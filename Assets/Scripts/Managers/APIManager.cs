@@ -38,8 +38,8 @@ public class APIManager : MonoBehaviour
             apikey = JsonUtility.FromJson<ApiKeyData>(json).apiKey;
         }
 
-        apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apikey;
-        promptMessage = "3개의 이미지 공통점을 너무 포괄적이지 않은 단어로 단 1개만! 출력해 뒤에 입니다 붙이지 마! 답변으로 판타지, 픽셀아트 금지!";
+        apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=" + apikey;
+        promptMessage = "3개의 이미지 공통점을 너무 포괄적이지 않은 단어로 단 1개만! 출력해 뒤에 입니다 붙이지 마! 답변으로 판타지, 픽셀아트, 중세 금지!";
     }
     
     void Awake()

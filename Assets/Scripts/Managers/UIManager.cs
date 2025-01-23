@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
         Debug.Log($"Initializing scene(UI): {scene.name}");
         
         canvas = GameObject.Find("Canvas");
+        UIList.Clear();
         
         // MainMenu Scene
         if (!GameManager.Instance.is_running)
