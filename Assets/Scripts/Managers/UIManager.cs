@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,6 +27,36 @@ public class UIManager : MonoBehaviour
         UIList = new List<RectTransform>();
     }
     
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"Scene Loaded(UI): {scene.name}");
+
+        InitializeUI();
+    }
+
+    private void InitializeUI()
+    {
+        canvas = GameObject.Find("Canvas");
+        
+        // MainMenu Scene
+        if (!GameManager.Instance.is_running)
+        {
+            FindUI("SettingsUI");
+            FindUI("LevelUI");
+            FindUI("MainMenuUI");
+        }
+    }
+
     private void FindUI(string UIName)
     {
         Transform target = GameManager.Instance.FindChildByName(canvas.transform, UIName);

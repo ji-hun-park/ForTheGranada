@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
             _boss_health = value;
         }
     }
-    [SerializeField] private float _boss_max_health;
+    private float _boss_max_health = 100f;
     public float boss_max_health
     {
         get { return _boss_max_health; }

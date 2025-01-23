@@ -45,14 +45,9 @@ public class bosscontroller : MonoBehaviour
 
     private void Awake()
     {
-        //DPI = GameObject.Find("LineRenderer").GetComponent<DashPathIndicator>();
-        //DPI.HideDashPath();
-        // 체력 세팅
-        GameManager.Instance.boss_max_health = 100f;
         GameManager.Instance.boss_health = GameManager.Instance.boss_max_health; // 보스 최대 체력으로 현재 체력 초기화
         UpdateHealthBar();
-        // 애니메이터 세팅
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>(); // 애니메이터 세팅
         if (animator == null)
         {
             Debug.LogError("Animator component not found on Boss!");
@@ -94,12 +89,6 @@ public class bosscontroller : MonoBehaviour
         }
         originalScale = transform.localScale;
         targetScale = originalScale * 1.2f; // 점프 시 커지는 효과
-        /*summonPoints = new Transform[60];
-        for (int i = 0; i < 60; i++)
-        {
-            string positionname = "FIREPOSITION_" + i;
-            summonPoints[i] = GameObject.Find(positionname).transform;
-        }*/
         summonPoint = GameObject.Find("FIREPOSITIONS").GetComponent<Transform>();
         summonPoints = summonPoint.GetComponentsInChildren<Transform>();
     }
@@ -169,14 +158,6 @@ public class bosscontroller : MonoBehaviour
         {
             isFire = true;
             StartCoroutine(SummonFire());
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (IsIdle() == true)
-        {
-            //bossrb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -526,12 +507,7 @@ public class bosscontroller : MonoBehaviour
                 Debug.Log("Border Crashed!");
                 SetMove(false);
                 Vector2 direction = (transform.position - collision.transform.position).normalized;
-                //bossrb.MovePosition(bossrb.position + direction * 10f);
                 bossrb.linearVelocity = direction * 0f;
-                /*if (damageCoroutine == null)
-                {
-                    damageCoroutine = StartCoroutine(HIT());
-                }*/
                 Debug.Log("Collision detected during dash, stopping dash...");
                 animator.SetBool("ISDASH", false);
                 isDashing = false;
@@ -546,7 +522,6 @@ public class bosscontroller : MonoBehaviour
                 Debug.Log("Block Crashed!");
                 SetMove(false);
                 backDirection = (transform.position - collision.transform.position).normalized;
-                //bossrb.MovePosition(bossrb.position + direction * 10f);
                 if (GameManager.Instance.diff == 3) TakeDamage(damageAmount);
                 else TakeDamage(damageAmount * 2);
                 StartCoroutine(collision.gameObject.GetComponent<bossblock>().BossDamage());
@@ -558,19 +533,6 @@ public class bosscontroller : MonoBehaviour
             }
         }
     }
-
-    /*private void OnCollisionEnter2D(Collider collider)
-    {
-        if (collider.CompareTag("Player"))
-        {
-            Debug.Log("Crashed!");
-            StartCoroutine(GameManager.Instance.pc.ChangeColor());
-            if (damageCoroutine == null)
-            {
-                damageCoroutine = StartCoroutine(HIT());
-            }
-        }
-    }*/
 
     private IEnumerator SummonFire()
     {
