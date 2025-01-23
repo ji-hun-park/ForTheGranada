@@ -1,13 +1,7 @@
 ﻿using TMPro;
-using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
