@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     public Dictionary<string, KeyCode> keyBindings;
     public Dictionary<string, Text> keyDisplayTexts;
+    
     [SerializeField] private float _boss_health;
     public float boss_health
     {
@@ -46,15 +47,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _boss_max_health;
     public float boss_max_health
     {
-        get => _boss_max_health;
-        set
-        {
-            _boss_max_health = value;
-        }
+        get { return _boss_max_health; }
     }
+    
     public int diff = 0;
     public int stage = 0;
-    public int maxstage = 0;
+    public const int MaxStage = 3;
 
     [Header("Flags")]
     public bool is_ressurection;
@@ -166,8 +164,6 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Initializing scene: {scene.name}");
 
         // 각 변수들 초기화
-        maxstage = 3;
-        //stealthTime = 0f;
         originspeed = 4f;
         speed_for_boss_stage = 4f;
 
@@ -1067,5 +1063,24 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         speed = tmpspeed;
         pc.STCoroutine = null; // 코루틴이 끝난 후 null로 초기화
+    }
+    
+    public Transform FindChildByName(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+            {
+                return child;
+            }
+
+            // 재귀적으로 자식 검색
+            Transform result = FindChildByName(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null; // 찾지 못했을 경우 null 반환
     }
 }

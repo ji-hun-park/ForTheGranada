@@ -43,7 +43,7 @@ public class stageclear : MonoBehaviour
             {
                 audiomanager.Instance.menusfx.Play();
                 blg.Alpha0();
-                if (GameManager.Instance.stage == GameManager.Instance.maxstage)
+                if (GameManager.Instance.stage == GameManager.MaxStage)
                 {
                     GameManager.Instance.key = 0;
                     GameManager.Instance.key_item = 0;

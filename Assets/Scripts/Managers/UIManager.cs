@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     // 싱글톤 패턴 적용
     public static UIManager Instance;
+    
+    [SerializeField]private GameObject canvas;
+    
+    public List<RectTransform> UIList;
     
     void Awake()
     {
@@ -16,6 +21,23 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject); // 기존에 존재하면 자신파괴
+        }
+        
+        UIList = new List<RectTransform>();
+    }
+    
+    private void FindUI(string UIName)
+    {
+        Transform target = GameManager.Instance.FindChildByName(canvas.transform, UIName);
+
+        if (target != null)
+        {
+            Debug.Log("찾은 오브젝트: " + target.name);
+            UIList.Add(target.GetComponent<RectTransform>());
+        }
+        else
+        {
+            Debug.Log("오브젝트를 찾을 수 없습니다.");
         }
     }
 }
