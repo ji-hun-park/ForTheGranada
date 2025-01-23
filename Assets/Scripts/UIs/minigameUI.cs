@@ -25,14 +25,14 @@ public class minigameUI : MonoBehaviour
     public void UpdateMinigame()
     {
         GameManager.Instance.is_minigame = true;
-        if (GameManager.Instance.is_mgset == true && GameManager.Instance.APIResponse != null && img_list.Length != 0 && img_list != null && GameManager.Instance.rannum3 != null && GameManager.Instance.rannum3.Length != 0)
+        if (GameManager.Instance.is_mgset == true && APIManager.Instance.APIResponse != null && img_list.Length != 0 && img_list != null && GameManager.Instance.rannum3 != null && GameManager.Instance.rannum3.Length != 0)
         {
             img_list[2].sprite = GameManager.Instance.spr_list[GameManager.Instance.rannum3[0]];
             img_list[3].sprite = GameManager.Instance.spr_list[GameManager.Instance.rannum3[1]];
             img_list[4].sprite = GameManager.Instance.spr_list[GameManager.Instance.rannum3[2]];
         }
 
-        if (GameManager.Instance.is_mgset == true && GameManager.Instance.APIResponse != null && txt_list.Length != 0 && txt_list != null && btn_list != null && btn_list.Length != 0 && GameManager.Instance.rannum3_2 != null && GameManager.Instance.rannum3_2.Length != 0)
+        if (GameManager.Instance.is_mgset == true && APIManager.Instance.APIResponse != null && txt_list.Length != 0 && txt_list != null && btn_list != null && btn_list.Length != 0 && GameManager.Instance.rannum3_2 != null && GameManager.Instance.rannum3_2.Length != 0)
         {
             for (int k = 1; k < 5; k++)
             {
@@ -51,7 +51,7 @@ public class minigameUI : MonoBehaviour
                     }
                     else if (j == LLM)
                     {
-                        txt_list[j].text = GameManager.Instance.APIResponse.Length > 6 ? GameManager.Instance.APIResponse.Substring(0, 6).Trim() : GameManager.Instance.APIResponse.Trim();
+                        txt_list[j].text = APIManager.Instance.APIResponse.Length > 6 ? APIManager.Instance.APIResponse.Substring(0, 6).Trim() : APIManager.Instance.APIResponse.Trim();
                     }
                     else
                     {
@@ -60,7 +60,7 @@ public class minigameUI : MonoBehaviour
                     }
                 }
             }
-            if (txt_list[4].text == "NULL" && LLM == 4) txt_list[4].text = GameManager.Instance.APIResponse.Length > 6 ? GameManager.Instance.APIResponse.Substring(0, 6).Trim() : GameManager.Instance.APIResponse.Trim();
+            if (txt_list[4].text == "NULL" && LLM == 4) txt_list[4].text = APIManager.Instance.APIResponse.Length > 6 ? APIManager.Instance.APIResponse.Substring(0, 6).Trim() : APIManager.Instance.APIResponse.Trim();
 
             // ��ư �ʱ�ȭ
             btn_list[1].onClick.RemoveAllListeners();

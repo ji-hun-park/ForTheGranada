@@ -6,19 +6,6 @@ using System.Collections.Generic;
 
 public class minigamemanager : MonoBehaviour
 {
-    //Random random = new Random();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public int[] RanNumGen()
     {
         HashSet<int> uniqueNumbers = new HashSet<int>();
@@ -49,145 +36,145 @@ public class minigamemanager : MonoBehaviour
                 GameManager.Instance.rannum3[0] = 1;
                 GameManager.Instance.rannum3[1] = 2;
                 GameManager.Instance.rannum3[2] = 3;
-                GameManager.Instance.APIResponse = "동물";
+                APIManager.Instance.APIResponse = "동물";
                 break;
             case 2:
                 GameManager.Instance.rannum3[0] = 4;
                 GameManager.Instance.rannum3[1] = 5;
                 GameManager.Instance.rannum3[2] = 6;
-                GameManager.Instance.APIResponse = "동물";
+                APIManager.Instance.APIResponse = "동물";
                 break;
             case 3:
                 GameManager.Instance.rannum3[0] = 7;
                 GameManager.Instance.rannum3[1] = 8;
                 GameManager.Instance.rannum3[2] = 9;
-                GameManager.Instance.APIResponse = "동물";
+                APIManager.Instance.APIResponse = "동물";
                 break;
             case 4:
                 GameManager.Instance.rannum3[0] = 11;
                 GameManager.Instance.rannum3[1] = 12;
                 GameManager.Instance.rannum3[2] = 13;
-                GameManager.Instance.APIResponse = "음식";
+                APIManager.Instance.APIResponse = "음식";
                 break;
             case 5:
                 GameManager.Instance.rannum3[0] = 14;
                 GameManager.Instance.rannum3[1] = 15;
                 GameManager.Instance.rannum3[2] = 16;
-                GameManager.Instance.APIResponse = "음식";
+                APIManager.Instance.APIResponse = "음식";
                 break;
             case 6:
                 GameManager.Instance.rannum3[0] = 17;
                 GameManager.Instance.rannum3[1] = 18;
                 GameManager.Instance.rannum3[2] = 19;
-                GameManager.Instance.APIResponse = "음식";
+                APIManager.Instance.APIResponse = "음식";
                 break;
             case 7:
                 GameManager.Instance.rannum3[0] = 21;
                 GameManager.Instance.rannum3[1] = 22;
                 GameManager.Instance.rannum3[2] = 23;
-                GameManager.Instance.APIResponse = "괴물";
+                APIManager.Instance.APIResponse = "괴물";
                 break;
             case 8:
                 GameManager.Instance.rannum3[0] = 24;
                 GameManager.Instance.rannum3[1] = 25;
                 GameManager.Instance.rannum3[2] = 26;
-                GameManager.Instance.APIResponse = "괴물";
+                APIManager.Instance.APIResponse = "괴물";
                 break;
             case 9:
                 GameManager.Instance.rannum3[0] = 27;
                 GameManager.Instance.rannum3[1] = 28;
                 GameManager.Instance.rannum3[2] = 29;
-                GameManager.Instance.APIResponse = "괴물";
+                APIManager.Instance.APIResponse = "괴물";
                 break;
             case 10:
                 GameManager.Instance.rannum3[0] = 31;
                 GameManager.Instance.rannum3[1] = 32;
                 GameManager.Instance.rannum3[2] = 33;
-                GameManager.Instance.APIResponse = "종족";
+                APIManager.Instance.APIResponse = "종족";
                 break;
             case 11:
                 GameManager.Instance.rannum3[0] = 34;
                 GameManager.Instance.rannum3[1] = 35;
                 GameManager.Instance.rannum3[2] = 36;
-                GameManager.Instance.APIResponse = "종족";
+                APIManager.Instance.APIResponse = "종족";
                 break;
             case 12:
                 GameManager.Instance.rannum3[0] = 37;
                 GameManager.Instance.rannum3[1] = 38;
                 GameManager.Instance.rannum3[2] = 39;
-                GameManager.Instance.APIResponse = "종족";
+                APIManager.Instance.APIResponse = "종족";
                 break;
             case 13:
                 GameManager.Instance.rannum3[0] = 43;
                 GameManager.Instance.rannum3[1] = 41;
                 GameManager.Instance.rannum3[2] = 42;
-                GameManager.Instance.APIResponse = "직업";
+                APIManager.Instance.APIResponse = "직업";
                 break;
             case 14:
                 GameManager.Instance.rannum3[0] = 44;
                 GameManager.Instance.rannum3[1] = 45;
                 GameManager.Instance.rannum3[2] = 46;
-                GameManager.Instance.APIResponse = "직업";
+                APIManager.Instance.APIResponse = "직업";
                 break;
             case 15:
                 GameManager.Instance.rannum3[0] = 47;
                 GameManager.Instance.rannum3[1] = 48;
                 GameManager.Instance.rannum3[2] = 49;
-                GameManager.Instance.APIResponse = "직업";
+                APIManager.Instance.APIResponse = "직업";
                 break;
             case 16:
                 GameManager.Instance.rannum3[0] = 51;
                 GameManager.Instance.rannum3[1] = 52;
                 GameManager.Instance.rannum3[2] = 53;
-                GameManager.Instance.APIResponse = "의상";
+                APIManager.Instance.APIResponse = "의상";
                 break;
             case 17:
                 GameManager.Instance.rannum3[0] = 54;
                 GameManager.Instance.rannum3[1] = 55;
                 GameManager.Instance.rannum3[2] = 56;
-                GameManager.Instance.APIResponse = "신발";
+                APIManager.Instance.APIResponse = "신발";
                 break;
             case 18:
                 GameManager.Instance.rannum3[0] = 57;
                 GameManager.Instance.rannum3[1] = 55;
                 GameManager.Instance.rannum3[2] = 56;
-                GameManager.Instance.APIResponse = "신발";
+                APIManager.Instance.APIResponse = "신발";
                 break;
             case 19:
                 GameManager.Instance.rannum3[0] = 60;
                 GameManager.Instance.rannum3[1] = 59;
                 GameManager.Instance.rannum3[2] = 58;
-                GameManager.Instance.APIResponse = "판타지";
+                APIManager.Instance.APIResponse = "판타지";
                 break;
             case 20:
                 GameManager.Instance.rannum3[0] = 62;
                 GameManager.Instance.rannum3[1] = 61;
                 GameManager.Instance.rannum3[2] = 63;
-                GameManager.Instance.APIResponse = "판타지";
+                APIManager.Instance.APIResponse = "판타지";
                 break;
             case 21:
                 GameManager.Instance.rannum3[0] = 64;
                 GameManager.Instance.rannum3[1] = 65;
                 GameManager.Instance.rannum3[2] = 66;
-                GameManager.Instance.APIResponse = "도구";
+                APIManager.Instance.APIResponse = "도구";
                 break;
             case 22:
                 GameManager.Instance.rannum3[0] = 67;
                 GameManager.Instance.rannum3[1] = 68;
                 GameManager.Instance.rannum3[2] = 69;
-                GameManager.Instance.APIResponse = "물약";
+                APIManager.Instance.APIResponse = "물약";
                 break;
             case 23:
                 GameManager.Instance.rannum3[0] = 77;
                 GameManager.Instance.rannum3[1] = 84;
                 GameManager.Instance.rannum3[2] = 85;
-                GameManager.Instance.APIResponse = "꽃";
+                APIManager.Instance.APIResponse = "꽃";
                 break;
             case 24:
                 GameManager.Instance.rannum3[0] = 73;
                 GameManager.Instance.rannum3[1] = 89;
                 GameManager.Instance.rannum3[2] = 90;
-                GameManager.Instance.APIResponse = "건물";
+                APIManager.Instance.APIResponse = "건물";
                 break;
             default:
                 Debug.LogError("OutOfRange");

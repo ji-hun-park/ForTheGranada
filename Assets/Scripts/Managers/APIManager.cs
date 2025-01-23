@@ -20,7 +20,7 @@ public class APIManager : MonoBehaviour
     private static readonly string apiKey;
     
     // 변수들
-    public string APIResponse{get; private set;}
+    public string APIResponse{get; set;}
 
     [System.Serializable]
     private class ApiKeyData
