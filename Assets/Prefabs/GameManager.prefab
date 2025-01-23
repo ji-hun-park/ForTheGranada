@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5876359838954342805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2055173238405742998}
+  - component: {fileID: 5914913824883140479}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2055173238405742998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876359838954342805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5914913824883140479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876359838954342805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38eeb53b520e543449863de4deea167c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  speed: 3
+  originspeed: 3
+  speed_for_boss_stage: 2
+  maxHealth: 0
+  armor: 0
+  stealthTime: 0
+  key: 0
+  req_key: 0
+  ressurection: 0
+  health_item: 0
+  armor_item: 0
+  stealth_item: 0
+  key_item: 0
+  speed_item: 0
+  haste_item: 0
+  preview_item: 0
+  ressurection_item: 0
+  _boss_health: 0
+  _boss_max_health: 0
+  diff: 0
+  stage: 0
+  maxtokens: 5
+  promptmessage: "3\uAC1C\uC758 \uC774\uBBF8\uC9C0 \uACF5\uD1B5\uC810\uC744 \uB108\uBB34
+    \uD3EC\uAD04\uC801\uC774\uC9C0 \uC54A\uC740 \uB2E8\uC5B4\uB85C 1\uAC1C\uB9CC
+    \uCD9C\uB825\uD574"
+  APIResponse: 
+  is_attacked_speed: 0
+  is_preview: 0
+  is_running: 0
+  is_closebox: 0
+  is_minigame: 0
+  is_delay: 0
+  is_CoroutineRunning: 0
+  is_mgset: 0
+  is_catch: 0
+  is_rannum: 1
+  is_rannum2: 1
+  _is_ingame: 0
+  _is_boss: 0
+  currentbox: {fileID: 0}
+  mg: {fileID: 0}
+  im: {fileID: 0}
+  tm: {fileID: 0}
+  sc: {fileID: 0}
+  boscon: {fileID: 0}
+  hint_count: {fileID: 0}
+  speedcount: {fileID: 0}
+  healthSlider: {fileID: 0}
+  player: {fileID: 5592056279853745845, guid: 868f14d6e0428d04fa4a16202498ca3d, type: 3}
+  health_list: []
+  item_list: []
+  ui_list: []
+  rannum3: 
+  rannum3_2: 
+  spr_list: []
+  ans_list: []

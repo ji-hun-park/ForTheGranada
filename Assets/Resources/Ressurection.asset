@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283cf51f1a201c1498b89e0095aad90d, type: 3}
+  m_Name: Ressurection
+  m_EditorClassIdentifier: 
+  item_ID: 5
+  item_sprite: {fileID: 8482712648628362555, guid: 76b8576955d8e134ebc10b4a126e22e5, type: 3}
+  num_nesting: 1
+  item_type: 3

@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1574785902516576201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8134369529375537855}
+  - component: {fileID: 9021492553330178709}
+  m_Layer: 0
+  m_Name: Mapmanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8134369529375537855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574785902516576201}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9021492553330178709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574785902516576201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cd279358fa2a648ba3bdfd13364d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage: 0
+  diff: 0
+  minimap_name: 
+  button: {fileID: 0}
+  player: {fileID: 0}
+  prefabEntries:
+  - {fileID: 9046363275815388647, guid: d4fada42bfe8b454da306176df9fa591, type: 3}
+  - {fileID: 3340106870803879199, guid: bfcf32892b4eb2b4c934ceb6733985af, type: 3}
+  - {fileID: 7564022214096064699, guid: 4e3bb0e163bf81c49951b943bae29c25, type: 3}
+  - {fileID: 8102764658699896637, guid: e1c55185b1d55fe43ad6ec2d72752793, type: 3}
+  - {fileID: 8668311913807200061, guid: 88529c8b94347a2458eadbce6ba2bdb7, type: 3}
+  - {fileID: 5448353100486533939, guid: 768ae498b5777d24fbd6280a542a5b44, type: 3}
+  - {fileID: 8749821216152933719, guid: 712f535c5f85b7747aa65bab5d1f6ee4, type: 3}
+  - {fileID: 7147369270648761446, guid: 3c51faa3b48c87d4eaedf2e1b4f206f2, type: 3}
+  - {fileID: 5571785178474649358, guid: cd0348b9d07a1f944a842f3bc5c2cc88, type: 3}
+  - {fileID: 6434141396439706394, guid: 16ee7b606cbe59741b448a1755894b29, type: 3}
+  - {fileID: 1097382550484816672, guid: 37d0da81ee2c71d4da8dbfbe1638714e, type: 3}
+  - {fileID: 720207125086632499, guid: 908e5c2c2a290184da330f637a55f31e, type: 3}
+  - {fileID: 1442547843057474132, guid: abf3af3894df95441bb4f9c73f105aca, type: 3}
+  text_size: {fileID: 0}
+  stage_size: 0000000005000000060000000700000007000000
+  room_count: 000000000a0000000f0000001400000019000000
+  type_room_count: 000000000500000007000000090000000b000000
+  type_room: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c000000

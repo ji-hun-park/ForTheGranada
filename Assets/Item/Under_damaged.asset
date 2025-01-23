@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283cf51f1a201c1498b89e0095aad90d, type: 3}
+  m_Name: Under_damaged
+  m_EditorClassIdentifier: 
+  item_ID: 6
+  item_sprite: {fileID: -2028240897101911080, guid: d14c2c44a875766419c53ac8f2d8ffb6, type: 3}
+  num_nesting: 1
+  item_type: 1
