@@ -11,7 +11,14 @@ public class popupUI : MonoBehaviour
 
     void OnEnable()
     {
+        SetItemText();
+        StartCoroutine(GameManager.Instance.WaitThreeSecond2());
+    }
+
+    private void SetItemText()
+    {
         if (item != null) itemnumber = item.GetItemID;
+        
         switch (itemnumber)
         {
             case 1:
@@ -48,7 +55,6 @@ public class popupUI : MonoBehaviour
 
         iteminfo = itemname + " 아이템 획득!";
         if (item != null) MyText.text = iteminfo;
-        StartCoroutine(GameManager.Instance.WaitThreeSecond2());
     }
 
     public void GetText()

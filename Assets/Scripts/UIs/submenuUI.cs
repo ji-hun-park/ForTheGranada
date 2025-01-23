@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -22,21 +20,7 @@ public class submenuUI : MonoBehaviour
 
     private void OnEnable()
     {
-        // ?��?�� 로드?�� ?�� ?���?
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
         FBS();
-    }
-
-    private void OnDisable()
-    {
-        // ?�� 로드 ?��벤트 ?��?��
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        //this.gameObject.SetActive(true);
     }
 
     public void OnClickReturnButton()
@@ -44,7 +28,7 @@ public class submenuUI : MonoBehaviour
         GameManager.Instance.is_ingame = false;
         GameManager.Instance.is_running = false;
         GameManager.Instance.is_boss = false;
-        Time.timeScale = 1;
+        Resume();
         audiomanager.Instance.menusfx.Play();
         audiomanager.Instance.ingamebgm.Stop();
         audiomanager.Instance.bossstagebgm.Stop();
@@ -52,11 +36,6 @@ public class submenuUI : MonoBehaviour
         audiomanager.Instance.mainmenubgm.loop = true;
         SceneManager.LoadScene("MainMenuScene");
     }
-
-    /*public void OnClickSaveButton()
-    {
-        Debug.Log("����Ǿ����ϴ�!");
-    }*/
 
     public void OnClickInfoButton()
     {

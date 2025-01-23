@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class minigameUI : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class minigameUI : MonoBehaviour
 
     void Awake()
     {
-        this.enabled = true;
+        enabled = true;
         eventSystem = EventSystem.current;
         img_list = GetComponentsInChildren<Image>();
         txt_list = GetComponentsInChildren<Text>();
@@ -23,14 +22,29 @@ public class minigameUI : MonoBehaviour
     public void UpdateMinigame()
     {
         GameManager.Instance.is_minigame = true;
-        if (GameManager.Instance.is_mgset == true && APIManager.Instance.APIResponse != null && img_list.Length != 0 && img_list != null && GameManager.Instance.rannum3 != null && GameManager.Instance.rannum3.Length != 0)
+        SetImages();
+        SetAnswers();
+    }
+
+    private void OnEnable()
+    {
+        eventSystem.SetSelectedGameObject(btn_list[1].gameObject);
+        Time.timeScale = 0;
+    }
+
+    private void SetImages()
+    {
+        if (GameManager.Instance.is_mgset && APIManager.Instance.APIResponse != null && img_list.Length != 0 && img_list != null && GameManager.Instance.rannum3 != null && GameManager.Instance.rannum3.Length != 0)
         {
             img_list[2].sprite = GameManager.Instance.spr_list[GameManager.Instance.rannum3[0]];
             img_list[3].sprite = GameManager.Instance.spr_list[GameManager.Instance.rannum3[1]];
             img_list[4].sprite = GameManager.Instance.spr_list[GameManager.Instance.rannum3[2]];
         }
+    }
 
-        if (GameManager.Instance.is_mgset == true && APIManager.Instance.APIResponse != null && txt_list.Length != 0 && txt_list != null && btn_list != null && btn_list.Length != 0 && GameManager.Instance.rannum3_2 != null && GameManager.Instance.rannum3_2.Length != 0)
+    private void SetAnswers()
+    {
+        if (GameManager.Instance.is_mgset && APIManager.Instance.APIResponse != null && txt_list.Length != 0 && txt_list != null && btn_list != null && btn_list.Length != 0 && GameManager.Instance.rannum3_2 != null && GameManager.Instance.rannum3_2.Length != 0)
         {
             for (int k = 1; k < 5; k++)
             {
@@ -58,70 +72,55 @@ public class minigameUI : MonoBehaviour
                     }
                 }
             }
+            
             if (txt_list[4].text == "NULL" && LLM == 4) txt_list[4].text = APIManager.Instance.APIResponse.Length > 6 ? APIManager.Instance.APIResponse.Substring(0, 6).Trim() : APIManager.Instance.APIResponse.Trim();
-
-            // ��ư �ʱ�ȭ
-            btn_list[1].onClick.RemoveAllListeners();
-            btn_list[2].onClick.RemoveAllListeners();
-            btn_list[3].onClick.RemoveAllListeners();
-            btn_list[4].onClick.RemoveAllListeners();
-
-            for (int i = 1; i < 5; i++)
+            
+            RemoveAL();
+            SetButtons();
+        }
+    }
+    
+    private void SetButtons()
+    {
+        for (int i = 1; i < 5; i++)
+        {
+            if (i == LLM)
             {
-                if (i == LLM)
-                {
-                    btn_list[i].onClick.AddListener(OnClickCorrectButton);
-                }
-                else
-                {
-                    btn_list[i].onClick.AddListener(OnClickIncorrectButton);
-                }
+                btn_list[i].onClick.AddListener(OnClickCorrectButton);
+            }
+            else
+            {
+                btn_list[i].onClick.AddListener(OnClickIncorrectButton);
             }
         }
     }
-
-    private void OnEnable()
+    
+    private void OnClickCorrectButton()
     {
-        // ?��?�� 로드?�� ?�� ?���?
-        //SceneManager.sceneLoaded += OnSceneLoaded;
-        //UpdateMinigame();
-        eventSystem.SetSelectedGameObject(btn_list[1].gameObject);
-        Time.timeScale = 0;
+        RemoveAL();
+        FlagOff();
+        SetForItem();
+        ChangeSet();
     }
 
-    private void OnDisable()
+    private void OnClickIncorrectButton()
     {
-        // ?�� 로드 ?��벤트 ?��?��
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        //this.gameObject.SetActive(true);
-    }
-
-    public void OnClickRandomButton()
-    {
-        btn_list[1].onClick.RemoveAllListeners();
-        btn_list[2].onClick.RemoveAllListeners();
-        btn_list[3].onClick.RemoveAllListeners();
-        btn_list[4].onClick.RemoveAllListeners();
-
-        if (GameManager.Instance.is_minigame)
-        {
-            GameManager.Instance.is_minigame = false;
-        }
+        RemoveAL();
+        FlagOff();
         GameManager.Instance.is_delay = true;
-        GameManager.Instance.ui_list[1].gameObject.SetActive(false);
+        ChangeSet();
     }
 
-    public void OnClickCorrectButton()
+    private void RemoveAL()
     {
         btn_list[1].onClick.RemoveAllListeners();
         btn_list[2].onClick.RemoveAllListeners();
         btn_list[3].onClick.RemoveAllListeners();
         btn_list[4].onClick.RemoveAllListeners();
+    }
 
+    private void FlagOff()
+    {
         if (GameManager.Instance.is_minigame)
         {
             GameManager.Instance.is_minigame = false;
@@ -131,47 +130,26 @@ public class minigameUI : MonoBehaviour
         {
             GameManager.Instance.is_mgset = false;
         }
+    }
 
+    private void ChangeSet()
+    {
         audiomanager.Instance.menusfx.Play();
+        Time.timeScale = 1;
+        GameManager.Instance.is_running = true;
+        GameManager.Instance.is_catch = false;
+        GameManager.Instance.is_rannum = true;
+        GameManager.Instance.is_rannum2 = true;
+        gameObject.SetActive(false);
+    }
+
+    private void SetForItem()
+    {
         GameManager.Instance.im.getItem(GameManager.Instance.currentbox.ii.item);
         GameManager.Instance.pu.item = GameManager.Instance.currentbox.ii.item;
-        Time.timeScale = 1;
         GameManager.Instance.currentbox.isOpen = true;
-        GameManager.Instance.is_running = true;
-        GameManager.Instance.is_catch = false;
-        GameManager.Instance.is_rannum = true;
-        GameManager.Instance.is_rannum2 = true;
         GameManager.Instance.currentbox.ii.Alpha255();
         GameManager.Instance.currentbox.ii.isGet = true;
-        GameManager.Instance.ui_list[8].gameObject.SetActive(true);
-        GameManager.Instance.ui_list[1].gameObject.SetActive(false);
+        UIManager.Instance.UIList[9].gameObject.SetActive(true);
     }
-
-    public void OnClickIncorrectButton()
-    {
-        btn_list[1].onClick.RemoveAllListeners();
-        btn_list[2].onClick.RemoveAllListeners();
-        btn_list[3].onClick.RemoveAllListeners();
-        btn_list[4].onClick.RemoveAllListeners();
-
-        if (GameManager.Instance.is_minigame)
-        {
-            GameManager.Instance.is_minigame = false;
-        }
-
-        if (GameManager.Instance.is_mgset)
-        {
-            GameManager.Instance.is_mgset = false;
-        }
-
-        audiomanager.Instance.menusfx.Play();
-        Time.timeScale = 1;
-        GameManager.Instance.is_running = true;
-        GameManager.Instance.is_catch = false;
-        GameManager.Instance.is_rannum = true;
-        GameManager.Instance.is_rannum2 = true;
-        GameManager.Instance.is_delay = true;
-        GameManager.Instance.ui_list[1].gameObject.SetActive(false);
-    }
-
 }
