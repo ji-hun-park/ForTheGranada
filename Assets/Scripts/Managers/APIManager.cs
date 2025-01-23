@@ -17,7 +17,7 @@ public class APIManager : MonoBehaviour
     private static readonly string path;
     private static readonly string promptMessage;
     private static readonly string apiUrl;
-    private static readonly string apiKey;
+    private static readonly string apikey;
     
     // 변수들
     public string APIResponse{get; set;}
@@ -25,7 +25,7 @@ public class APIManager : MonoBehaviour
     [System.Serializable]
     private class ApiKeyData
     {
-        public string apikey;
+        public string apiKey;
     }
 
     static APIManager()
@@ -35,10 +35,10 @@ public class APIManager : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            apiKey = JsonUtility.FromJson<ApiKeyData>(json).apikey;
+            apikey = JsonUtility.FromJson<ApiKeyData>(json).apiKey;
         }
 
-        apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apikey;
         promptMessage = "3개의 이미지 공통점을 너무 포괄적이지 않은 단어로 단 1개만! 출력해 뒤에 입니다 붙이지 마! 답변으로 판타지, 픽셀아트 금지!";
     }
     
