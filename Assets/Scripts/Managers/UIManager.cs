@@ -39,13 +39,17 @@ public class UIManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // 씬이 로드되면 로그 띄움
         Debug.Log($"Scene Loaded(UI): {scene.name}");
 
-        InitializeUI();
+        InitializeUI(scene);
     }
 
-    private void InitializeUI()
+    private void InitializeUI(Scene scene)
     {
+        // 씬이 초기화되면 로그 띄움
+        Debug.Log($"Initializing scene(UI): {scene.name}");
+        
         canvas = GameObject.Find("Canvas");
         
         // MainMenu Scene

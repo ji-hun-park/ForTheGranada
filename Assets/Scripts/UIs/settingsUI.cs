@@ -44,8 +44,8 @@ public class settingsUI : MonoBehaviour
 
     public void ESC()
     {
-        if (GameManager.Instance.ui_list[0] != null && !GameManager.Instance.is_running) GameManager.Instance.ui_list[0].gameObject.GetComponent<mainmenuUI>().FBS();
+        if (UIManager.Instance.UIList[2] != null && !GameManager.Instance.is_running) UIManager.Instance.UIList[2].gameObject.GetComponent<mainmenuUI>().FBS();
         if (GameManager.Instance.ui_list[2] != null && GameManager.Instance.is_running) GameManager.Instance.ui_list[2].gameObject.GetComponent<submenuUI>().FBS();
-        GameManager.Instance.ui_list[10].gameObject.SetActive(false);
+        if (UIManager.Instance.UIList[0] != null) UIManager.Instance.UIList[0].gameObject.SetActive(false);
     }
 }

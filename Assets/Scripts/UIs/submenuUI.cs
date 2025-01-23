@@ -71,9 +71,9 @@ public class submenuUI : MonoBehaviour
     public void OnClickSettingButton()
     {
         audiomanager.Instance.menusfx.Play();
-        if (GameManager.Instance.ui_list[10] != null)
+        if (UIManager.Instance.UIList[0] != null)
         {
-            GameManager.Instance.ui_list[10].gameObject.SetActive(true);
+            UIManager.Instance.UIList[0].gameObject.SetActive(true);
         }
     }
 

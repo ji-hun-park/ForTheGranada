@@ -42,7 +42,7 @@ public class mainmenuUI : MonoBehaviour
     public void OnClickLevelSelectButton()
     {
         audiomanager.Instance.menusfx.Play();
-        if (GameManager.Instance.ui_list[1] != null) GameManager.Instance.ui_list[1].gameObject.SetActive(true);
+        if (UIManager.Instance.UIList[0] != null) UIManager.Instance.UIList[0].gameObject.SetActive(true);
     }
 
     public void OnClickQuitButton()

@@ -153,6 +153,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // 씬이 로드되면 로그 띄움
         Debug.Log($"Scene Loaded: {scene.name}");
 
         InitializeScene(scene);
@@ -171,22 +172,6 @@ public class GameManager : MonoBehaviour
         if (!is_running)
         {
             audiomanager.Instance.bossdash.Stop();
-            ui_list = new RectTransform[11];
-            tmp = GameObject.Find("SettingsUI");
-            if (tmp != null) ui_list[10] = tmp.GetComponent<RectTransform>();
-            if (ui_list[10] != null) ui_list[10].gameObject.SetActive(false);
-            tmp = GameObject.Find("LevelUI");
-            if (tmp != null) ui_list[1] = tmp.GetComponent<RectTransform>();
-            if (ui_list[1] != null) ui_list[1].gameObject.SetActive(false);
-            tmp = GameObject.Find("MainMenuUI");
-            if (tmp != null) ui_list[0] = tmp.GetComponent<RectTransform>();
-            //if (ui_list[0] != null) ui_list[1].gameObject.SetActive(false);
-            /*tmp = GameObject.Find("ChatUI");
-            if (tmp != null)
-            {
-                ui_list[6] = tmp.GetComponent<RectTransform>();
-                ui_list[6].gameObject.SetActive(false);
-            }*/
         }
 
         // Ingame 들어가면 초기화 작업 실행
