@@ -12,17 +12,34 @@ public class APIManager : MonoBehaviour
     // 싱글톤 패턴 적용
     public static APIManager Instance;
     
+    // 상수들
     private const int maxTokens = 6;
     private static readonly string path;
     private static readonly string promptMessage;
     private static readonly string apiUrl;
     private static readonly string apiKey;
-    private string APIResponse{get;set;}
+    
+    // 변수들
+    public string APIResponse{get; private set;}
 
     [System.Serializable]
     private class ApiKeyData
     {
         public string apikey;
+    }
+
+    static APIManager()
+    {
+        path = Path.Combine(Application.streamingAssetsPath, "config.json");
+        
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            apiKey = JsonUtility.FromJson<ApiKeyData>(json).apikey;
+        }
+
+        apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        promptMessage = "3개의 이미지 공통점을 너무 포괄적이지 않은 단어로 단 1개만! 출력해 뒤에 입니다 붙이지 마! 답변으로 판타지, 픽셀아트 금지!";
     }
     
     void Awake()
@@ -37,25 +54,14 @@ public class APIManager : MonoBehaviour
         {
             Destroy(gameObject); // 기존에 존재하면 자신파괴
         }
-        
-        path = Path.Combine(Application.streamingAssetsPath, "config.json");
-        
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            apiKey = JsonUtility.FromJson<ApiKeyData>(json).apikey;
-        }
-
-        apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
-        promptMessage = "3개의 이미지 공통점을 너무 포괄적이지 않은 단어로 단 1개만 출력해! 뒤에 입니다 붙이지 마! 판타지, 픽셀아트 금지!";
     }
 
     public void RequestStart()
     {
-        StartCoroutine(LLMAPIRequest(promptMessage, maxTokens));
+        StartCoroutine(LLMAPIRequest());
     }
     
-    private IEnumerator LLMAPIRequest(string prompt, int maxTokens)
+    private IEnumerator LLMAPIRequest()
     {
         // 전송할 이미지 3장 배열에 담기
         string[] imageNames = new string[3];
@@ -107,7 +113,7 @@ public class APIManager : MonoBehaviour
         }
 
         // POST로 보내기 위해 JSON 형식 데이터로 만듬
-        string jsonData = "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"},{\"inlineData\": {\"mimeType\": \"image/png\",\"data\": \"" + base64Images[0] + "\"}},{\"inlineData\": {\"mimeType\": \"image/png\",\"data\": \"" + base64Images[1] + "\"}},{\"inlineData\": {\"mimeType\": \"image/png\",\"data\": \"" + base64Images[2] + "\"}}]}], \"generationConfig\": {\"maxOutputTokens\": " + maxTokens + "}}";
+        string jsonData = "{\"contents\":[{\"parts\":[{\"text\":\"" + promptMessage + "\"},{\"inlineData\": {\"mimeType\": \"image/png\",\"data\": \"" + base64Images[0] + "\"}},{\"inlineData\": {\"mimeType\": \"image/png\",\"data\": \"" + base64Images[1] + "\"}},{\"inlineData\": {\"mimeType\": \"image/png\",\"data\": \"" + base64Images[2] + "\"}}]}], \"generationConfig\": {\"maxOutputTokens\": " + maxTokens + "}}";
 
         // UnityWebRequest 보내기 위해 필요한 것 들
         UnityWebRequest request = new UnityWebRequest(apiUrl, "POST");
