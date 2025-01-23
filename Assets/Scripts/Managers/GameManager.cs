@@ -184,124 +184,10 @@ public class GameManager : MonoBehaviour
             StartCoroutine(ResetCoroutine());
 
             // 난이도 선택에 따라 게임 설정들 변경
-            switch (diff)
-            {
-                case 1:
-                    health = 5;
-                    if (stage == 1) maxHealth = 5;
-                    if (stage == 1) health_item = 0;
-                    if (stage != 1) health = maxHealth;
-                    switch (stage)
-                    {
-                        case 1:
-                            req_key = 3;
-                            break;
-                        case 2:
-                            req_key = 5;
-                            break;
-                        case 3:
-                            req_key = 7;
-                            break;
-                        default:
-                            Debug.LogError("Out of StageNum!");
-                            break;
-                    }
-                    break;
-                case 2:
-                    health = 3;
-                    if (stage == 1) maxHealth = 3;
-                    if (stage == 1) health_item = 0;
-                    if (stage != 1) health = maxHealth;
-                    switch (stage)
-                    {
-                        case 1:
-                            req_key = 3;
-                            break;
-                        case 2:
-                            req_key = 5;
-                            break;
-                        case 3:
-                            req_key = 7;
-                            break;
-                        default:
-                            Debug.LogError("Out of StageNum!");
-                            break;
-                    }
-                    break;
-                case 3:
-                    health = 1;
-                    if (stage == 1) maxHealth = 1;
-                    if (stage == 1) health_item = 0;
-                    if (stage != 1) health = maxHealth;
-                    switch (stage)
-                    {
-                        case 1:
-                            req_key = 5;
-                            break;
-                        case 2:
-                            req_key = 7;
-                            break;
-                        case 3:
-                            req_key = 9;
-                            break;
-                        default:
-                            Debug.LogError("Out of StageNum!");
-                            break;
-                    }
-                    break;
-                default:
-                    Debug.LogError("Out of Diff!");
-                    break;
-            }
+            SwitchingSettingsOnDiff();
 
             // 필요한 컴포넌트들 가져오기
-            tmp = GameObject.Find("MinigameManager");
-            if (tmp != null) mg = tmp.GetComponent<minigamemanager>();
-            tmp = GameObject.Find("ItemManager");
-            if (tmp != null) im = tmp.GetComponent<itemmanager>();
-            tmp = GameObject.Find("TIME");
-            if (tmp != null) tm = tmp.GetComponent<timer>();
-            tmp = GameObject.Find("Scanner");
-            if (tmp != null) sc = tmp.GetComponent<scanner>();
-            tmp = GameObject.Find("hintcount");
-            if (tmp != null) hint_count = tmp.GetComponent<TMP_Text>();
-            tmp = GameObject.Find("stagetext");
-            if (tmp != null) stagetext = tmp.GetComponent<TMP_Text>();
-            //tmp = GameObject.Find("keyimage");
-            //if (tmp != null) keyimage = tmp.GetComponent<Image>();
-            tmp = GameObject.Find("Player");
-            if (tmp != null) player = tmp.GetComponent<Transform>();
-            if (player != null) pc = player.GetComponent<playercontroller>();
-
-            // ui_list에 필요한 UI들 미리 가져오기
-            ui_list = new RectTransform[11];
-            tmp = GameObject.Find("InGameUI");
-            if (tmp != null) ui_list[0] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("MiniGameUI");
-            if (tmp != null) ui_list[1] = tmp.GetComponent<RectTransform>();
-            if (ui_list[1] != null) mgui = ui_list[1].GetComponent<minigameUI>();
-            tmp = GameObject.Find("PauseMenuUI");
-            if (tmp != null) ui_list[2] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("GRayout5X5");
-            if (tmp != null) ui_list[3] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("GRayout6X6");
-            if (tmp != null) ui_list[4] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("GRayout7X7");
-            if (tmp != null) ui_list[5] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("ChatUI");
-            if (tmp != null) ui_list[6] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("OverUI");
-            if (tmp != null) ui_list[7] = tmp.GetComponent<RectTransform>();
-            //tmp = GameObject.Find("Canvas");
-            //iftmp != null) CanvasList = tmp.GetComponentsInChildren<RectTransform>(true);
-            tmp = GameObject.Find("PopupUI");
-            if (tmp != null) ui_list[8] = tmp.GetComponent<RectTransform>();
-            if (ui_list[8] != null) pu = ui_list[8].GetComponent<popupUI>();
-            if (pu != null) pu.GetText();
-            if (ui_list[8] != null) ui_list[8].gameObject.SetActive(false);
-            tmp = GameObject.Find("SettingsUI");
-            if (tmp != null) ui_list[10] = tmp.GetComponent<RectTransform>();
-            if (ui_list[10] != null) ui_list[10].gameObject.SetActive(false);
+            FetchForIngame();
 
             // 체력과 아이템 UI 자식들 가져오기
             tmp = GameObject.Find("HPUI");
@@ -441,6 +327,7 @@ public class GameManager : MonoBehaviour
                     health_item = 0;
                     break;
                 default:
+                    Debug.LogError("Out of Diff!");
                     break;
             }
             tmp = GameObject.Find("ITEMUI");
@@ -450,6 +337,98 @@ public class GameManager : MonoBehaviour
             updateitemui();
             updateshoe();
         }
+    }
+
+    private void SwitchingSettingsOnDiff()
+    {
+        switch (diff)
+            {
+                case 1:
+                    health = 5;
+                    if (stage == 1) maxHealth = 5;
+                    if (stage == 1) health_item = 0;
+                    if (stage != 1) health = maxHealth;
+                    switch (stage)
+                    {
+                        case 1:
+                            req_key = 3;
+                            break;
+                        case 2:
+                            req_key = 5;
+                            break;
+                        case 3:
+                            req_key = 7;
+                            break;
+                        default:
+                            Debug.LogError("Out of StageNum!");
+                            break;
+                    }
+                    break;
+                case 2:
+                    health = 3;
+                    if (stage == 1) maxHealth = 3;
+                    if (stage == 1) health_item = 0;
+                    if (stage != 1) health = maxHealth;
+                    switch (stage)
+                    {
+                        case 1:
+                            req_key = 3;
+                            break;
+                        case 2:
+                            req_key = 5;
+                            break;
+                        case 3:
+                            req_key = 7;
+                            break;
+                        default:
+                            Debug.LogError("Out of StageNum!");
+                            break;
+                    }
+                    break;
+                case 3:
+                    health = 1;
+                    if (stage == 1) maxHealth = 1;
+                    if (stage == 1) health_item = 0;
+                    if (stage != 1) health = maxHealth;
+                    switch (stage)
+                    {
+                        case 1:
+                            req_key = 5;
+                            break;
+                        case 2:
+                            req_key = 7;
+                            break;
+                        case 3:
+                            req_key = 9;
+                            break;
+                        default:
+                            Debug.LogError("Out of StageNum!");
+                            break;
+                    }
+                    break;
+                default:
+                    Debug.LogError("Out of Diff!");
+                    break;
+            }
+    }
+
+    private void FetchForIngame()
+    {
+        tmp = GameObject.Find("MinigameManager");
+        if (tmp != null) mg = tmp.GetComponent<minigamemanager>();
+        tmp = GameObject.Find("ItemManager");
+        if (tmp != null) im = tmp.GetComponent<itemmanager>();
+        tmp = GameObject.Find("TIME");
+        if (tmp != null) tm = tmp.GetComponent<timer>();
+        tmp = GameObject.Find("Scanner");
+        if (tmp != null) sc = tmp.GetComponent<scanner>();
+        tmp = GameObject.Find("hintcount");
+        if (tmp != null) hint_count = tmp.GetComponent<TMP_Text>();
+        tmp = GameObject.Find("stagetext");
+        if (tmp != null) stagetext = tmp.GetComponent<TMP_Text>();
+        tmp = GameObject.Find("Player");
+        if (tmp != null) player = tmp.GetComponent<Transform>();
+        if (player != null) pc = player.GetComponent<playercontroller>();
     }
 
     // Start is called before the first frame update

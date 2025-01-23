@@ -11,7 +11,6 @@ public class submenuUI : MonoBehaviour
     public Button firstbutton;
     void Awake()
     {
-        //this.enabled = true;
         if (GameManager.Instance.is_running) firstbutton = GameObject.Find("RetButton").GetComponent<Button>();
         eventSystem = EventSystem.current;
     }
@@ -62,9 +61,9 @@ public class submenuUI : MonoBehaviour
     public void OnClickInfoButton()
     {
         audiomanager.Instance.menusfx.Play();
-        if (GameManager.Instance.ui_list[6] != null)
+        if (UIManager.Instance.UIList[7] != null)
         {
-            GameManager.Instance.ui_list[6].gameObject.SetActive(true);
+            UIManager.Instance.UIList[7].gameObject.SetActive(true);
         }
     }
 

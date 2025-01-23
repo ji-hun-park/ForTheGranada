@@ -56,10 +56,41 @@ public class UIManager : MonoBehaviour
         // MainMenu Scene
         if (!GameManager.Instance.is_running)
         {
-            FindUI("SettingsUI");
-            FindUI("LevelUI");
-            FindUI("MainMenuUI");
+            InitMainMenuUI();
         }
+        else
+        {
+            // Ingame Scene
+            if (GameManager.Instance.is_ingame)
+            {
+                InitIngameUI();
+            }
+        }
+    }
+
+    private void InitMainMenuUI()
+    {
+        FindUI("SettingsUI");
+        FindUI("LevelUI");
+        FindUI("MainMenuUI");
+    }
+
+    private void InitIngameUI()
+    {
+        // ui_list에 필요한 UI들 가져오기
+        FindUI("SettingsUI");
+        FindUI("PauseMenuUI");
+        FindUI("InGameUI");
+        FindUI("MiniGameUI");
+        if (UIList[3] != null) GameManager.Instance.mgui = UIList[3].GetComponent<minigameUI>();
+        FindUI("GRayout5X5");
+        FindUI("GRayout6X6");
+        FindUI("GRayout7X7");
+        FindUI("ChatUI");
+        FindUI("OverUI");
+        FindUI("PopupUI");
+        if (UIList[9] != null) GameManager.Instance.pu = UIList[9].GetComponent<popupUI>();
+        if (GameManager.Instance.pu != null) GameManager.Instance.pu.GetText();
     }
 
     private void FindUI(string UIName)
