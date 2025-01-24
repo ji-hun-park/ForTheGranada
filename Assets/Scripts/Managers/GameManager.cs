@@ -195,8 +195,8 @@ public class GameManager : MonoBehaviour
             if (item_list != null) speedcount = item_list[3].GetComponent<Image>();
 
             // 아이템 UI들 업데이트
-            updateshoe();
-            updateitemui();
+            UpdateShoe();
+            UpdateItemUI();
 
             // Find로 찾았으니 UI List들 다시 비활성화
             if (health_list != null) health_list[6].gameObject.SetActive(false);
@@ -304,8 +304,8 @@ public class GameManager : MonoBehaviour
             item_list = tmp.GetComponentsInChildren<RectTransform>();
             //스피드 카운트 렌더러
             if (item_list != null) speedcount = item_list[3].GetComponent<Image>();
-            updateitemui();
-            updateshoe();
+            UpdateItemUI();
+            UpdateShoe();
         }
     }
 
@@ -477,8 +477,8 @@ public class GameManager : MonoBehaviour
             }
 
             if (hint_count != null) hint_count.text = key + " / " + req_key;
-            if (health_list != null && health_list.Length != 0) updatehealth();
-            if (item_list != null && item_list.Length != 0) updateshoe();
+            if (health_list != null && health_list.Length != 0) UpdateHealth();
+            if (item_list != null && item_list.Length != 0) UpdateShoe();
             if (stagetext != null) stagetext.text = "S" + stage;
         }
 
@@ -490,7 +490,7 @@ public class GameManager : MonoBehaviour
                 ESCMenu();
             }
             
-            updatehealth();
+            UpdateHealth();
             if (boss_health <= 0) StartCoroutine(EndingCoroutine());
         }
         
@@ -697,7 +697,7 @@ public class GameManager : MonoBehaviour
         return itemnum;
     }
 
-    public void updatehealth()
+    public void UpdateHealth()
     {
         switch (health)
         {
@@ -779,7 +779,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void updateshoe()
+    public void UpdateShoe()
     {
         string spriteName = "Speed";
         spriteName += speed_item;
@@ -805,7 +805,7 @@ public class GameManager : MonoBehaviour
         else if (is_running)
         {
             //StartCoroutine(WaitPointSecond());
-            updatehealth();
+            UpdateHealth();
             audiomanager.Instance.ingamebgm.Stop();
             audiomanager.Instance.bossstagebgm.Stop();
             audiomanager.Instance.bossdash.Stop();
@@ -905,7 +905,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void updateitemui()
+    public void UpdateItemUI()
     {
         if (armor_item >= 1 && health_list != null) health_list[8].gameObject.SetActive(true); else health_list[8].gameObject.SetActive(false);
         if (is_ressurection && item_list != null) item_list[4].gameObject.SetActive(true); else item_list[4].gameObject.SetActive(false);

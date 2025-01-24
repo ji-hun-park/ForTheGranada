@@ -116,9 +116,9 @@ public class gamedata : MonoBehaviour
         if (PlayerPrefs.GetString("PR") == "True") GameManager.Instance.is_preview = true;
         if (PlayerPrefs.GetString("ST") == "True") GameManager.Instance.is_stealth = true;
 
-        GameManager.Instance.updatehealth();
+        GameManager.Instance.UpdateHealth();
         GameManager.Instance.SetItemIcon();
-        GameManager.Instance.updateitemui();
+        GameManager.Instance.UpdateItemUI();
 
         Debug.Log("load");
     }
