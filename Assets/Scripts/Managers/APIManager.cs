@@ -137,7 +137,7 @@ public class APIManager : MonoBehaviour
         {
             Debug.LogError("Error: " + request.error);
             Debug.LogError("Response: " + request.downloadHandler.text);
-            GameManager.Instance.mg.FailRequest();
+            MinigameManager.Instance.FailRequest();
             GameManager.Instance.is_catch = true;
             if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }
@@ -161,7 +161,7 @@ public class APIManager : MonoBehaviour
         else
         {
             Debug.LogError("Could not parse the response.");
-            GameManager.Instance.mg.FailRequest();
+            MinigameManager.Instance.FailRequest();
             GameManager.Instance.is_catch = true;
             if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }

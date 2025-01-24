@@ -1,8 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using System.Collections.Generic;
 
 public class ItemManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class ItemManager : MonoBehaviour
     private Item item;
     public Item Item { get { return item; } set { item = value; } }
     public List<Item> itemList;
+    public inneritem[] innerItems;
     
     void Awake()
     {
@@ -149,6 +151,118 @@ public class ItemManager : MonoBehaviour
                 GameManager.Instance.key++;
                 GameManager.Instance.key_item++;
             }
+        }
+    }
+    
+    public int SelectItem(int rannum1)
+    {
+        int itemNum = 10;
+
+        if (rannum1 >= 1 && rannum1 <= 50)
+        {
+            itemNum = 1;
+            //Debug.Log("체력 회복");
+        }
+        else if (rannum1 >= 51 && rannum1 <= 70)
+        {
+            itemNum = 2;
+            //Debug.Log("쉴드 획득");
+        }
+        else if (rannum1 >= 71 && rannum1 <= 81)
+        {
+            itemNum = 3;
+            //Debug.Log("이속 증가");
+        }
+        else if (rannum1 >= 82 && rannum1 <= 87)
+        {
+            itemNum = 0;
+            //Debug.Log("최대 체력 증가");
+        }
+        else if (rannum1 >= 88 && rannum1 <= 92)
+        {
+            itemNum = 5;
+            //Debug.Log("피격 시 이속 증가");
+        }
+        else if (rannum1 >= 93 && rannum1 <= 94)
+        {
+            itemNum = 6;
+            //Debug.Log("감지 시 이속 증가");
+        }
+        else if (rannum1 >= 95 && rannum1 <= 99)
+        {
+            itemNum = 7;
+            //Debug.Log("상자 투시");
+        }
+        else if (rannum1 == 100)
+        {
+            itemNum = 4;
+            //Debug.Log("부활 템 획득!");
+        }
+        else
+        {
+            Debug.LogError("Out of itemNum");
+        }
+
+        return itemNum;
+    }
+    
+    public void SetItems()
+    {
+        // 초기화 작업
+        for (int k = 0; k < innerItems.Length; k++)
+        {
+            innerItems[k].is_set = false;
+        }
+
+        // 열쇠를 미리 세팅
+        int[] rankey = MinigameManager.Instance.RanNumGenWithNum(GameManager.Instance.req_key, innerItems.Length);
+
+        foreach (int i in rankey)
+        {
+            innerItems[i].itemNumber = 8;
+            innerItems[i].is_set = true;
+        }
+
+        // 나머지 아이템 랜덤 세팅
+        for (int j = 0; j < innerItems.Length; j++)
+        {
+            if (!innerItems[j].is_set)
+            {
+                innerItems[j].itemNumber = SelectItem(UnityEngine.Random.Range(1, 101));
+                innerItems[j].is_set = true;
+            }
+        }
+    }
+
+    public void StartSetItmScr()
+    {
+        StartCoroutine(SetItemScripts());
+    }
+    
+    public void StartWaitFive()
+    {
+        StartCoroutine(WaitFiveSeconds());
+    }
+    
+    private IEnumerator SetItemScripts()
+    {
+        yield return new WaitForSeconds(1f);
+        // InnerItem 스크립트를 가진 모든 오브젝트 찾기
+        innerItems = FindObjectsOfType<inneritem>(true);
+        // 모든 상자에 키랑 아이템 할당
+        if (innerItems.Length >= GameManager.Instance.req_key) SetItems();
+    }
+    
+    private IEnumerator WaitFiveSeconds()
+    {
+        // 5초 기다리고 응답없으면 프리셋 적용
+        yield return new WaitForSeconds(5f);
+        if (!GameManager.Instance.is_catch)
+        {
+            Debug.Log("응답 너무 느림");
+            MinigameManager.Instance.FailRequest();
+            GameManager.Instance.is_catch = true;
+            if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }
     }
 }

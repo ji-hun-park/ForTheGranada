@@ -1081,12 +1081,12 @@ MonoBehaviour:
   speed_item: 0
   haste_item: 0
   preview_item: 0
-  ressurection_item: 0
+  resurrection_item: 0
   interactKey: 102
   _boss_health: 0
   diff: 0
   stage: 0
-  is_ressurection: 0
+  is_resurrection: 0
   is_attacked_speed: 0
   is_stealth: 0
   is_detected: 0
@@ -1107,17 +1107,14 @@ MonoBehaviour:
   mm: {fileID: 0}
   mg: {fileID: 0}
   mgui: {fileID: 0}
-  im: {fileID: 0}
-  tm: {fileID: 0}
   sc: {fileID: 0}
   pc: {fileID: 0}
   boscon: {fileID: 0}
   hint_count: {fileID: 0}
   stagetext: {fileID: 0}
-  speedcount: {fileID: 0}
   player: {fileID: 0}
   innerItems: []
-  health_list: []
+  healthList: []
   health_lose_list: []
   item_list: []
   ui_list: []
@@ -1141,6 +1138,7 @@ Transform:
   - {fileID: 1641681090}
   - {fileID: 180083601}
   - {fileID: 1412137877}
+  - {fileID: 1908223398}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &180083600
@@ -7607,6 +7605,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1908223397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1908223398}
+  - component: {fileID: 1908223399}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1908223398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908223397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 171053776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1908223399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908223397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02902f0b68bc0f4d9b09cf2aea1e23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList: []
 --- !u!1 &1954040506
 GameObject:
   m_ObjectHideFlags: 0

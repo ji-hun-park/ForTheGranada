@@ -1,10 +1,28 @@
-//using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
-public class minigamemanager : MonoBehaviour
+public class MinigameManager : MonoBehaviour
 {
+    // 싱글톤 패턴 적용
+    public static MinigameManager Instance;
+
+    private void Awake()
+    {
+        // Instance 존재 유무에 따라 게임 매니저 파괴 여부 정함
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 기존에 존재 안하면 이걸로 대체하고 파괴하지 않기
+        }
+        else
+        {
+            Destroy(gameObject); // 기존에 존재하면 자신파괴
+        }
+    }
+
     public int[] RanNumGen()
     {
         HashSet<int> uniqueNumbers = new HashSet<int>();
@@ -387,5 +405,20 @@ public class minigamemanager : MonoBehaviour
         img_list[100] = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
         return img_list;
+    }
+
+    public void StartSelInc()
+    {
+        StartCoroutine(SelectedIncurrect());
+    }
+    
+    private IEnumerator SelectedIncurrect()
+    {
+        GameManager.Instance.is_CoroutineRunning = true;
+        // 미니게임 오답 패널티
+        yield return new WaitForSeconds(5f);
+        GameManager.Instance.is_delay = false;
+        GameManager.Instance.is_CoroutineRunning = false;
+        Debug.Log("패널티 해제");
     }
 }

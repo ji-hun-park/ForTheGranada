@@ -78,7 +78,6 @@ public class GameManager : MonoBehaviour
     public itemboxcontroller currentbox;
     public popupUI pu;
     public mainmenuUI mm;
-    public minigamemanager mg;
     public minigameUI mgui;
     public scanner sc;
     public playercontroller pc;
@@ -129,9 +128,10 @@ public class GameManager : MonoBehaviour
         }
 
         interactKey = KeyCode.F;
-
         stealthTime = 0f;
-
+        is_attacked_speed = false;
+        is_preview = false;
+        
         if (keyBindings == null) keyBindings = new Dictionary<string, KeyCode>();
         if (keyDisplayTexts == null) keyDisplayTexts = new Dictionary<string, Text>();
     }
@@ -197,12 +197,12 @@ public class GameManager : MonoBehaviour
         is_minigame = false;
 
         // 미니게임용 이미지랑 보기 리스트 가져오기
-        if (spr_list.Length == 0) spr_list = mg.ImageSet();
-        if (ans_list.Length == 0) ans_list = mg.AnswerSet();
+        if (spr_list.Length == 0) spr_list = MinigameManager.Instance.ImageSet();
+        if (ans_list.Length == 0) ans_list = MinigameManager.Instance.AnswerSet();
 
         StartCoroutine(SetBorder());
-        StartCoroutine(SetItemScripts());
-        SetItemIcon();
+        ItemManager.Instance.StartSetItmScr();
+        UIManager.Instance.SetItemIcon();
     }
 
     private void InitBoss()
@@ -341,8 +341,6 @@ public class GameManager : MonoBehaviour
 
     private void FetchForIngame()
     {
-        tmp = GameObject.Find("MinigameManager");
-        if (tmp != null) mg = tmp.GetComponent<minigamemanager>();
         tmp = GameObject.Find("Scanner");
         if (tmp != null) sc = tmp.GetComponent<scanner>();
         tmp = GameObject.Find("hintcount");
@@ -357,13 +355,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    void Start()
-    {
-        Debug.Log("GameManager is initialized");
-        is_attacked_speed = false;
-        is_preview = false;
-    }
-    
     void Update()
     {
         if (health == 0 && (is_boss || is_ingame))
@@ -375,13 +366,13 @@ public class GameManager : MonoBehaviour
         {
             if (is_rannum)
             {
-                if (mg != null) rannum3 = mg.RanNumGen();
+                rannum3 = MinigameManager.Instance.RanNumGen();
                 is_rannum = false;
             }
 
             if (is_rannum2)
             {
-                if (mg != null) rannum3_2 = mg.RanNumGen();
+                rannum3_2 = MinigameManager.Instance.RanNumGen();
                 is_rannum2 = false;
                 if (mgui != null) mgui.UpdateMinigame();
             }
@@ -425,8 +416,8 @@ public class GameManager : MonoBehaviour
 
             if (is_delay && is_CoroutineRunning == false)
             {
-                StartCoroutine(SelectedIncurrect());
-                StartCoroutine(WaitFiveSecond());
+                MinigameManager.Instance.StartSelInc();
+                ItemManager.Instance.StartWaitFive();
             }
             
             UIManager.Instance.UpdateHealth();
@@ -575,81 +566,6 @@ public class GameManager : MonoBehaviour
             }
     }
 
-    private IEnumerator WaitFiveSecond()
-    {
-        // 5초 기다리고 응답없으면 프리셋 적용
-        yield return new WaitForSeconds(5f);
-        if (!is_catch)
-        {
-            Debug.Log("응답 너무 느림");
-            mg.FailRequest();
-            is_catch = true;
-            if (mgui != null) mgui.UpdateMinigame();
-        }
-    }
-
-    public IEnumerator SelectedIncurrect()
-    {
-        is_CoroutineRunning = true;
-        // 미니게임 오답 패널티
-        yield return new WaitForSeconds(5f);
-        is_delay = false;
-        is_CoroutineRunning = false;
-        Debug.Log("패널티 해제");
-    }
-
-    public int SelectItem(int rannum1)
-    {
-        int itemnum = 10;
-
-        if (rannum1 >= 1 && rannum1 <= 50)
-        {
-            itemnum = 1;
-            //Debug.Log("체력 회복");
-        }
-        else if (rannum1 >= 51 && rannum1 <= 70)
-        {
-            itemnum = 2;
-            //Debug.Log("쉴드 획득");
-        }
-        else if (rannum1 >= 71 && rannum1 <= 81)
-        {
-            itemnum = 3;
-            //Debug.Log("이속 증가");
-        }
-        else if (rannum1 >= 82 && rannum1 <= 87)
-        {
-            itemnum = 0;
-            //Debug.Log("최대 체력 증가");
-        }
-        else if (rannum1 >= 88 && rannum1 <= 92)
-        {
-            itemnum = 5;
-            //Debug.Log("피격 시 이속 증가");
-        }
-        else if (rannum1 >= 93 && rannum1 <= 94)
-        {
-            itemnum = 6;
-            //Debug.Log("감지 시 이속 증가");
-        }
-        else if (rannum1 >= 95 && rannum1 <= 99)
-        {
-            itemnum = 7;
-            //Debug.Log("상자 투시");
-        }
-        else if (rannum1 == 100)
-        {
-            itemnum = 4;
-            //Debug.Log("부활 템 획득!");
-        }
-        else
-        {
-            Debug.LogError("Out of ItemNum");
-        }
-        //im.getItem(im.itemlist[itemnum]);
-        return itemnum;
-    }
-
     // 보스 체력 비율 반환
     public float GetNormalizedHealth()
     {
@@ -697,15 +613,6 @@ public class GameManager : MonoBehaviour
         is_resurrection = false;
         UIManager.Instance.itemList[4].gameObject.SetActive(false);
     }
-    
-    public IEnumerator SetItemScripts()
-    {
-        yield return new WaitForSeconds(1f);
-        // InnerItem 스크립트를 가진 모든 오브젝트 찾기
-        innerItems = FindObjectsOfType<inneritem>(true);
-        // 모든 상자에 키랑 아이템 할당
-        if (innerItems.Length >= req_key) SetItems();
-    }
 
     public IEnumerator SetBorder()
     {
@@ -746,49 +653,6 @@ public class GameManager : MonoBehaviour
         else if (is_boss)
         {
             UIManager.Instance.UIList[4].gameObject.SetActive(false);
-        }
-    }
-
-    public void SetItems()
-    {
-        // 초기화 작업
-        for (int k = 0; k < innerItems.Length; k++)
-        {
-            innerItems[k].is_set = false;
-        }
-
-        // 열쇠를 미리 세팅
-        int[] rankey = mg.RanNumGenWithNum(req_key, innerItems.Length);
-
-        foreach (int i in rankey)
-        {
-            innerItems[i].itemNumber = 8;
-            innerItems[i].is_set = true;
-        }
-
-        // 나머지 아이템 랜덤 세팅
-        for (int j = 0; j < innerItems.Length; j++)
-        {
-            if (!innerItems[j].is_set)
-            {
-                innerItems[j].itemNumber = SelectItem(UnityEngine.Random.Range(1, 101));
-                innerItems[j].is_set = true;
-            }
-        }
-    }
-
-    public void SetItemIcon()
-    {
-        if (healthList != null && healthList.Length != 0)
-        {
-            if (armor_item >= 1) healthList[8].gameObject.SetActive(true);
-        }
-        if (item_list != null && item_list.Length != 0)
-        {
-            if (resurrection_item >= 1) item_list[4].gameObject.SetActive(true);
-            if (is_attacked_speed) item_list[5].gameObject.SetActive(true);
-            if (stealth_item >= 1) item_list[6].gameObject.SetActive(true);
-            if (preview_item >= 1) item_list[7].gameObject.SetActive(true);
         }
     }
 

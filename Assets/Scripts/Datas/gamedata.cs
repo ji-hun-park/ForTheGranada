@@ -117,7 +117,7 @@ public class gamedata : MonoBehaviour
         if (PlayerPrefs.GetString("ST") == "True") GameManager.Instance.is_stealth = true;
 
         UIManager.Instance.UpdateHealth();
-        GameManager.Instance.SetItemIcon();
+        UIManager.Instance.SetItemIcon();
         UIManager.Instance.UpdateItemUI();
 
         Debug.Log("load");

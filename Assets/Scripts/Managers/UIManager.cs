@@ -308,6 +308,21 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    public void SetItemIcon()
+    {
+        if (healthList != null && healthList.Count != 0)
+        {
+            if (GameManager.Instance.armor_item >= 1) healthList[8].gameObject.SetActive(true);
+        }
+        if (itemList != null && itemList.Count != 0)
+        {
+            if (GameManager.Instance.resurrection_item >= 1) itemList[4].gameObject.SetActive(true);
+            if (GameManager.Instance.is_attacked_speed) itemList[5].gameObject.SetActive(true);
+            if (GameManager.Instance.stealth_item >= 1) itemList[6].gameObject.SetActive(true);
+            if (GameManager.Instance.preview_item >= 1) itemList[7].gameObject.SetActive(true);
+        }
+    }
+    
     private void FindUI(string UIName)
     {
         Transform target = GameManager.Instance.FindChildByName(canvas.transform, UIName);
