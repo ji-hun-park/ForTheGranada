@@ -199,8 +199,7 @@ public class GameManager : MonoBehaviour
         // 미니게임용 이미지랑 보기 리스트 가져오기
         if (spr_list.Length == 0) spr_list = MinigameManager.Instance.ImageSet();
         if (ans_list.Length == 0) ans_list = MinigameManager.Instance.AnswerSet();
-
-        StartCoroutine(SetBorder());
+        
         ItemManager.Instance.StartSetItmScr();
         UIManager.Instance.SetItemIcon();
     }
@@ -561,17 +560,6 @@ public class GameManager : MonoBehaviour
         resurrection_item--;
         is_resurrection = false;
         UIManager.Instance.itemList[4].gameObject.SetActive(false);
-    }
-
-    public IEnumerator SetBorder()
-    {
-        yield return new WaitForSeconds(1f);
-        if (sc != null) sc.UpdateBorder();
-    }
-
-    public IEnumerator WaitPointSecond()
-    {
-        yield return new WaitForSeconds(0.5f);
     }
 
     public IEnumerator WaitThreeSecond()
