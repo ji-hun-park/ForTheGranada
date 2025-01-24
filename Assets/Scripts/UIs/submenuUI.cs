@@ -9,7 +9,6 @@ public class submenuUI : MonoBehaviour
     public Button firstbutton;
     void Awake()
     {
-        if (GameManager.Instance.is_running) firstbutton = GameObject.Find("RetButton").GetComponent<Button>();
         eventSystem = EventSystem.current;
     }
 
@@ -68,7 +67,7 @@ public class submenuUI : MonoBehaviour
     public void FBS()
     {
         // 버튼을 첫 번째 선택된 오브젝트로 설정
-        if (firstbutton != null) eventSystem.SetSelectedGameObject(firstbutton.gameObject);
+        if (firstbutton != null && GameManager.Instance.is_running) eventSystem.SetSelectedGameObject(firstbutton.gameObject);
     }
 
 }

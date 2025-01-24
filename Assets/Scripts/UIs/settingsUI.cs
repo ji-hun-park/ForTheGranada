@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class settingsUI : MonoBehaviour
 {
@@ -11,8 +8,6 @@ public class settingsUI : MonoBehaviour
     public Button firstbutton;
     void Awake()
     {
-        //this.enabled = true;
-        firstbutton = GameObject.Find("BakButton").GetComponent<Button>();
         eventSystem = EventSystem.current;
     }
 
@@ -23,23 +18,13 @@ public class settingsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        // ?��?�� 로드?�� ?�� ?���?
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
         // 버튼을 첫 번째 선택된 오브젝트로 설정
-        eventSystem.SetSelectedGameObject(firstbutton.gameObject);
+        if (eventSystem != null) eventSystem.SetSelectedGameObject(firstbutton.gameObject);
     }
 
     private void OnDisable()
     {
-        // ?�� 로드 ?��벤트 ?��?��
-        SceneManager.sceneLoaded -= OnSceneLoaded;
         ESC();
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        //GameManager.Instance.is_ingame = false;
     }
 
     public void ESC()

@@ -692,6 +692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912752074fb3cb74eb5643dae111d203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  check: {fileID: 0}
+  bgmsld: {fileID: 0}
 --- !u!1 &57702002
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,6 +2011,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!212 &160427345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2096,6 +2099,7 @@ MonoBehaviour:
   health: 0
   speed: 0
   originspeed: 3
+  tmpspeed: 0
   speed_for_boss_stage: 2
   maxHealth: 0
   armor: 0
@@ -2112,17 +2116,12 @@ MonoBehaviour:
   ressurection_item: 0
   interactKey: 102
   _boss_health: 0
-  _boss_max_health: 0
   diff: 0
   stage: 0
-  maxstage: 0
-  maxtokens: 5
-  promptmessage: "3\uAC1C\uC758 \uC774\uBBF8\uC9C0 \uACF5\uD1B5\uC810\uC744 \uB108\uBB34
-    \uD3EC\uAD04\uC801\uC774\uC9C0 \uC54A\uC740 \uB2E8\uC5B4\uB85C 1\uAC1C\uB9CC
-    \uCD9C\uB825\uD574"
-  APIResponse: 
   is_ressurection: 0
   is_attacked_speed: 0
+  is_stealth: 0
+  is_detected: 0
   is_preview: 0
   is_running: 0
   is_closebox: 0
@@ -2138,6 +2137,7 @@ MonoBehaviour:
   currentbox: {fileID: 0}
   pu: {fileID: 0}
   mg: {fileID: 0}
+  mgui: {fileID: 0}
   im: {fileID: 0}
   tm: {fileID: 0}
   sc: {fileID: 0}
@@ -2150,6 +2150,7 @@ MonoBehaviour:
   player: {fileID: 0}
   innerItems: []
   health_list: []
+  health_lose_list: []
   item_list: []
   ui_list: []
   rannum3: 
@@ -2367,6 +2368,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!1 &167526700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2705,7 +2707,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -580, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &204743450
 MonoBehaviour:
@@ -2931,9 +2933,9 @@ RectTransform:
   - {fileID: 891819154}
   m_Father: {fileID: 286335661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 340, y: -122.5}
   m_SizeDelta: {x: 300, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &209838453
@@ -3462,10 +3464,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!50 &260674455
 Rigidbody2D:
   serializedVersion: 5
@@ -3869,9 +3870,9 @@ RectTransform:
   - {fileID: 938823425}
   m_Father: {fileID: 286335661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 340, y: -227.5}
   m_SizeDelta: {x: 300, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &292208188
@@ -4657,7 +4658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &409049169
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4693,6 +4694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef2bada279171e40a5ecaf652a3d355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
+  firstbutton: {fileID: 0}
 --- !u!1 &412967364
 GameObject:
   m_ObjectHideFlags: 0
@@ -5343,10 +5346,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!50 &482092994
 Rigidbody2D:
   serializedVersion: 5
@@ -6444,10 +6446,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!114 &568801483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6622,6 +6623,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e7c061de3900440a4e8bf99cb00e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  check: {fileID: 0}
+  sfxsld: {fileID: 0}
 --- !u!1 &588941541
 GameObject:
   m_ObjectHideFlags: 0
@@ -7648,6 +7651,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!212 &708970499
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8397,7 +8401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &810416124
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8712,9 +8716,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 204743449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 110, y: -110}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848027756
@@ -9104,6 +9108,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!1 &864885261
 GameObject:
   m_ObjectHideFlags: 0
@@ -9340,10 +9345,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!50 &881836213
 Rigidbody2D:
   serializedVersion: 5
@@ -10652,10 +10656,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!114 &959204099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10850,10 +10853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!114 &962897559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12085,10 +12087,10 @@ RectTransform:
   - {fileID: 1972910745}
   m_Father: {fileID: 1561949524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 455, y: -35}
+  m_SizeDelta: {x: 300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1079604497
 MonoBehaviour:
@@ -12221,6 +12223,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!212 &1083258493
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12325,6 +12328,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!212 &1095388411
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12846,7 +12850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1183971646
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13688,9 +13692,9 @@ RectTransform:
   - {fileID: 856351456}
   m_Father: {fileID: 286335661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 340, y: -437.5}
   m_SizeDelta: {x: 300, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1254985372
@@ -14627,9 +14631,9 @@ RectTransform:
   - {fileID: 76815961}
   m_Father: {fileID: 286335661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 340, y: -332.5}
   m_SizeDelta: {x: 300, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1401770934
@@ -14992,10 +14996,10 @@ RectTransform:
   - {fileID: 104036366}
   m_Father: {fileID: 1561949524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 455, y: -110}
+  m_SizeDelta: {x: 300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1411132675
 MonoBehaviour:
@@ -16613,7 +16617,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 190}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -675, y: 145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1561949525
 MonoBehaviour:
@@ -16744,7 +16748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1574116639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16785,6 +16789,7 @@ MonoBehaviour:
   txt_list: []
   btn_list: []
   LLM: 0
+  eventSystem: {fileID: 0}
 --- !u!1 &1604093792
 GameObject:
   m_ObjectHideFlags: 0
@@ -16909,6 +16914,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!212 &1609173736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17460,6 +17466,7 @@ MonoBehaviour:
   item: {fileID: 0}
   SR: {fileID: 0}
   is_set: 0
+  isGet: 0
 --- !u!212 &1677187990
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17640,10 +17647,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!50 &1699880010
 Rigidbody2D:
   serializedVersion: 5
@@ -18046,6 +18052,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e82dfe857f0b9d7459a99f30fc7a41da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  check: {fileID: 0}
+  allsld: {fileID: 0}
 --- !u!1 &1752614027
 GameObject:
   m_ObjectHideFlags: 0
@@ -18080,10 +18088,10 @@ RectTransform:
   - {fileID: 2093047900}
   m_Father: {fileID: 1561949524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -110}
+  m_SizeDelta: {x: 300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1752614029
 MonoBehaviour:
@@ -18599,10 +18607,10 @@ RectTransform:
   - {fileID: 929892072}
   m_Father: {fileID: 1561949524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -35}
+  m_SizeDelta: {x: 300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1768021535
 MonoBehaviour:
@@ -19250,9 +19258,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 204743449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 590, y: -110}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854950130
@@ -20540,9 +20548,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 204743449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 350, y: -110}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2016745886
@@ -21021,10 +21029,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites: []
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: 5
 --- !u!114 &2030275767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21321,7 +21328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2058583134
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21456,6 +21463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ea335fe60d7f64086b46532ef61f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
+  firstbutton: {fileID: 0}
 --- !u!95 &2090171249
 Animator:
   serializedVersion: 7
@@ -21714,7 +21723,9 @@ MonoBehaviour:
   room_y: 0
   next_room_x: 0
   next_room_y: 0
+  pushed_force: 0
   minimap_name: 
+  is_door: 0
 --- !u!95 &2094673897
 Animator:
   serializedVersion: 7

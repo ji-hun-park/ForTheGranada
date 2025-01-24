@@ -4,12 +4,13 @@ using UnityEngine.UI;
 public class chatUI : MonoBehaviour
 {
     public string[] chats;
-    public int idx = 0;
+    public int idx;
     public Text txt;
     private const int MaxChats = 10;
 
     void Awake()
     {
+        idx = 0;
         txt = GameObject.Find("chat").GetComponent<Text>();
         SetChats();    
     }

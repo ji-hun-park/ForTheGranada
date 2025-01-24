@@ -205,13 +205,6 @@ public class GameManager : MonoBehaviour
             updateitemui();
 
             // Find로 찾았으니 UI List들 다시 비활성화
-            if (ui_list != null) ui_list[1].gameObject.SetActive(false);
-            if (ui_list != null) ui_list[2].gameObject.SetActive(false);
-            if (ui_list != null) ui_list[3].gameObject.SetActive(false);
-            if (ui_list != null) ui_list[4].gameObject.SetActive(false);
-            if (ui_list != null) ui_list[5].gameObject.SetActive(false);
-            if (ui_list != null) ui_list[6].gameObject.SetActive(false);
-            if (ui_list != null) ui_list[7].gameObject.SetActive(false);
             if (health_list != null) health_list[6].gameObject.SetActive(false);
             if (health_list != null) health_list[7].gameObject.SetActive(false);
             if (health_list != null) health_list[8].gameObject.SetActive(false);
@@ -447,7 +440,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (is_ingame == true)
+        if (is_ingame)
         {
             if (is_rannum)
             {
@@ -459,7 +452,7 @@ public class GameManager : MonoBehaviour
             {
                 if (mg != null) rannum3_2 = mg.RanNumGen();
                 is_rannum2 = false;
-                mgui.UpdateMinigame();
+                if (mgui != null) mgui.UpdateMinigame();
             }
 
             if (is_catch && ans_list != null && ans_list.Length != 0)
@@ -480,7 +473,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 // ESC 메뉴 여닫기
-                if (ui_list[2] != null)
+                if (UIManager.Instance.UIList[1] != null)
                 {
                     if (Time.timeScale == 1)
                     {
@@ -488,63 +481,17 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        if (!ui_list[1].gameObject.activeSelf) Time.timeScale = 1;
+                        if (!UIManager.Instance.UIList[0].gameObject.activeSelf) Time.timeScale = 1;
                     }
                     audiomanager.Instance.menusfx.Play();
-                    ui_list[2].gameObject.SetActive(!ui_list[2].gameObject.activeSelf);
+                    UIManager.Instance.UIList[1].gameObject.SetActive(!UIManager.Instance.UIList[1].gameObject.activeSelf);
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.M))
             {
                 // 레벨 및 난이도 별 표시할 맵
-                switch (diff)
-                {
-                    case 1:
-                        // 값1일 때 실행할 코드
-                        if (ui_list[3] != null && stage == 1)
-                        {
-                            ui_list[3].gameObject.SetActive(!ui_list[3].gameObject.activeSelf);
-                        }
-                        else if (ui_list[4] != null && stage == 2)
-                        {
-                            ui_list[4].gameObject.SetActive(!ui_list[4].gameObject.activeSelf);
-                        }
-                        else if (ui_list[5] != null && stage == 3)
-                        {
-                            ui_list[5].gameObject.SetActive(!ui_list[5].gameObject.activeSelf);
-                        }
-                        break;
-                    case 2:
-                        // 값2일 때 실행할 코드
-                        if (ui_list[3] != null && stage == 1)
-                        {
-                            ui_list[3].gameObject.SetActive(!ui_list[3].gameObject.activeSelf);
-                        }
-                        else if (ui_list[4] != null && stage == 2)
-                        {
-                            ui_list[4].gameObject.SetActive(!ui_list[4].gameObject.activeSelf);
-                        }
-                        else if (ui_list[5] != null && stage == 3)
-                        {
-                            ui_list[5].gameObject.SetActive(!ui_list[5].gameObject.activeSelf);
-                        }
-                        break;
-                    case 3:
-                        // 값3일 때 실행할 코드
-                        if (ui_list[4] != null && stage == 1)
-                        {
-                            ui_list[4].gameObject.SetActive(!ui_list[4].gameObject.activeSelf);
-                        }
-                        else if (ui_list[5] != null && stage >= 2)
-                        {
-                            ui_list[5].gameObject.SetActive(!ui_list[5].gameObject.activeSelf);
-                        }
-                        break;
-                    default:
-                        Debug.LogError("Out of Diff!");
-                        break;
-                }
+                MapSetOnDiff();
                 audiomanager.Instance.menusfx.Play();
             }
 
@@ -591,26 +538,6 @@ public class GameManager : MonoBehaviour
             updatehealth();
             if (boss_health <= 0) StartCoroutine(EndingCoroutine());
         }
-
-        /*if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (!is_ingame)
-            {
-                is_ingame = true;
-            }
-            if (is_boss)
-            {
-                is_boss = false;
-            }
-            is_running = true;
-            diff = 1;
-            stage = 1;
-            key = 0;
-            key_item = 0;
-            Time.timeScale = 1;
-            speed = originspeed;
-            SceneManager.LoadScene("Test");
-        }*/
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -683,26 +610,57 @@ public class GameManager : MonoBehaviour
             audiomanager.Instance.mainmenubgm.Stop();
             SceneManager.LoadScene("Stage_Boss");
         }
+    }
 
-        /*if (Input.GetKeyDown(KeyCode.U))
-        {
-            if (!is_ingame)
+    private void MapSetOnDiff()
+    {
+        switch (diff)
             {
-                is_ingame = true;
+                case 1:
+                    // 값1일 때 실행할 코드
+                    if (UIManager.Instance.UIList[4] != null && stage == 1)
+                    {
+                        UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[5] != null && stage == 2)
+                    {
+                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[6] != null && stage == 3)
+                    {
+                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
+                    }
+                    break;
+                case 2:
+                    // 값2일 때 실행할 코드
+                    if (UIManager.Instance.UIList[4] != null && stage == 1)
+                    {
+                        UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[5] != null && stage == 2)
+                    {
+                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[6] != null && stage == 3)
+                    {
+                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
+                    }
+                    break;
+                case 3:
+                    // 값3일 때 실행할 코드
+                    if (UIManager.Instance.UIList[5] != null && stage == 1)
+                    {
+                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[6] != null && stage >= 2)
+                    {
+                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
+                    }
+                    break;
+                default:
+                    Debug.LogError("Out of Diff!");
+                    break;
             }
-            if (is_boss)
-            {
-                is_boss = false;
-            }
-            is_running = true;
-            diff = 1;
-            stage = 1;
-            key = 0;
-            key_item = 0;
-            Time.timeScale = 1;
-            speed = originspeed;
-            SceneManager.LoadScene("PlayScene");
-        }*/
     }
 
     private IEnumerator WaitFiveSecond()

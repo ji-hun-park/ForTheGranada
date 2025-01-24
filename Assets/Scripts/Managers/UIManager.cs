@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -50,8 +51,22 @@ public class UIManager : MonoBehaviour
         // 씬이 초기화되면 로그 띄움
         Debug.Log($"Initializing scene(UI): {scene.name}");
         
-        canvas = GameObject.Find("Canvas");
+        StartCoroutine(FindCanvasAfterDelay());
+    }
+    
+    private IEnumerator FindCanvasAfterDelay()
+    {
+        yield return null; // 한 프레임 대기
         UIList.Clear();
+        canvas = FindObjectOfType<Canvas>().gameObject;
+        if (canvas != null)
+        {
+            Debug.Log($"Canvas Found: {canvas.name}");
+        }
+        else
+        {
+            Debug.Log("Canvas Not Found.");
+        }
         
         // MainMenu Scene
         if (!GameManager.Instance.is_running)

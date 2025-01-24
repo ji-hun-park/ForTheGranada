@@ -12,8 +12,6 @@ public class mainmenuUI : MonoBehaviour
 
     void Awake()
     {
-        //this.enabled = true;
-        firstbutton = GameObject.Find("NewButton").GetComponent<Button>();
         eventSystem = EventSystem.current;
         FBS();
     }

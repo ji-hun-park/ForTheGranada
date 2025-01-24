@@ -26,11 +26,11 @@ public class playercontroller : MonoBehaviour
     float player_x;//鮈�? ???鴔�?
     float player_y;//??��踝蕭??��踝蕭 ???鴔�?
 
-    bool isDead = false;
+    bool isDead;
     public bool is_door;
     bool is_horizon_move; //4방향 결정
     bool is_finish;
-    bool is_damaged = false;
+    bool is_damaged;
 
     private Vector2 externalVelocity = Vector2.zero; // 충돌로 인한 추가 속도 저장
     private float decayRate = 5f; // 충돌 효과 감소 속도
