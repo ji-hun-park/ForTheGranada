@@ -12,23 +12,22 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Settings")]
     public int health = 1;
-    public float speed = 0f;
-    public float originspeed = 0f;
-    public float tmpspeed = 0f;
-    public float speed_for_boss_stage = 0f;
+    public float speed;
+    private const float Originspeed = 4f;
+    public float tmpspeed;
     public int maxHealth = 10;
-    public int armor = 0;
-    public float stealthTime = 0f;
+    public int armor;
+    public float stealthTime;
     public int key;
     public int req_key;
-    public int health_item = 0;
-    public int armor_item = 0;
-    public int stealth_item = 0;
-    public int key_item = 0;
-    public int speed_item = 0;
-    public int haste_item = 0;
-    public int preview_item = 0;
-    public int ressurection_item = 0;
+    public int health_item ;
+    public int armor_item;
+    public int stealth_item;
+    public int key_item;
+    public int speed_item;
+    public int haste_item;
+    public int preview_item;
+    public int ressurection_item;
     public KeyCode interactKey = KeyCode.F;
 
     [Header("Game Settings")]
@@ -87,7 +86,6 @@ public class GameManager : MonoBehaviour
     public bosscontroller boscon;
     public TMP_Text hint_count;
     public TMP_Text stagetext;
-    //public Image keyimage;
     public Image speedcount;
     public Slider healthSlider;
     public Transform player;
@@ -163,11 +161,7 @@ public class GameManager : MonoBehaviour
     {
         // 씬이 초기화되면 로그 띄움
         Debug.Log($"Initializing scene: {scene.name}");
-
-        // 각 변수들 초기화
-        originspeed = 4f;
-        speed_for_boss_stage = 4f;
-
+        
         // MainMenu Scene
         if (!is_running)
         {
@@ -419,20 +413,21 @@ public class GameManager : MonoBehaviour
         if (tmp != null) hint_count = tmp.GetComponent<TMP_Text>();
         tmp = GameObject.Find("stagetext");
         if (tmp != null) stagetext = tmp.GetComponent<TMP_Text>();
-        tmp = GameObject.Find("Player");
-        if (tmp != null) player = tmp.GetComponent<Transform>();
-        if (player != null) pc = player.GetComponent<playercontroller>();
+        tmp = GameObject.FindGameObjectWithTag("Player");
+        if (tmp != null)
+        {
+            player = tmp.GetComponent<Transform>();
+            pc = tmp.GetComponent<playercontroller>();
+        }
     }
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         Debug.Log("GameManager is initialized");
         is_attacked_speed = false;
         is_preview = false;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (health == 0 && (is_boss || is_ingame))
@@ -473,19 +468,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 // ESC 메뉴 여닫기
-                if (UIManager.Instance.UIList[1] != null)
-                {
-                    if (Time.timeScale == 1)
-                    {
-                        Time.timeScale = 0;
-                    }
-                    else
-                    {
-                        if (!UIManager.Instance.UIList[0].gameObject.activeSelf) Time.timeScale = 1;
-                    }
-                    audiomanager.Instance.menusfx.Play();
-                    UIManager.Instance.UIList[1].gameObject.SetActive(!UIManager.Instance.UIList[1].gameObject.activeSelf);
-                }
+                ESCMenu();
             }
 
             if (Input.GetKeyDown(KeyCode.M))
@@ -521,97 +504,90 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 // ESC 메뉴 여닫기
-                if (ui_list[2] != null)
-                {
-                    if (Time.timeScale == 1)
-                    {
-                        Time.timeScale = 0;
-                    }
-                    else
-                    {
-                        Time.timeScale = 1;
-                    }
-                    audiomanager.Instance.menusfx.Play();
-                    ui_list[2].gameObject.SetActive(!ui_list[2].gameObject.activeSelf);
-                }
+                ESCMenu();
             }
+            
             updatehealth();
             if (boss_health <= 0) StartCoroutine(EndingCoroutine());
         }
+        
+        if (Input.GetKey(KeyCode.B) // 보스맵 테스트용
+        {
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                TestBoss(1);
+            }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            is_running = false;
-            is_ingame = false;
-            is_boss = false;
-            SceneManager.LoadScene("SampleScene");
-        }
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                TestBoss(2);
+            }
 
-        if (Input.GetKeyDown(KeyCode.B) && Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            if (is_ingame)
+            if (Input.GetKey(KeyCode.Alpha3))
             {
-                is_ingame = false;
+                TestBoss(3);
             }
-            if (!is_boss)
-            {
-                is_boss = true;
-            }
-            health = 5;
-            key = 0;
-            key_item = 0;
-            diff = 1;
-            stage = 4;
-            Time.timeScale = 1;
-            is_running = true;
-            speed = speed_for_boss_stage;
-            audiomanager.Instance.mainmenubgm.Stop();
-            SceneManager.LoadScene("Stage_Boss");
-        }
-        if (Input.GetKeyDown(KeyCode.B) && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (is_ingame)
-            {
-                is_ingame = false;
-            }
-            if (!is_boss)
-            {
-                is_boss = true;
-            }
-            health = 5;
-            key = 0;
-            key_item = 0;
-            diff = 2;
-            stage = 4;
-            Time.timeScale = 1;
-            is_running = true;
-            speed = speed_for_boss_stage;
-            audiomanager.Instance.mainmenubgm.Stop();
-            SceneManager.LoadScene("Stage_Boss");
-        }
-        if (Input.GetKeyDown(KeyCode.B) && Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (is_ingame)
-            {
-                is_ingame = false;
-            }
-            if (!is_boss)
-            {
-                is_boss = true;
-            }
-            health = 5;
-            key = 0;
-            key_item = 0;
-            diff = 3;
-            stage = 4;
-            Time.timeScale = 1;
-            is_running = true;
-            speed = speed_for_boss_stage;
-            audiomanager.Instance.mainmenubgm.Stop();
-            SceneManager.LoadScene("Stage_Boss");
         }
     }
 
+    private void TestBoss(int selectDiff)
+    {
+        if (is_ingame)
+        {
+            is_ingame = false;
+        }
+        
+        if (!is_boss)
+        {
+            is_boss = true;
+        }
+        
+        switch (selectDiff)
+        {
+            case 1:
+                health = 5;
+                diff = 1;
+                break;
+            case 2:
+                health = 3;
+                diff = 2;
+                break;
+            case 3:
+                health = 1;
+                diff = 3;
+                break;
+            default:
+                Debug.LogError("Out of Diff!");
+                break;
+        }
+        
+        key = 0;
+        key_item = 0;
+        stage = 4;
+        Time.timeScale = 1;
+        is_running = true;
+        speed = Originspeed;
+        audiomanager.Instance.mainmenubgm.Stop();
+        SceneManager.LoadScene("Stage_Boss");
+    }
+
+    private void ESCMenu()
+    {
+        if (UIManager.Instance.UIList[1] != null)
+        {
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                if (!UIManager.Instance.UIList[0].gameObject.activeSelf) Time.timeScale = 1;
+            }
+            audiomanager.Instance.menusfx.Play();
+            UIManager.Instance.UIList[1].gameObject.SetActive(!UIManager.Instance.UIList[1].gameObject.activeSelf);
+        }
+    }
+    
     private void MapSetOnDiff()
     {
         switch (diff)
