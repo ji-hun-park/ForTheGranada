@@ -1622,9 +1622,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 626299712}
-        m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
-        m_MethodName: GameLoad
+      - m_Target: {fileID: 1020116876}
+        m_TargetAssemblyTypeName: mainmenuUI, Assembly-CSharp
+        m_MethodName: OnClickLoadButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
