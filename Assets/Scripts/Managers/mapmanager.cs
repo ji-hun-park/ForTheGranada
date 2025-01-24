@@ -13,6 +13,9 @@ using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
+    // 싱글톤 패턴 적용
+    public static MapManager Instance;
+    
     [System.Serializable]
     public struct PrefabEntry
     {
@@ -20,7 +23,7 @@ public class MapManager : MonoBehaviour
         public GameObject prefab;
     }
     public int stage;
-    public int diff = 0;
+    public int diff;
     public Button button;
     public GameObject player;
     public GameObject[] prefabEntries;
@@ -31,15 +34,49 @@ public class MapManager : MonoBehaviour
     public int[] type_room_count = { 0, 5, 7, 9, 11 };
     public int[] type_room = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
-    bool isCreate = false;
+    bool isCreate;
     string minimap_name;
 
-    public void Start()
+    private void Awake()
     {
+        // Instance 존재 유무에 따라 게임 매니저 파괴 여부 정함
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 기존에 존재 안하면 이걸로 대체하고 파괴하지 않기
+        }
+        else
+        {
+            Destroy(gameObject); // 기존에 존재하면 자신파괴
+        }
+        queue_room = new Queue<GameObject>();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(InitMap());
+    }
+
+    private IEnumerator InitMap()
+    {
+        yield return null;
         stage = GameManager.Instance.stage;
         diff = GameManager.Instance.diff;
-        queue_room = new Queue<GameObject>();
-        CreateMap(stage);
+        player = GameManager.Instance.player.gameObject;
+        if (GameManager.Instance.is_ingame)
+        {
+            CreateMap(stage);
+        }
     }
 
     public void OnClick()
@@ -90,13 +127,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        /*if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameManager.Instance.is_ingame = false;
-            GameManager.Instance.is_boss = false;
-            GameManager.Instance.is_running = false;
-            SceneManager.LoadScene("MainMenuScene");
-        }*/
     }
     void CreateMap(int stage_num)
     {
@@ -219,12 +249,16 @@ public class MapManager : MonoBehaviour
             {
                 Debug.Log("start_room : " + x + " " + y);
                 image.color = Color.red;
-                player.transform.position = position;
-                playercontroller player_controller = player.GetComponent<playercontroller>();
-                player_controller.room_x = x;
-                player_controller.room_y = y;
-                player_controller.minimap_name = minimap_name + "/Image ";
-                player_controller.is_door = false;
+                if (player != null)
+                {
+                    player.transform.position = position;
+                    playercontroller player_controller = player.GetComponent<playercontroller>();
+                    player_controller.room_x = x;
+                    player_controller.room_y = y;
+                    player_controller.minimap_name = minimap_name + "/Image ";
+                    player_controller.is_door = false;
+                    GameManager.Instance.sc.UpdateBorder();
+                }
             }
             if (room == 12)
             {

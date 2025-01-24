@@ -323,6 +323,57 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    public void MapSetOnDiff()
+    {
+        switch (GameManager.Instance.diff)
+            {
+                case 1:
+                    // 쉬움 난이도일 때 실행할 코드
+                    if (UIManager.Instance.UIList[4] != null && GameManager.Instance.stage == 1)
+                    {
+                        UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[5] != null && GameManager.Instance.stage == 2)
+                    {
+                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[6] != null && GameManager.Instance.stage == 3)
+                    {
+                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
+                    }
+                    break;
+                case 2:
+                    // 보통 난이도일 때 실행할 코드
+                    if (UIManager.Instance.UIList[4] != null && GameManager.Instance.stage == 1)
+                    {
+                        UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[5] != null && GameManager.Instance.stage == 2)
+                    {
+                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[6] != null && GameManager.Instance.stage == 3)
+                    {
+                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
+                    }
+                    break;
+                case 3:
+                    // 도전 난이도일 때 실행할 코드
+                    if (UIManager.Instance.UIList[5] != null && GameManager.Instance.stage == 1)
+                    {
+                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
+                    }
+                    else if (UIManager.Instance.UIList[6] != null && GameManager.Instance.stage >= 2)
+                    {
+                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
+                    }
+                    break;
+                default:
+                    Debug.LogError("Out of Diff!");
+                    break;
+            }
+    }
+    
     private void FindUI(string UIName)
     {
         Transform target = GameManager.Instance.FindChildByName(canvas.transform, UIName);

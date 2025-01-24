@@ -181,6 +181,9 @@ public class GameManager : MonoBehaviour
 
     private void InitIngame()
     {
+        // 필요한 컴포넌트들 가져오기
+        FetchForIngame();
+        
         is_rannum = true;
         is_rannum2 = true;
         is_mgset = false;
@@ -188,9 +191,6 @@ public class GameManager : MonoBehaviour
 
         // 난이도 선택에 따라 게임 설정들 변경
         SwitchingSettingsOnDiff();
-
-        // 필요한 컴포넌트들 가져오기
-        FetchForIngame();
 
         // 시간 정상화, 미니게임 OFF
         Time.timeScale = 1;
@@ -401,7 +401,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.M))
             {
                 // 레벨 및 난이도 별 표시할 맵
-                MapSetOnDiff();
+                UIManager.Instance.MapSetOnDiff();
                 audiomanager.Instance.menusfx.Play();
             }
 
@@ -513,57 +513,6 @@ public class GameManager : MonoBehaviour
             audiomanager.Instance.menusfx.Play();
             UIManager.Instance.UIList[1].gameObject.SetActive(!UIManager.Instance.UIList[1].gameObject.activeSelf);
         }
-    }
-    
-    private void MapSetOnDiff()
-    {
-        switch (diff)
-            {
-                case 1:
-                    // 쉬움 난이도일 때 실행할 코드
-                    if (UIManager.Instance.UIList[4] != null && stage == 1)
-                    {
-                        UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
-                    }
-                    else if (UIManager.Instance.UIList[5] != null && stage == 2)
-                    {
-                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
-                    }
-                    else if (UIManager.Instance.UIList[6] != null && stage == 3)
-                    {
-                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
-                    }
-                    break;
-                case 2:
-                    // 보통 난이도일 때 실행할 코드
-                    if (UIManager.Instance.UIList[4] != null && stage == 1)
-                    {
-                        UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
-                    }
-                    else if (UIManager.Instance.UIList[5] != null && stage == 2)
-                    {
-                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
-                    }
-                    else if (UIManager.Instance.UIList[6] != null && stage == 3)
-                    {
-                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
-                    }
-                    break;
-                case 3:
-                    // 도전 난이도일 때 실행할 코드
-                    if (UIManager.Instance.UIList[5] != null && stage == 1)
-                    {
-                        UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
-                    }
-                    else if (UIManager.Instance.UIList[6] != null && stage >= 2)
-                    {
-                        UIManager.Instance.UIList[6].gameObject.SetActive(!UIManager.Instance.UIList[6].gameObject.activeSelf);
-                    }
-                    break;
-                default:
-                    Debug.LogError("Out of Diff!");
-                    break;
-            }
     }
 
     // 보스 체력 비율 반환
