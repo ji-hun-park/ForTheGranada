@@ -19,10 +19,10 @@ public class hidden : MonoBehaviour
         switch (Random.Range(1, 3))
         {
             case 1:
-                GameManager.Instance.im.getItem(GameManager.Instance.im.itemList[4]);
+                ItemManager.Instance.getItem(ItemManager.Instance.itemList[4]);
                 break;
             case 2:
-                GameManager.Instance.im.getItem(GameManager.Instance.im.itemList[6]);
+                ItemManager.Instance.getItem(ItemManager.Instance.itemList[6]);
                 break;
             default:
                 Debug.LogError("Out of ItemNum");

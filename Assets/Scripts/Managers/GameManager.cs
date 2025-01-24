@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
     public mainmenuUI mm;
     public minigamemanager mg;
     public minigameUI mgui;
-    public itemmanager im;
     public scanner sc;
     public playercontroller pc;
     public bosscontroller boscon;
@@ -344,8 +343,6 @@ public class GameManager : MonoBehaviour
     {
         tmp = GameObject.Find("MinigameManager");
         if (tmp != null) mg = tmp.GetComponent<minigamemanager>();
-        tmp = GameObject.Find("ItemManager");
-        if (tmp != null) im = tmp.GetComponent<itemmanager>();
         tmp = GameObject.Find("Scanner");
         if (tmp != null) sc = tmp.GetComponent<scanner>();
         tmp = GameObject.Find("hintcount");

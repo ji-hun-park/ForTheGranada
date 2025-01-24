@@ -47,7 +47,7 @@ public class inneritem : MonoBehaviour
         {
             //newPPU = 200f;
             //sprite.texture.filterMode = FilterMode.Point;
-            item = GameManager.Instance.im.itemList[itemNumber];
+            item = ItemManager.Instance.itemList[itemNumber];
             if (SR != null) SR.sprite = item.GetItemSprite;
             transform.localScale = new Vector3(0.1f, 0.1f, 1f); // ũ�� ����
         }
