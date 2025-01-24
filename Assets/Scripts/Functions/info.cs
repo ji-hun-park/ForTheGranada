@@ -3,13 +3,7 @@ using UnityEngine;
 public class info : MonoBehaviour
 {
     public bool is_inrange;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //
-    }
-
-    // Update is called once per frame
+    
     void Update()
     {
         InfoBoxInteraction();
@@ -22,7 +16,7 @@ public class info : MonoBehaviour
             if (Input.GetKeyDown(GameManager.Instance.interactKey))
             {
                 audiomanager.Instance.menusfx.Play();
-                GameManager.Instance.ui_list[6].gameObject.SetActive(true);
+                UIManager.Instance.UIList[7].gameObject.SetActive(true);
                 Time.timeScale = 0;
                 Debug.Log("Interactable");
             }

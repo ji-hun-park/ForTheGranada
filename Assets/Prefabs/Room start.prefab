@@ -13624,7 +13624,7 @@ GameObject:
   - component: {fileID: 1250256121199014542}
   m_Layer: 6
   m_Name: f
-  m_TagString: Chest
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -118,7 +118,7 @@ public class gamedata : MonoBehaviour
 
         GameManager.Instance.UpdateHealth();
         GameManager.Instance.SetItemIcon();
-        GameManager.Instance.UpdateItemUI();
+        UIManager.Instance.UpdateItemUI();
 
         Debug.Log("load");
     }

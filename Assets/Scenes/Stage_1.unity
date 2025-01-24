@@ -13081,7 +13081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 0}
-  firstbutton: {fileID: 0}
+  firstbutton: {fileID: 931335101}
 --- !u!1 &1474695198
 GameObject:
   m_ObjectHideFlags: 0
@@ -13446,7 +13446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ea335fe60d7f64086b46532ef61f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSystem: {fileID: 0}
+  eventSystem: {fileID: 670647464}
   firstbutton: {fileID: 1734364489}
 --- !u!95 &1493985095
 Animator:

@@ -11,8 +11,12 @@ public class UIManager : MonoBehaviour
     
     [SerializeField]private GameObject canvas;
     public Slider bossSlider;
+    public Image speedCount;
     
     public List<RectTransform> UIList;
+    public List<RectTransform> healthList;
+    public List<RectTransform> healthLoseList;
+    public List<RectTransform> itemList;
     
     void Awake()
     {
@@ -28,6 +32,9 @@ public class UIManager : MonoBehaviour
         }
         
         UIList = new List<RectTransform>();
+        healthList = new List<RectTransform>();
+        healthLoseList = new List<RectTransform>();
+        itemList = new List<RectTransform>();
     }
     
     private void OnEnable()
@@ -59,7 +66,9 @@ public class UIManager : MonoBehaviour
     private IEnumerator FindCanvasAfterDelay()
     {
         yield return null; // 한 프레임 대기
-        UIList.Clear();
+        
+        ClearList(); // 리스트들 초기화
+        
         canvas = FindObjectOfType<Canvas>().gameObject;
         if (canvas != null)
         {
@@ -91,6 +100,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void ClearList()
+    {
+        UIList.Clear();
+        healthList.Clear();
+        healthLoseList.Clear();
+        itemList.Clear();
+    }
+
     private void InitMainMenuUI()
     {
         FindUI("SettingsUI");
@@ -115,6 +132,20 @@ public class UIManager : MonoBehaviour
         FindUI("PopupUI");
         if (UIList[9] != null) GameManager.Instance.pu = UIList[9].GetComponent<popupUI>();
         if (GameManager.Instance.pu != null) GameManager.Instance.pu.GetText();
+        
+        // 체력과 아이템 UI 자식들 가져오기
+        FindUI("HPUI");
+        healthList.AddRange(UIList[10].GetComponentsInChildren<RectTransform>());
+        FindUI("LOSEHPUI");
+        healthLoseList.AddRange(UIList[11].GetComponentsInChildren<RectTransform>());
+        FindUI("ITEMUI");
+        itemList.AddRange(UIList[12].GetComponentsInChildren<RectTransform>());
+        //스피드 카운트 렌더러
+        if (itemList != null) speedCount = itemList[3].GetComponent<Image>();
+        
+        // 아이템 UI들 업데이트
+        UpdateShoe();
+        UpdateItemUI();
     }
 
     private void InitBossUI()
@@ -126,6 +157,20 @@ public class UIManager : MonoBehaviour
         FindUI("ChatUI");
         FindUI("OverUI");
         FindUI("EndingUI");
+        
+        // 체력과 아이템 UI 자식들 가져오기
+        FindUI("HPUI");
+        healthList.AddRange(UIList[6].GetComponentsInChildren<RectTransform>());
+        FindUI("LOSEHPUI");
+        healthLoseList.AddRange(UIList[7].GetComponentsInChildren<RectTransform>());
+        FindUI("ITEMUI");
+        itemList.AddRange(UIList[8].GetComponentsInChildren<RectTransform>());
+        //스피드 카운트 렌더러
+        if (itemList != null) speedCount = itemList[3].GetComponent<Image>();
+        
+        // 아이템 UI들 업데이트
+        UpdateShoe();
+        UpdateItemUI();
     }
     
     public void UpdateHealthSlider()
@@ -134,6 +179,22 @@ public class UIManager : MonoBehaviour
         {
             bossSlider.value = GameManager.Instance.GetNormalizedHealth();
         }
+    }
+    
+    public void UpdateShoe()
+    {
+        string spriteName = "Speed";
+        spriteName += GameManager.Instance.speed_item;
+        speedCount.sprite = Resources.Load<Sprite>(spriteName);
+    }
+    
+    public void UpdateItemUI()
+    {
+        if (GameManager.Instance.armor_item >= 1 && healthList != null) healthList[8].gameObject.SetActive(true); else healthList[8].gameObject.SetActive(false);
+        if (GameManager.Instance.is_ressurection && itemList != null) itemList[4].gameObject.SetActive(true); else itemList[4].gameObject.SetActive(false);
+        if (GameManager.Instance.is_attacked_speed && itemList != null) itemList[5].gameObject.SetActive(true); else itemList[5].gameObject.SetActive(false);
+        if (GameManager.Instance.is_stealth && itemList != null) itemList[6].gameObject.SetActive(true); else itemList[6].gameObject.SetActive(false);
+        if (GameManager.Instance.is_preview && itemList != null) itemList[7].gameObject.SetActive(true); else itemList[7].gameObject.SetActive(false);
     }
 
     private void FindUI(string UIName)

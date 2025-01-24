@@ -226,14 +226,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  isUse: 0
   ItemBoxSprites:
   - {fileID: -172131914, guid: 4ebcf0423bbbfbb469957387637cc8dd, type: 3}
   - {fileID: -1761907223, guid: 4ebcf0423bbbfbb469957387637cc8dd, type: 3}
   ii: {fileID: 0}
-  otherrb: {fileID: 0}
-  pushForce: {x: 0, y: 0, z: 0}
-  pushDirection: {x: 0, y: 0, z: 0}
-  V2: {x: 0, y: 0}
 --- !u!61 &3739809265489077590
 BoxCollider2D:
   m_ObjectHideFlags: 0

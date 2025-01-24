@@ -16,7 +16,8 @@ public class playercontroller : MonoBehaviour
     public string minimap_name;
     public Coroutine ASCoroutine;
     public Coroutine STCoroutine;
-
+    [SerializeField] private itemboxcontroller itembox; 
+    
     Rigidbody2D rigidbody2d;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -139,7 +140,7 @@ public class playercontroller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chest"))
         {
-            itemboxcontroller itembox = collision.gameObject.GetComponent<itemboxcontroller>();
+            itembox = collision.gameObject.GetComponent<itemboxcontroller>();
             if (itembox.isUse == false)
             {
                 Vector2 pushDirection = collision.contacts[0].point - (Vector2)transform.position;

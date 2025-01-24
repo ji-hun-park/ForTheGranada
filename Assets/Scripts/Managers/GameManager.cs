@@ -172,140 +172,129 @@ public class GameManager : MonoBehaviour
         if (is_ingame == true)
         {
             audiomanager.Instance.bossdash.Stop();
-            is_rannum = true;
-            is_rannum2 = true;
-            is_mgset = false;
-            StartCoroutine(ResetCoroutine());
-
-            // 난이도 선택에 따라 게임 설정들 변경
-            SwitchingSettingsOnDiff();
-
-            // 필요한 컴포넌트들 가져오기
-            FetchForIngame();
-
-            // 체력과 아이템 UI 자식들 가져오기
-            tmp = GameObject.Find("HPUI");
-            health_list = tmp.GetComponentsInChildren<RectTransform>();
-            tmp = GameObject.Find("LOSEHPUI");
-            health_lose_list = tmp.GetComponentsInChildren<RectTransform>();
-            tmp = GameObject.Find("ITEMUI");
-            item_list = tmp.GetComponentsInChildren<RectTransform>();
-
-            //스피드 카운트 렌더러
-            if (item_list != null) speedcount = item_list[3].GetComponent<Image>();
-
-            // 아이템 UI들 업데이트
-            UpdateShoe();
-            UpdateItemUI();
-
-            // Find로 찾았으니 UI List들 다시 비활성화
-            if (health_list != null) health_list[6].gameObject.SetActive(false);
-            if (health_list != null) health_list[7].gameObject.SetActive(false);
-            if (health_list != null) health_list[8].gameObject.SetActive(false);
-            if (health_lose_list != null)
-            {
-                for (int i = maxHealth + 1; i < health_lose_list.Length; i++)
-                {
-                    health_lose_list[i].gameObject.SetActive(false);
-                }
-            }
-            if (item_list != null) item_list[4].gameObject.SetActive(false);
-            if (item_list != null) item_list[5].gameObject.SetActive(false);
-            if (item_list != null) item_list[6].gameObject.SetActive(false);
-            if (item_list != null) item_list[7].gameObject.SetActive(false);
-
-            // 시간 정상화, 미니게임 OFF
-            Time.timeScale = 1;
-            is_minigame = false;
-
-            // 미니게임용 이미지랑 보기 리스트 가져오기
-            if (spr_list.Length == 0) spr_list = mg.ImageSet();
-            if (ans_list.Length == 0) ans_list = mg.AnswerSet();
-
-            StartCoroutine(SetBorder());
-            StartCoroutine(SetItemScripts());
-            SetItemIcon();
+            InitIngame();
         }
         // 보스전이면
         if (is_boss)
         {
             audiomanager.Instance.bossdash.Stop();
-            tmp = GameObject.FindGameObjectWithTag("Player");
-            if (tmp != null)
-            {
-                player = tmp.GetComponent<Transform>();
-                pc = tmp.GetComponent<playercontroller>();
-            }
-            tmp = GameObject.FindGameObjectWithTag("Boss");
-            if (tmp != null) boscon = tmp.GetComponent<bosscontroller>();
+            InitBoss();
+        }
+    }
 
-            // 블럭 수가 난이도가 이지면 18개, 노말이면 12개, 도전이면 6개
-            tmp = GameObject.Find("Block1_03");
-            if (tmp != null && diff == 3) tmp.SetActive(false);
-            tmp = GameObject.Find("Block1_04");
-            if (tmp != null && diff == 3) tmp.SetActive(false);
-            tmp = GameObject.Find("Block2_03");
-            if (tmp != null && diff == 3) tmp.SetActive(false);
-            tmp = GameObject.Find("Block2_04");
-            if (tmp != null && diff == 3) tmp.SetActive(false);
-            tmp = GameObject.Find("Block3_03");
-            if (tmp != null && diff == 3) tmp.SetActive(false);
-            tmp = GameObject.Find("Block3_04");
-            if (tmp != null && diff == 3) tmp.SetActive(false);
-            tmp = GameObject.Find("Block1_05");
-            if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-            tmp = GameObject.Find("Block1_06");
-            if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-            tmp = GameObject.Find("Block2_05");
-            if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-            tmp = GameObject.Find("Block2_06");
-            if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-            tmp = GameObject.Find("Block3_05");
-            if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-            tmp = GameObject.Find("Block3_06");
-            if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-            tmp = GameObject.Find("HPUI");
-            // 보스전용 체력UI
-            health_list = tmp.GetComponentsInChildren<RectTransform>();
-            tmp = GameObject.Find("LOSEHPUI");
-            health_lose_list = tmp.GetComponentsInChildren<RectTransform>();
-            armor = 0;
-            armor_item = 0;
-            if (health_lose_list != null)
+    private void InitIngame()
+    {
+        is_rannum = true;
+        is_rannum2 = true;
+        is_mgset = false;
+        StartCoroutine(ResetCoroutine());
+
+        // 난이도 선택에 따라 게임 설정들 변경
+        SwitchingSettingsOnDiff();
+
+        // 필요한 컴포넌트들 가져오기
+        FetchForIngame();
+
+        // Find로 찾았으니 UI List들 다시 비활성화
+        if (health_list != null) health_list[6].gameObject.SetActive(false);
+        if (health_list != null) health_list[7].gameObject.SetActive(false);
+        if (health_list != null) health_list[8].gameObject.SetActive(false);
+        if (health_lose_list != null)
+        {
+            for (int i = maxHealth + 1; i < health_lose_list.Length; i++)
             {
-                for (int i = maxHealth + 1; i < health_lose_list.Length; i++)
-                {
-                    health_lose_list[i].gameObject.SetActive(false);
-                }
+                health_lose_list[i].gameObject.SetActive(false);
             }
-            if (health_list != null && health_list.Length != 0 && armor == 0) health_list[8].gameObject.SetActive(false);
-            switch (diff)
+        }
+        if (item_list != null) item_list[4].gameObject.SetActive(false);
+        if (item_list != null) item_list[5].gameObject.SetActive(false);
+        if (item_list != null) item_list[6].gameObject.SetActive(false);
+        if (item_list != null) item_list[7].gameObject.SetActive(false);
+
+        // 시간 정상화, 미니게임 OFF
+        Time.timeScale = 1;
+        is_minigame = false;
+
+        // 미니게임용 이미지랑 보기 리스트 가져오기
+        if (spr_list.Length == 0) spr_list = mg.ImageSet();
+        if (ans_list.Length == 0) ans_list = mg.AnswerSet();
+
+        StartCoroutine(SetBorder());
+        StartCoroutine(SetItemScripts());
+        SetItemIcon();
+    }
+
+    private void InitBoss()
+    {
+        tmp = GameObject.FindGameObjectWithTag("Player");
+        if (tmp != null)
+        {
+            player = tmp.GetComponent<Transform>();
+            pc = tmp.GetComponent<playercontroller>();
+        }
+        tmp = GameObject.FindGameObjectWithTag("Boss");
+        if (tmp != null) boscon = tmp.GetComponent<bosscontroller>();
+
+        // 블럭 수가 난이도가 이지면 18개, 노말이면 12개, 도전이면 6개
+        tmp = GameObject.Find("Block1_03");
+        if (tmp != null && diff == 3) tmp.SetActive(false);
+        tmp = GameObject.Find("Block1_04");
+        if (tmp != null && diff == 3) tmp.SetActive(false);
+        tmp = GameObject.Find("Block2_03");
+        if (tmp != null && diff == 3) tmp.SetActive(false);
+        tmp = GameObject.Find("Block2_04");
+        if (tmp != null && diff == 3) tmp.SetActive(false);
+        tmp = GameObject.Find("Block3_03");
+        if (tmp != null && diff == 3) tmp.SetActive(false);
+        tmp = GameObject.Find("Block3_04");
+        if (tmp != null && diff == 3) tmp.SetActive(false);
+        tmp = GameObject.Find("Block1_05");
+        if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
+        tmp = GameObject.Find("Block1_06");
+        if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
+        tmp = GameObject.Find("Block2_05");
+        if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
+        tmp = GameObject.Find("Block2_06");
+        if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
+        tmp = GameObject.Find("Block3_05");
+        if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
+        tmp = GameObject.Find("Block3_06");
+        if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
+        tmp = GameObject.Find("HPUI");
+        // 보스전용 체력UI
+        health_list = tmp.GetComponentsInChildren<RectTransform>();
+        tmp = GameObject.Find("LOSEHPUI");
+        health_lose_list = tmp.GetComponentsInChildren<RectTransform>();
+        armor = 0;
+        armor_item = 0;
+        if (health_lose_list != null)
+        {
+            for (int i = maxHealth + 1; i < health_lose_list.Length; i++)
             {
-                case 1:
-                    health = 5;
-                    maxHealth = 5;
-                    health_item = 0;
-                    break;
-                case 2:
-                    health = 3;
-                    maxHealth = 3;
-                    health_item = 0;
-                    break;
-                case 3:
-                    health = 1;
-                    maxHealth = 1;
-                    health_item = 0;
-                    break;
-                default:
-                    Debug.LogError("Out of Diff!");
-                    break;
+                health_lose_list[i].gameObject.SetActive(false);
             }
-            tmp = GameObject.Find("ITEMUI");
-            item_list = tmp.GetComponentsInChildren<RectTransform>();
-            //스피드 카운트 렌더러
-            if (item_list != null) speedcount = item_list[3].GetComponent<Image>();
-            UpdateItemUI();
-            UpdateShoe();
+        }
+        if (health_list != null && health_list.Length != 0 && armor == 0) health_list[8].gameObject.SetActive(false);
+        switch (diff)
+        {
+            case 1:
+                health = 5;
+                maxHealth = 5;
+                health_item = 0;
+                break;
+            case 2:
+                health = 3;
+                maxHealth = 3;
+                health_item = 0;
+                break;
+            case 3:
+                health = 1;
+                maxHealth = 1;
+                health_item = 0;
+                break;
+            default:
+                Debug.LogError("Out of Diff!");
+                break;
         }
     }
 
@@ -478,7 +467,7 @@ public class GameManager : MonoBehaviour
 
             if (hint_count != null) hint_count.text = key + " / " + req_key;
             if (health_list != null && health_list.Length != 0) UpdateHealth();
-            if (item_list != null && item_list.Length != 0) UpdateShoe();
+            if (item_list != null && item_list.Length != 0) UIManager.Instance.UpdateShoe();
             if (stagetext != null) stagetext.text = "S" + stage;
         }
 
@@ -779,13 +768,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateShoe()
-    {
-        string spriteName = "Speed";
-        spriteName += speed_item;
-        speedcount.sprite = Resources.Load<Sprite>(spriteName);
-    }
-
     // 보스 체력 비율 반환
     public float GetNormalizedHealth()
     {
@@ -903,15 +885,6 @@ public class GameManager : MonoBehaviour
             if (stealth_item >= 1) item_list[6].gameObject.SetActive(true);
             if (preview_item >= 1) item_list[7].gameObject.SetActive(true);
         }
-    }
-
-    public void UpdateItemUI()
-    {
-        if (armor_item >= 1 && health_list != null) health_list[8].gameObject.SetActive(true); else health_list[8].gameObject.SetActive(false);
-        if (is_ressurection && item_list != null) item_list[4].gameObject.SetActive(true); else item_list[4].gameObject.SetActive(false);
-        if (is_attacked_speed && item_list != null) item_list[5].gameObject.SetActive(true); else item_list[5].gameObject.SetActive(false);
-        if (is_stealth && item_list != null) item_list[6].gameObject.SetActive(true); else item_list[6].gameObject.SetActive(false);
-        if (is_preview && item_list != null) item_list[7].gameObject.SetActive(true); else item_list[7].gameObject.SetActive(false);
     }
 
     public IEnumerator EndingCoroutine()
