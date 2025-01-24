@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     
     [SerializeField]private GameObject canvas;
-    public Slider healthSlider;
+    public Slider bossSlider;
     
     public List<RectTransform> UIList;
     
@@ -122,10 +122,18 @@ public class UIManager : MonoBehaviour
         FindUI("SettingsUI");
         FindUI("PauseMenuUI");
         FindUI("Slider");
-        if (UIList[2] != null) healthSlider = UIList[2].GetComponent<Slider>();
+        if (UIList[2] != null) bossSlider = UIList[2].GetComponent<Slider>();
         FindUI("ChatUI");
         FindUI("OverUI");
         FindUI("EndingUI");
+    }
+    
+    public void UpdateHealthSlider()
+    {
+        if (bossSlider != null)
+        {
+            bossSlider.value = GameManager.Instance.GetNormalizedHealth();
+        }
     }
 
     private void FindUI(string UIName)

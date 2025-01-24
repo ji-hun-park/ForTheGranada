@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
     public TMP_Text hint_count;
     public TMP_Text stagetext;
     public Image speedcount;
-    public Slider healthSlider;
     public Transform player;
     public inneritem[] innerItems;
     public RectTransform[] health_list;
@@ -918,7 +917,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator EndingCoroutine()
     {
         yield return new WaitForSeconds(1.2f);
-        ui_list[9].gameObject.SetActive(true);
+        UIManager.Instance.UIList[5].gameObject.SetActive(true);
         boss_health = 1;
         Debug.Log("Ending!");
     }

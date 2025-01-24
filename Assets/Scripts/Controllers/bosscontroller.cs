@@ -46,7 +46,7 @@ public class bosscontroller : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.boss_health = GameManager.Instance.boss_max_health; // 보스 최대 체력으로 현재 체력 초기화
-        UpdateHealthBar();
+        UIManager.Instance.UpdateHealthSlider();
         animator = GetComponent<Animator>(); // 애니메이터 세팅
         if (animator == null)
         {
@@ -211,8 +211,8 @@ public class bosscontroller : MonoBehaviour
             GameManager.Instance.boss_health = Mathf.Clamp(GameManager.Instance.boss_health, 0, GameManager.Instance.boss_max_health); // 체력이 0보다 작아지면 0으로 보정
 
             SetIdle(true); // 데미지 입으면 행동 중단
-            UpdateHealthBar(); // 체력바 UI 업데이트
-
+            UIManager.Instance.UpdateHealthSlider(); // 체력바 UI 업데이트
+            
             Debug.Log($"Boss took {damage} damage! Remaining health: {GameManager.Instance.boss_health}");
 
             if (GameManager.Instance.boss_health <= 0)
@@ -299,15 +299,6 @@ public class bosscontroller : MonoBehaviour
             }
         }
         currentCoroutine = null; // 코루틴이 끝난 후 null로 초기화
-    }
-
-    // 보스 체력바 UI 업데이트
-    private void UpdateHealthBar()
-    {
-        if (GameManager.Instance.healthSlider != null)
-        {
-            GameManager.Instance.healthSlider.value = GameManager.Instance.boss_health / GameManager.Instance.boss_max_health; // 0~1 정규화된 값으로 할당
-        }
     }
 
     public void Dash()
