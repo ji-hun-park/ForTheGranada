@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class npccontroller : MonoBehaviour
 {
-    Rigidbody2D rb;
     Animator animator;
 
     public bool isChasing = false;
@@ -11,18 +10,15 @@ public class npccontroller : MonoBehaviour
     public float currentSpeed;
     public float moveSpeed;
     public float chaseSpeed;
-
-
+    
     private int nextPoint = 0;
     private float distToPoint;
-
     private bool returnDefault = false;
 
     void Start()
     {
-        moveSpeed = GameManager.Instance.originspeed * 0.75f;
-        chaseSpeed = GameManager.Instance.diff == 1 ? GameManager.Instance.originspeed * 0.85f : GameManager.Instance.originspeed * 1f;
-        rb = GetComponent<Rigidbody2D>();
+        moveSpeed = GameManager.OriginSpeed * 0.75f;
+        chaseSpeed = GameManager.Instance.diff == 1 ? GameManager.OriginSpeed * 0.85f : GameManager.OriginSpeed * 1f;
         animator = GetComponent<Animator>();
         currentSpeed = moveSpeed;
     }

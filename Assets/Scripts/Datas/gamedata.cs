@@ -12,7 +12,6 @@ public class gamedata : MonoBehaviour
         {
             GameSave();
         }
-
     }
 
     public void GameSave()
@@ -83,7 +82,6 @@ public class gamedata : MonoBehaviour
         GameManager.Instance.health = PlayerPrefs.GetInt("Health");
         GameManager.Instance.armor = PlayerPrefs.GetInt("Armor");
         GameManager.Instance.speed = PlayerPrefs.GetFloat("Speed");
-        GameManager.Instance.originspeed = 4;
         SceneManager.LoadScene(stage_scene);
 
         GameManager.Instance.stealthTime = PlayerPrefs.GetInt("StealthTime");

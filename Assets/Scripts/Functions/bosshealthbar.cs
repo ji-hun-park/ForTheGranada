@@ -3,21 +3,21 @@ using UnityEngine.UI;
 
 public class bosshealthbar : MonoBehaviour
 {
-    [SerializeField] private Slider healthSlider; // Ã¼·Â ½½¶óÀÌ´õ
+    [SerializeField] private Slider healthSlider; // Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½
 
     public void Start()
     {
-        GameManager.Instance.speed = GameManager.Instance.speed_for_boss_stage;
+        GameManager.Instance.speed = GameManager.OriginSpeed;
         healthSlider = GetComponent<Slider>();
     }
 
-    // Ã¼·Â »óÅÂ ¾÷µ¥ÀÌÆ®
+    // Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public void Update()
     {
-        // °ÔÀÓ ¸Å´ÏÀú¿¡¼­ 0~1 »çÀÌÀÇ Ã¼·Â ºñÀ²°ªÀ» °¡Á®¿Í ½½¶óÀÌ´õ ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0~1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         if (healthSlider != null)
         {
-            healthSlider.value = GameManager.Instance.GetNormalizedHealth(); // 0~1 »çÀÌÀÇ °ªÀ¸·Î ½½¶óÀÌ´õ ¾÷µ¥ÀÌÆ®
+            healthSlider.value = GameManager.Instance.GetNormalizedHealth(); // 0~1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         }
     }
 }

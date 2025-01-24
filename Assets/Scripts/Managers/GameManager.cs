@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     public int health = 1;
     public float speed;
-    private const float Originspeed = 4f;
-    public float tmpspeed;
+    public const float OriginSpeed = 4f;
+    public float tmpSpeed;
     public int maxHealth = 10;
     public int armor;
     public float stealthTime;
@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
     private GameObject tmp;
     public itemboxcontroller currentbox;
     public popupUI pu;
+    public mainmenuUI mm;
     public minigamemanager mg;
     public minigameUI mgui;
     public itemmanager im;
@@ -511,7 +512,7 @@ public class GameManager : MonoBehaviour
             if (boss_health <= 0) StartCoroutine(EndingCoroutine());
         }
         
-        if (Input.GetKey(KeyCode.B) // 보스맵 테스트용
+        if (Input.GetKey(KeyCode.B)) // 보스맵 테스트용
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
@@ -566,7 +567,7 @@ public class GameManager : MonoBehaviour
         stage = 4;
         Time.timeScale = 1;
         is_running = true;
-        speed = Originspeed;
+        speed = OriginSpeed;
         audiomanager.Instance.mainmenubgm.Stop();
         SceneManager.LoadScene("Stage_Boss");
     }
@@ -947,19 +948,19 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ASCoroutine()
     {
-        tmpspeed = speed;
+        tmpSpeed = speed;
         speed *= 1.3f;
         yield return new WaitForSeconds(3f);
-        speed = tmpspeed;
+        speed = tmpSpeed;
         pc.ASCoroutine = null; // 코루틴이 끝난 후 null로 초기화
     }
 
     public IEnumerator STCoroutine()
     {
-        tmpspeed = speed;
+        tmpSpeed = speed;
         speed *= is_attacked_speed ? 1.3f : 1.2f;
         yield return new WaitForSeconds(1f);
-        speed = tmpspeed;
+        speed = tmpSpeed;
         pc.STCoroutine = null; // 코루틴이 끝난 후 null로 초기화
     }
     

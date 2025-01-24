@@ -88,6 +88,7 @@ public class UIManager : MonoBehaviour
         FindUI("SettingsUI");
         FindUI("LevelUI");
         FindUI("MainMenuUI");
+        if (UIList[2] != null) GameManager.Instance.mm = UIList[2].GetComponent<mainmenuUI>();
     }
 
     private void InitIngameUI()

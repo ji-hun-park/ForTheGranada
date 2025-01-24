@@ -50,7 +50,7 @@ public class stageclear : MonoBehaviour
                     GameManager.Instance.is_ingame = false;
                     GameManager.Instance.is_boss = true;
                     GameManager.Instance.stage++;
-                    GameManager.Instance.speed = GameManager.Instance.speed_for_boss_stage;
+                    GameManager.Instance.speed = GameManager.OriginSpeed;
                     SceneManager.LoadScene("Stage_Boss");
                     Debug.Log("Enter BossStage!");
                 }
