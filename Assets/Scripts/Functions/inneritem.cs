@@ -5,13 +5,13 @@ using System.Collections;
 
 public class inneritem : MonoBehaviour
 {
-    [SerializeField] private int Itemnumber;
-    public int itemnumber
+    [SerializeField] private int ItemNumber;
+    public int itemNumber
     {
-        get => Itemnumber;
+        get => ItemNumber;
         set
         {
-            Itemnumber = value;
+            ItemNumber = value;
         }
     }
 
@@ -26,7 +26,7 @@ public class inneritem : MonoBehaviour
 
     private void Awake()
     {
-        itemnumber = 10;
+        itemNumber = 10;
         SR = GetComponent<SpriteRenderer>();
         if (SR != null) originalColor = SR.color; // ���� ��
         darkenAmount = 0f; // ��Ӱ� �� ���� (0: ���� ��, 1: ������ ������, 0.5: �ݸ� ��ο���)
@@ -43,11 +43,11 @@ public class inneritem : MonoBehaviour
         {
             //Alpha0();
         }
-        if (is_set && itemnumber != 10)
+        if (is_set && itemNumber != 10)
         {
             //newPPU = 200f;
             //sprite.texture.filterMode = FilterMode.Point;
-            item = GameManager.Instance.im.itemlist[itemnumber];
+            item = GameManager.Instance.im.itemList[itemNumber];
             if (SR != null) SR.sprite = item.GetItemSprite;
             transform.localScale = new Vector3(0.1f, 0.1f, 1f); // ũ�� ����
         }

@@ -11,30 +11,18 @@ public class hidden : MonoBehaviour
 {
     public HiddenStatus mystatus;
     public Transform[] hiddendoor = new Transform[2];
-    public Item hiddenitem;
-    public bool is_used = false;
+    public Item hiddenItem;
+    public bool is_used;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void selecthiddenitem()
+    public void SelectHiddenItem()
     {
         switch (Random.Range(1, 3))
         {
             case 1:
-                GameManager.Instance.im.getItem(GameManager.Instance.im.itemlist[4]);
+                GameManager.Instance.im.getItem(GameManager.Instance.im.itemList[4]);
                 break;
             case 2:
-                GameManager.Instance.im.getItem(GameManager.Instance.im.itemlist[6]);
+                GameManager.Instance.im.getItem(GameManager.Instance.im.itemList[6]);
                 break;
             default:
                 Debug.LogError("Out of ItemNum");
@@ -85,7 +73,7 @@ public class hidden : MonoBehaviour
                 if (mystatus == HiddenStatus.Box)
                 {
                     Debug.Log("템 겟");
-                    if (!is_used) selecthiddenitem();
+                    if (!is_used) SelectHiddenItem();
                 }
             }
         }

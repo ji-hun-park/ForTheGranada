@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public int speed_item;
     public int haste_item;
     public int preview_item;
-    public int ressurection_item;
+    public int resurrection_item;
     public KeyCode interactKey = KeyCode.F;
 
     [Header("Game Settings")]
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     public const int MaxStage = 3;
 
     [Header("Flags")]
-    public bool is_ressurection;
+    public bool is_resurrection;
     public bool is_attacked_speed;
     public bool is_stealth;
     public bool is_detected;
@@ -532,7 +532,7 @@ public class GameManager : MonoBehaviour
         switch (diff)
             {
                 case 1:
-                    // 값1일 때 실행할 코드
+                    // 쉬움 난이도일 때 실행할 코드
                     if (UIManager.Instance.UIList[4] != null && stage == 1)
                     {
                         UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
@@ -547,7 +547,7 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 2:
-                    // 값2일 때 실행할 코드
+                    // 보통 난이도일 때 실행할 코드
                     if (UIManager.Instance.UIList[4] != null && stage == 1)
                     {
                         UIManager.Instance.UIList[4].gameObject.SetActive(!UIManager.Instance.UIList[4].gameObject.activeSelf);
@@ -562,7 +562,7 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 3:
-                    // 값3일 때 실행할 코드
+                    // 도전 난이도일 때 실행할 코드
                     if (UIManager.Instance.UIList[5] != null && stage == 1)
                     {
                         UIManager.Instance.UIList[5].gameObject.SetActive(!UIManager.Instance.UIList[5].gameObject.activeSelf);
@@ -663,13 +663,10 @@ public class GameManager : MonoBehaviour
     {
         if (!is_running) return;
         
-        if (is_ressurection)
+        if (is_resurrection)
         {
-            audiomanager.Instance.reserrection.Play();
-            health = 1;
-            ressurection_item--;
-            is_ressurection = false;
-            item_list[4].gameObject.SetActive(false);
+            // 부활템 사용
+            UseReserrectionItem();
         }
         else
         {
@@ -680,13 +677,30 @@ public class GameManager : MonoBehaviour
             audiomanager.Instance.gameover.Play();
             if (pc != null) pc.Dead();
             is_running = false;
-            is_ingame = false;
             Debug.Log("캐릭터 사망!");
-            if (UIManager.Instance.UIList[8]) UIManager.Instance.UIList[8].gameObject.SetActive(true);
+            // 게임 오버 UI 띄우기
+            if (is_ingame && UIManager.Instance.UIList[8] != null) // Normal
+            {
+                UIManager.Instance.UIList[8].gameObject.SetActive(true);
+            }
+            else if (is_boss && UIManager.Instance.UIList[4] != null) // Boss
+            {
+                UIManager.Instance.UIList[4].gameObject.SetActive(true);
+            }
             speed = 0;
             StartCoroutine(WaitThreeSecond());
         }
     }
+
+    private void UseReserrectionItem()
+    {
+        audiomanager.Instance.reserrection.Play();
+        health = 1;
+        resurrection_item--;
+        is_resurrection = false;
+        UIManager.Instance.itemList[4].gameObject.SetActive(false);
+    }
+    
     public IEnumerator SetItemScripts()
     {
         yield return new WaitForSeconds(1f);
@@ -713,10 +727,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         if (is_ingame)
         {
+            UIManager.Instance.UIList[8].gameObject.SetActive(false);
             is_ingame = false;
         }
         if (is_boss)
         {
+            UIManager.Instance.UIList[4].gameObject.SetActive(false);
             is_boss = false;
         }
         SceneManager.LoadScene("MainMenuScene");
@@ -726,7 +742,14 @@ public class GameManager : MonoBehaviour
     {
         // 3초 기다리기
         yield return new WaitForSeconds(3f);
-        ui_list[8].gameObject.SetActive(false);
+        if (is_ingame)
+        {
+            UIManager.Instance.UIList[8].gameObject.SetActive(false);
+        }
+        else if (is_boss)
+        {
+            UIManager.Instance.UIList[4].gameObject.SetActive(false);
+        }
     }
 
     public void SetItems()
@@ -742,7 +765,7 @@ public class GameManager : MonoBehaviour
 
         foreach (int i in rankey)
         {
-            innerItems[i].itemnumber = 8;
+            innerItems[i].itemNumber = 8;
             innerItems[i].is_set = true;
         }
 
@@ -751,7 +774,7 @@ public class GameManager : MonoBehaviour
         {
             if (!innerItems[j].is_set)
             {
-                innerItems[j].itemnumber = SelectItem(UnityEngine.Random.Range(1, 101));
+                innerItems[j].itemNumber = SelectItem(UnityEngine.Random.Range(1, 101));
                 innerItems[j].is_set = true;
             }
         }
@@ -765,7 +788,7 @@ public class GameManager : MonoBehaviour
         }
         if (item_list != null && item_list.Length != 0)
         {
-            if (ressurection_item >= 1) item_list[4].gameObject.SetActive(true);
+            if (resurrection_item >= 1) item_list[4].gameObject.SetActive(true);
             if (is_attacked_speed) item_list[5].gameObject.SetActive(true);
             if (stealth_item >= 1) item_list[6].gameObject.SetActive(true);
             if (preview_item >= 1) item_list[7].gameObject.SetActive(true);

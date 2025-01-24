@@ -95,13 +95,13 @@ public class diffselectUI : MonoBehaviour
     public void CleanItems()
     {
         GameManager.Instance.armor_item = 0;
-        GameManager.Instance.ressurection_item = 0;
+        GameManager.Instance.resurrection_item = 0;
         GameManager.Instance.preview_item = 0;
         GameManager.Instance.stealth_item = 0;
         GameManager.Instance.speed_item = 0;
         GameManager.Instance.haste_item = 0;
         GameManager.Instance.key_item = 0;
-        GameManager.Instance.is_ressurection = false;
+        GameManager.Instance.is_resurrection = false;
         GameManager.Instance.is_stealth = false;
         GameManager.Instance.is_preview = false;
         GameManager.Instance.is_attacked_speed = false;

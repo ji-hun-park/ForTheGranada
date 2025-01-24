@@ -29,9 +29,9 @@ public class gamedata : MonoBehaviour
         PlayerPrefs.SetInt("SpeedItem", GameManager.Instance.speed_item);
         PlayerPrefs.SetInt("HasteItem", GameManager.Instance.haste_item);
         PlayerPrefs.SetInt("PreviewItem", GameManager.Instance.preview_item);
-        PlayerPrefs.SetInt("RessurectionItem", GameManager.Instance.ressurection_item);
+        PlayerPrefs.SetInt("RessurectionItem", GameManager.Instance.resurrection_item);
         PlayerPrefs.SetString("AS", GameManager.Instance.is_attacked_speed ? "True" : "False");
-        PlayerPrefs.SetString("RS", GameManager.Instance.is_ressurection ? "True" : "False");
+        PlayerPrefs.SetString("RS", GameManager.Instance.is_resurrection ? "True" : "False");
         PlayerPrefs.SetString("PR", GameManager.Instance.is_preview ? "True" : "False");
         PlayerPrefs.SetString("ST", GameManager.Instance.is_stealth ? "True" : "False");
         PlayerPrefs.Save();
@@ -105,14 +105,14 @@ public class gamedata : MonoBehaviour
         {
             GameManager.Instance.is_preview = true;
         }
-        GameManager.Instance.ressurection_item = PlayerPrefs.GetInt("RessurectionItem");
-        if (GameManager.Instance.ressurection_item == 1)
+        GameManager.Instance.resurrection_item = PlayerPrefs.GetInt("RessurectionItem");
+        if (GameManager.Instance.resurrection_item == 1)
         {
-            GameManager.Instance.is_ressurection = true;
+            GameManager.Instance.is_resurrection = true;
         }
 
         if (PlayerPrefs.GetString("AS") == "True") GameManager.Instance.is_attacked_speed = true;
-        if (PlayerPrefs.GetString("RS") == "True") GameManager.Instance.is_ressurection = true;
+        if (PlayerPrefs.GetString("RS") == "True") GameManager.Instance.is_resurrection = true;
         if (PlayerPrefs.GetString("PR") == "True") GameManager.Instance.is_preview = true;
         if (PlayerPrefs.GetString("ST") == "True") GameManager.Instance.is_stealth = true;
 

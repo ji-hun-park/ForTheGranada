@@ -9,9 +9,8 @@ public class itemmanager : MonoBehaviour
     //[SerializeField]
     private Item item;
     public Item Item { get { return item; } set { item = value; } }
-    public List<Item> itemlist;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public List<Item> itemList;
+    
     void Awake()
     {
         /*
@@ -37,29 +36,23 @@ public class itemmanager : MonoBehaviour
         #endif
         */
         Item = Resources.Load<Item>("Health");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Heal");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Armor");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Speed");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Ressurection");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Under_damaged");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Detect");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Preview");
-        itemlist.Add(Item);
+        itemList.Add(Item);
         Item = Resources.Load<Item>("Key");
-        itemlist.Add(Item);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //
+        itemList.Add(Item);
     }
 
     public void getItem(Item item)
@@ -127,10 +120,10 @@ public class itemmanager : MonoBehaviour
         }
         else if (item.GetItemType == ItemType.Resurrection)
         {
-            if (item.GetItemID == 5 && GameManager.Instance.ressurection_item < item.GetNumNesting)//��Ȱ ������
+            if (item.GetItemID == 5 && GameManager.Instance.resurrection_item < item.GetNumNesting)//��Ȱ ������
             {
-                GameManager.Instance.is_ressurection = true;
-                GameManager.Instance.ressurection_item++;
+                GameManager.Instance.is_resurrection = true;
+                GameManager.Instance.resurrection_item++;
                 GameManager.Instance.item_list[4].gameObject.SetActive(true);
             }
         }

@@ -218,7 +218,7 @@ public class UIManager : MonoBehaviour
     public void UpdateItemUI()
     {
         if (GameManager.Instance.armor_item >= 1 && healthList != null) healthList[8].gameObject.SetActive(true); else healthList[8].gameObject.SetActive(false);
-        if (GameManager.Instance.is_ressurection && itemList != null) itemList[4].gameObject.SetActive(true); else itemList[4].gameObject.SetActive(false);
+        if (GameManager.Instance.is_resurrection && itemList != null) itemList[4].gameObject.SetActive(true); else itemList[4].gameObject.SetActive(false);
         if (GameManager.Instance.is_attacked_speed && itemList != null) itemList[5].gameObject.SetActive(true); else itemList[5].gameObject.SetActive(false);
         if (GameManager.Instance.is_stealth && itemList != null) itemList[6].gameObject.SetActive(true); else itemList[6].gameObject.SetActive(false);
         if (GameManager.Instance.is_preview && itemList != null) itemList[7].gameObject.SetActive(true); else itemList[7].gameObject.SetActive(false);
