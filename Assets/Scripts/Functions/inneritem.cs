@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using Unity.VisualScripting;
 using System.Collections;
 
 public class inneritem : MonoBehaviour
@@ -28,8 +26,8 @@ public class inneritem : MonoBehaviour
     {
         itemNumber = 10;
         SR = GetComponent<SpriteRenderer>();
-        if (SR != null) originalColor = SR.color; // ���� ��
-        darkenAmount = 0f; // ��Ӱ� �� ���� (0: ���� ��, 1: ������ ������, 0.5: �ݸ� ��ο���)
+        if (SR != null) originalColor = SR.color; 
+        darkenAmount = 0f; 
         Alpha0();
     }
 
@@ -39,17 +37,11 @@ public class inneritem : MonoBehaviour
         {
             Alpha255();
         }
-        else
-        {
-            //Alpha0();
-        }
         if (is_set && itemNumber != 10)
         {
-            //newPPU = 200f;
-            //sprite.texture.filterMode = FilterMode.Point;
             item = ItemManager.Instance.itemList[itemNumber];
             if (SR != null) SR.sprite = item.GetItemSprite;
-            transform.localScale = new Vector3(0.1f, 0.1f, 1f); // ũ�� ����
+            transform.localScale = new Vector3(0.1f, 0.1f, 1f); 
         }
         if (isGet) StartCoroutine(HIDEITEM());
     }
@@ -60,7 +52,7 @@ public class inneritem : MonoBehaviour
             originalColor.r * (1 - darkenAmount),
             originalColor.g * (1 - darkenAmount),
             originalColor.b * (1 - darkenAmount),
-            0 // ���İ� ����(originalColor.a)
+            0 
         );
         if (SR != null) SR.color = darkerColor;
     }
@@ -71,7 +63,7 @@ public class inneritem : MonoBehaviour
             originalColor.r * (1 - darkenAmount),
             originalColor.g * (1 - darkenAmount),
             originalColor.b * (1 - darkenAmount),
-            255 // ���İ� ����(originalColor.a)
+            255
             );
         if (SR != null) SR.color = darkerColor;
     }
@@ -81,9 +73,4 @@ public class inneritem : MonoBehaviour
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
     }
-
-    /*Color originalColor = spriteRenderer.color; // ���� ���� ��
-    float darkenFactor = 0.1f; // ��ο����� ���� (0: ���� ��, 1: ������ ������, 0.5: �ݸ� ��ο���)
-    Color darkerColor = Color.Lerp(originalColor, Color.black, darkenFactor); // ������ �ݸ� ��ο����� ��
-    spriteRenderer.color = darkerColor; // �� ����*/
 }

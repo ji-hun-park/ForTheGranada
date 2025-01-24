@@ -468,7 +468,21 @@ public class GameManager : MonoBehaviour
             is_boss = true;
         }
         
-        switch (selectDiff)
+        SelDiff(selectDiff); // 난이도에 따른 체력과 난도변수 조정
+        
+        key = 0;
+        key_item = 0;
+        stage = 4;
+        Time.timeScale = 1;
+        is_running = true;
+        speed = OriginSpeed;
+        audiomanager.Instance.mainmenubgm.Stop();
+        SceneManager.LoadScene("Stage_Boss");
+    }
+
+    private void SelDiff(int df)
+    {
+        switch (df)
         {
             case 1:
                 health = 5;
@@ -486,15 +500,6 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("Out of Diff!");
                 break;
         }
-        
-        key = 0;
-        key_item = 0;
-        stage = 4;
-        Time.timeScale = 1;
-        is_running = true;
-        speed = OriginSpeed;
-        audiomanager.Instance.mainmenubgm.Stop();
-        SceneManager.LoadScene("Stage_Boss");
     }
 
     private void ESCMenu()
@@ -514,12 +519,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // 보스 체력 비율 반환
-    public float GetNormalizedHealth()
-    {
-        return boss_health / boss_max_health;
-    }
-
     public void GameOver()
     {
         if (!is_running) return;
@@ -527,7 +526,7 @@ public class GameManager : MonoBehaviour
         if (is_resurrection)
         {
             // 부활템 사용
-            UseReserrectionItem();
+            ItemManager.Instance.UseReserrectionItem();
         }
         else
         {
@@ -551,15 +550,6 @@ public class GameManager : MonoBehaviour
             speed = 0;
             StartCoroutine(WaitThreeSecond());
         }
-    }
-
-    private void UseReserrectionItem()
-    {
-        audiomanager.Instance.reserrection.Play();
-        health = 1;
-        resurrection_item--;
-        is_resurrection = false;
-        UIManager.Instance.itemList[4].gameObject.SetActive(false);
     }
 
     public IEnumerator WaitThreeSecond()

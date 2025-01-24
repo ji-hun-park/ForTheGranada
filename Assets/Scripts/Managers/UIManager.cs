@@ -202,7 +202,7 @@ public class UIManager : MonoBehaviour
     {
         if (bossSlider != null)
         {
-            bossSlider.value = GameManager.Instance.GetNormalizedHealth();
+            bossSlider.value = GameManager.Instance.boss_health / GameManager.Instance.boss_max_health;;
         }
     }
     

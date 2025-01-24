@@ -265,4 +265,13 @@ public class ItemManager : MonoBehaviour
             if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }
     }
+    
+    public void UseReserrectionItem()
+    {
+        audiomanager.Instance.reserrection.Play();
+        GameManager.Instance.health = 1;
+        GameManager.Instance.resurrection_item--;
+        GameManager.Instance.is_resurrection = false;
+        UIManager.Instance.itemList[4].gameObject.SetActive(false);
+    }
 }
