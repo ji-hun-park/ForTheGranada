@@ -42,6 +42,12 @@ public class mainmenuUI : MonoBehaviour
         audiomanager.Instance.menusfx.Play();
         if (UIManager.Instance.UIList[1] != null) UIManager.Instance.UIList[1].gameObject.SetActive(true);
     }
+    
+    public void OnClickSettingSelectButton()
+    {
+        audiomanager.Instance.menusfx.Play();
+        if (UIManager.Instance.UIList[0] != null) UIManager.Instance.UIList[0].gameObject.SetActive(true);
+    }
 
     public void OnClickQuitButton()
     {

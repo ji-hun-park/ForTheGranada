@@ -122,7 +122,7 @@ public class itemmanager : MonoBehaviour
             {
                 GameManager.Instance.armor++;
                 GameManager.Instance.armor_item++;
-                GameManager.Instance.health_list[8].gameObject.SetActive(true);
+                UIManager.Instance.healthList[8].gameObject.SetActive(true);
             }
         }
         else if (item.GetItemType == ItemType.Resurrection)

@@ -29,16 +29,23 @@ public class settingsUI : MonoBehaviour
 
     public void ESC()
     {
-        if (UIManager.Instance.UIList[2] != null && !GameManager.Instance.is_running) UIManager.Instance.UIList[2].gameObject.GetComponent<mainmenuUI>().FBS();
-        if (UIManager.Instance.UIList[1] == null)
+        if (GameManager.Instance.is_running)
         {
-            return;
-        }
-        else if (GameManager.Instance.is_running)
-        {
+            if (UIManager.Instance.UIList[1] == null)
+            {
+                return;
+            }
+            
             UIManager.Instance.UIList[1].gameObject.GetComponent<submenuUI>().FBS();
         }
-        
-        if (UIManager.Instance.UIList[0] != null) UIManager.Instance.UIList[0].gameObject.SetActive(false);
+        else // MainMenuScene
+        {
+            if (UIManager.Instance.UIList[2] == null)
+            {
+                return;
+            }
+            
+            UIManager.Instance.UIList[2].gameObject.GetComponent<mainmenuUI>().FBS();
+        }
     }
 }

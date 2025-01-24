@@ -143,6 +143,22 @@ public class UIManager : MonoBehaviour
         //스피드 카운트 렌더러
         if (itemList != null) speedCount = itemList[3].GetComponent<Image>();
         
+        // Find로 찾았으니 UI List들 다시 비활성화
+        if (healthList != null) healthList[6].gameObject.SetActive(false);
+        if (healthList != null) healthList[7].gameObject.SetActive(false);
+        if (healthList != null) healthList[8].gameObject.SetActive(false);
+        if (healthLoseList != null)
+        {
+            for (int i = GameManager.Instance.maxHealth + 1; i < healthLoseList.Count; i++)
+            {
+                healthLoseList[i].gameObject.SetActive(false);
+            }
+        }
+        if (itemList != null) itemList[4].gameObject.SetActive(false);
+        if (itemList != null) itemList[5].gameObject.SetActive(false);
+        if (itemList != null) itemList[6].gameObject.SetActive(false);
+        if (itemList != null) itemList[7].gameObject.SetActive(false);
+        
         // 아이템 UI들 업데이트
         UpdateShoe();
         UpdateItemUI();
@@ -168,6 +184,15 @@ public class UIManager : MonoBehaviour
         //스피드 카운트 렌더러
         if (itemList != null) speedCount = itemList[3].GetComponent<Image>();
         
+        if (healthLoseList != null)
+        {
+            for (int i = GameManager.Instance.maxHealth + 1; i < healthLoseList.Count; i++)
+            {
+                healthLoseList[i].gameObject.SetActive(false);
+            }
+        }
+        if (healthList != null && healthList.Count != 0 && GameManager.Instance.armor == 0) healthList[8].gameObject.SetActive(false);
+        
         // 아이템 UI들 업데이트
         UpdateShoe();
         UpdateItemUI();
@@ -183,6 +208,8 @@ public class UIManager : MonoBehaviour
     
     public void UpdateShoe()
     {
+        if (itemList == null || itemList.Count == 0) return;
+        
         string spriteName = "Speed";
         spriteName += GameManager.Instance.speed_item;
         speedCount.sprite = Resources.Load<Sprite>(spriteName);
@@ -197,6 +224,90 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.is_preview && itemList != null) itemList[7].gameObject.SetActive(true); else itemList[7].gameObject.SetActive(false);
     }
 
+    public void UpdateHealth()
+    {
+        if (healthList == null || healthList.Count == 0) return;
+        
+        switch (GameManager.Instance.health)
+        {
+            case 0:
+                healthList[1].gameObject.SetActive(false);
+                healthList[2].gameObject.SetActive(false);
+                healthList[3].gameObject.SetActive(false);
+                healthList[4].gameObject.SetActive(false);
+                healthList[5].gameObject.SetActive(false);
+                healthList[6].gameObject.SetActive(false);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 1:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(false);
+                healthList[3].gameObject.SetActive(false);
+                healthList[4].gameObject.SetActive(false);
+                healthList[5].gameObject.SetActive(false);
+                healthList[6].gameObject.SetActive(false);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 2:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(true);
+                healthList[3].gameObject.SetActive(false);
+                healthList[4].gameObject.SetActive(false);
+                healthList[5].gameObject.SetActive(false);
+                healthList[6].gameObject.SetActive(false);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 3:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(true);
+                healthList[3].gameObject.SetActive(true);
+                healthList[4].gameObject.SetActive(false);
+                healthList[5].gameObject.SetActive(false);
+                healthList[6].gameObject.SetActive(false);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 4:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(true);
+                healthList[3].gameObject.SetActive(true);
+                healthList[4].gameObject.SetActive(true);
+                healthList[5].gameObject.SetActive(false);
+                healthList[6].gameObject.SetActive(false);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 5:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(true);
+                healthList[3].gameObject.SetActive(true);
+                healthList[4].gameObject.SetActive(true);
+                healthList[5].gameObject.SetActive(true);
+                healthList[6].gameObject.SetActive(false);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 6:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(true);
+                healthList[3].gameObject.SetActive(true);
+                healthList[4].gameObject.SetActive(true);
+                healthList[5].gameObject.SetActive(true);
+                healthList[6].gameObject.SetActive(true);
+                healthList[7].gameObject.SetActive(false);
+                break;
+            case 7:
+                healthList[1].gameObject.SetActive(true);
+                healthList[2].gameObject.SetActive(true);
+                healthList[3].gameObject.SetActive(true);
+                healthList[4].gameObject.SetActive(true);
+                healthList[5].gameObject.SetActive(true);
+                healthList[6].gameObject.SetActive(true);
+                healthList[7].gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogError("Out of Health!");
+                break;
+        }
+    }
+    
     private void FindUI(string UIName)
     {
         Transform target = GameManager.Instance.FindChildByName(canvas.transform, UIName);

@@ -1,38 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 public class timer : MonoBehaviour
 {
-    public TMP_Text timerText; // UI Text ������Ʈ�� ����
-    public float totalTime = 10f; // �� Ÿ�̸� �ð� (900��)
-    private float timeLeft; // ���� �ð�
-    //private bool is_Running = true; // Ÿ�̸� ���� (���� ������ ����)
+    public TMP_Text timerText;
+    public const float TotalTime = 900f;
+    private float timeLeft;
 
     public void Awake()
     {
-        timerText = this.transform.GetComponentInChildren<TMP_Text>();
-        totalTime = 900f;
-        timeLeft = totalTime; // �ʱ�ȭ
-    }
-
-    void Start()
-    {
-        //timeLeft = totalTime; // �ʱ�ȭ
-        //UpdateTimerText();
-    }
-
-    public void OnEnable()
-    {
-        //timeLeft = totalTime; // �ʱ�ȭ
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        //timeLeft = totalTime; // �ʱ�ȭ
+        timerText = transform.GetComponentInChildren<TMP_Text>();
+        timeLeft = TotalTime;
     }
 
     void Update()
@@ -49,19 +27,16 @@ public class timer : MonoBehaviour
         }
     }
 
-    // Ÿ�̸� ���߱�
     public void PauseTimer()
     {
         GameManager.Instance.is_running = false;
     }
 
-    // Ÿ�̸� �ٽ� �����ϱ�
     public void ResumeTimer()
     {
         GameManager.Instance.is_running = true;
     }
 
-    // ���� �ð��� �ؽ�Ʈ�� ������Ʈ
     private void UpdateTimerText()
     {
         int m, s, t;

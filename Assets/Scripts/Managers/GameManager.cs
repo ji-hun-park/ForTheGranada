@@ -49,8 +49,8 @@ public class GameManager : MonoBehaviour
         get { return _boss_max_health; }
     }
     
-    public int diff = 0;
-    public int stage = 0;
+    public int diff;
+    public int stage;
     public const int MaxStage = 3;
 
     [Header("Flags")]
@@ -60,18 +60,18 @@ public class GameManager : MonoBehaviour
     public bool is_detected;
     public bool is_preview;
     public bool is_running;
-    public bool is_closebox = false;
-    public bool is_minigame = false;
-    public bool is_delay = false;
-    public bool is_CoroutineRunning = false;
-    public bool is_mgset = false;
-    public bool is_catch = false;
-    public bool is_rannum = false;
-    public bool is_rannum2 = false;
+    public bool is_closebox;
+    public bool is_minigame;
+    public bool is_delay;
+    public bool is_CoroutineRunning;
+    public bool is_mgset;
+    public bool is_catch;
+    public bool is_rannum;
+    public bool is_rannum2;
     [SerializeField]
-    private bool _is_ingame = false;
+    private bool _is_ingame;
     [SerializeField]
-    private bool _is_boss = false;
+    private bool _is_boss;
 
     [Header("GetComponents")]
     private GameObject tmp;
@@ -81,16 +81,14 @@ public class GameManager : MonoBehaviour
     public minigamemanager mg;
     public minigameUI mgui;
     public itemmanager im;
-    public timer tm;
     public scanner sc;
     public playercontroller pc;
     public bosscontroller boscon;
     public TMP_Text hint_count;
     public TMP_Text stagetext;
-    public Image speedcount;
     public Transform player;
     public inneritem[] innerItems;
-    public RectTransform[] health_list;
+    public RectTransform[] healthList;
     public RectTransform[] health_lose_list;
     public RectTransform[] item_list;
     public RectTransform[] ui_list;
@@ -195,22 +193,6 @@ public class GameManager : MonoBehaviour
         // 필요한 컴포넌트들 가져오기
         FetchForIngame();
 
-        // Find로 찾았으니 UI List들 다시 비활성화
-        if (health_list != null) health_list[6].gameObject.SetActive(false);
-        if (health_list != null) health_list[7].gameObject.SetActive(false);
-        if (health_list != null) health_list[8].gameObject.SetActive(false);
-        if (health_lose_list != null)
-        {
-            for (int i = maxHealth + 1; i < health_lose_list.Length; i++)
-            {
-                health_lose_list[i].gameObject.SetActive(false);
-            }
-        }
-        if (item_list != null) item_list[4].gameObject.SetActive(false);
-        if (item_list != null) item_list[5].gameObject.SetActive(false);
-        if (item_list != null) item_list[6].gameObject.SetActive(false);
-        if (item_list != null) item_list[7].gameObject.SetActive(false);
-
         // 시간 정상화, 미니게임 OFF
         Time.timeScale = 1;
         is_minigame = false;
@@ -260,37 +242,24 @@ public class GameManager : MonoBehaviour
         if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
         tmp = GameObject.Find("Block3_06");
         if (tmp != null && (diff == 3 || diff == 2)) tmp.SetActive(false);
-        tmp = GameObject.Find("HPUI");
-        // 보스전용 체력UI
-        health_list = tmp.GetComponentsInChildren<RectTransform>();
-        tmp = GameObject.Find("LOSEHPUI");
-        health_lose_list = tmp.GetComponentsInChildren<RectTransform>();
+        
         armor = 0;
         armor_item = 0;
-        if (health_lose_list != null)
-        {
-            for (int i = maxHealth + 1; i < health_lose_list.Length; i++)
-            {
-                health_lose_list[i].gameObject.SetActive(false);
-            }
-        }
-        if (health_list != null && health_list.Length != 0 && armor == 0) health_list[8].gameObject.SetActive(false);
+        health_item = 0;
+        
         switch (diff)
         {
             case 1:
                 health = 5;
                 maxHealth = 5;
-                health_item = 0;
                 break;
             case 2:
                 health = 3;
                 maxHealth = 3;
-                health_item = 0;
                 break;
             case 3:
                 health = 1;
                 maxHealth = 1;
-                health_item = 0;
                 break;
             default:
                 Debug.LogError("Out of Diff!");
@@ -377,8 +346,6 @@ public class GameManager : MonoBehaviour
         if (tmp != null) mg = tmp.GetComponent<minigamemanager>();
         tmp = GameObject.Find("ItemManager");
         if (tmp != null) im = tmp.GetComponent<itemmanager>();
-        tmp = GameObject.Find("TIME");
-        if (tmp != null) tm = tmp.GetComponent<timer>();
         tmp = GameObject.Find("Scanner");
         if (tmp != null) sc = tmp.GetComponent<scanner>();
         tmp = GameObject.Find("hintcount");
@@ -450,7 +417,7 @@ public class GameManager : MonoBehaviour
                 audiomanager.Instance.menusfx.Play();
             }
 
-            if (is_closebox == true && is_delay == false && is_mgset == true && is_catch == true && !currentbox.isOpen && currentbox.ii.is_set)
+            if (is_closebox && is_delay == false && is_mgset && is_catch && !currentbox.isOpen && currentbox.ii.is_set)
             {
                 if (Input.GetKeyDown(interactKey))
                 {
@@ -464,10 +431,10 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(SelectedIncurrect());
                 StartCoroutine(WaitFiveSecond());
             }
-
+            
+            UIManager.Instance.UpdateHealth();
+            UIManager.Instance.UpdateShoe();
             if (hint_count != null) hint_count.text = key + " / " + req_key;
-            if (health_list != null && health_list.Length != 0) UpdateHealth();
-            if (item_list != null && item_list.Length != 0) UIManager.Instance.UpdateShoe();
             if (stagetext != null) stagetext.text = "S" + stage;
         }
 
@@ -479,7 +446,7 @@ public class GameManager : MonoBehaviour
                 ESCMenu();
             }
             
-            UpdateHealth();
+            UIManager.Instance.UpdateHealth();
             if (boss_health <= 0) StartCoroutine(EndingCoroutine());
         }
         
@@ -686,88 +653,6 @@ public class GameManager : MonoBehaviour
         return itemnum;
     }
 
-    public void UpdateHealth()
-    {
-        switch (health)
-        {
-            case 0:
-                health_list[1].gameObject.SetActive(false);
-                health_list[2].gameObject.SetActive(false);
-                health_list[3].gameObject.SetActive(false);
-                health_list[4].gameObject.SetActive(false);
-                health_list[5].gameObject.SetActive(false);
-                health_list[6].gameObject.SetActive(false);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 1:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(false);
-                health_list[3].gameObject.SetActive(false);
-                health_list[4].gameObject.SetActive(false);
-                health_list[5].gameObject.SetActive(false);
-                health_list[6].gameObject.SetActive(false);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 2:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(true);
-                health_list[3].gameObject.SetActive(false);
-                health_list[4].gameObject.SetActive(false);
-                health_list[5].gameObject.SetActive(false);
-                health_list[6].gameObject.SetActive(false);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 3:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(true);
-                health_list[3].gameObject.SetActive(true);
-                health_list[4].gameObject.SetActive(false);
-                health_list[5].gameObject.SetActive(false);
-                health_list[6].gameObject.SetActive(false);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 4:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(true);
-                health_list[3].gameObject.SetActive(true);
-                health_list[4].gameObject.SetActive(true);
-                health_list[5].gameObject.SetActive(false);
-                health_list[6].gameObject.SetActive(false);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 5:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(true);
-                health_list[3].gameObject.SetActive(true);
-                health_list[4].gameObject.SetActive(true);
-                health_list[5].gameObject.SetActive(true);
-                health_list[6].gameObject.SetActive(false);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 6:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(true);
-                health_list[3].gameObject.SetActive(true);
-                health_list[4].gameObject.SetActive(true);
-                health_list[5].gameObject.SetActive(true);
-                health_list[6].gameObject.SetActive(true);
-                health_list[7].gameObject.SetActive(false);
-                break;
-            case 7:
-                health_list[1].gameObject.SetActive(true);
-                health_list[2].gameObject.SetActive(true);
-                health_list[3].gameObject.SetActive(true);
-                health_list[4].gameObject.SetActive(true);
-                health_list[5].gameObject.SetActive(true);
-                health_list[6].gameObject.SetActive(true);
-                health_list[7].gameObject.SetActive(true);
-                break;
-            default:
-                Debug.LogError("Out of Health!");
-                break;
-        }
-    }
-
     // 보스 체력 비율 반환
     public float GetNormalizedHealth()
     {
@@ -776,6 +661,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (!is_running) return;
+        
         if (is_ressurection)
         {
             audiomanager.Instance.reserrection.Play();
@@ -784,10 +671,9 @@ public class GameManager : MonoBehaviour
             is_ressurection = false;
             item_list[4].gameObject.SetActive(false);
         }
-        else if (is_running)
+        else
         {
-            //StartCoroutine(WaitPointSecond());
-            UpdateHealth();
+            UIManager.Instance.UpdateHealth();
             audiomanager.Instance.ingamebgm.Stop();
             audiomanager.Instance.bossstagebgm.Stop();
             audiomanager.Instance.bossdash.Stop();
@@ -796,8 +682,7 @@ public class GameManager : MonoBehaviour
             is_running = false;
             is_ingame = false;
             Debug.Log("캐릭터 사망!");
-            if (ui_list != null && ui_list.Length != 0) ui_list[7].gameObject.SetActive(true);
-            //Time.timeScale = 0;
+            if (UIManager.Instance.UIList[8]) UIManager.Instance.UIList[8].gameObject.SetActive(true);
             speed = 0;
             StartCoroutine(WaitThreeSecond());
         }
@@ -874,9 +759,9 @@ public class GameManager : MonoBehaviour
 
     public void SetItemIcon()
     {
-        if (health_list != null && health_list.Length != 0)
+        if (healthList != null && healthList.Length != 0)
         {
-            if (armor_item >= 1) health_list[8].gameObject.SetActive(true);
+            if (armor_item >= 1) healthList[8].gameObject.SetActive(true);
         }
         if (item_list != null && item_list.Length != 0)
         {

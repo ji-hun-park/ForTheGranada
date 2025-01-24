@@ -209,7 +209,7 @@ public class playercontroller : MonoBehaviour
             {
                 GameManager.Instance.armor--;
                 GameManager.Instance.armor_item--;
-                GameManager.Instance.health_list[8].gameObject.SetActive(false);
+                UIManager.Instance.healthList[8].gameObject.SetActive(false);
             }
             else
             {
