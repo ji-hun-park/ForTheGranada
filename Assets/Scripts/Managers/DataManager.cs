@@ -1,11 +1,44 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class gamedata : MonoBehaviour
+public class DataManager : MonoBehaviour
 {
+    // 싱글톤 패턴 적용
+    public static DataManager Instance;
+    
     Scene current_scene;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
+    {
+        // Instance 존재 유무에 따라 게임 매니저 파괴 여부 정함
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 기존에 존재 안하면 이걸로 대체하고 파괴하지 않기
+        }
+        else
+        {
+            Destroy(gameObject); // 기존에 존재하면 자신파괴
+        }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SaveSettings();
+    }
+    
+    private void SaveSettings()
     {
         current_scene = SceneManager.GetActiveScene();
         if (current_scene.name != "MainMenuScene")
@@ -63,6 +96,7 @@ public class gamedata : MonoBehaviour
         else
         {
             stage_scene = "Stage_Boss";
+            GameManager.Instance.boss_health = GameManager.Instance.boss_max_health;
             if (GameManager.Instance.is_ingame)
             {
                 GameManager.Instance.is_ingame = false;

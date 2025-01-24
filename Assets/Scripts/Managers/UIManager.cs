@@ -217,11 +217,12 @@ public class UIManager : MonoBehaviour
     
     public void UpdateItemUI()
     {
-        if (GameManager.Instance.armor_item >= 1 && healthList != null) healthList[8].gameObject.SetActive(true); else healthList[8].gameObject.SetActive(false);
-        if (GameManager.Instance.is_resurrection && itemList != null) itemList[4].gameObject.SetActive(true); else itemList[4].gameObject.SetActive(false);
-        if (GameManager.Instance.is_attacked_speed && itemList != null) itemList[5].gameObject.SetActive(true); else itemList[5].gameObject.SetActive(false);
-        if (GameManager.Instance.is_stealth && itemList != null) itemList[6].gameObject.SetActive(true); else itemList[6].gameObject.SetActive(false);
-        if (GameManager.Instance.is_preview && itemList != null) itemList[7].gameObject.SetActive(true); else itemList[7].gameObject.SetActive(false);
+        if (healthList == null || healthList.Count == 0 || itemList == null || itemList.Count == 0) return;
+        if (GameManager.Instance.armor_item >= 1 && healthList[8] != null) healthList[8].gameObject.SetActive(true); else healthList[8].gameObject.SetActive(false);
+        if (GameManager.Instance.is_resurrection && itemList[4] != null) itemList[4].gameObject.SetActive(true); else itemList[4].gameObject.SetActive(false);
+        if (GameManager.Instance.is_attacked_speed && itemList[5] != null) itemList[5].gameObject.SetActive(true); else itemList[5].gameObject.SetActive(false);
+        if (GameManager.Instance.is_stealth && itemList[6] != null) itemList[6].gameObject.SetActive(true); else itemList[6].gameObject.SetActive(false);
+        if (GameManager.Instance.is_preview && itemList[7] != null) itemList[7].gameObject.SetActive(true); else itemList[7].gameObject.SetActive(false);
     }
 
     public void UpdateHealth()

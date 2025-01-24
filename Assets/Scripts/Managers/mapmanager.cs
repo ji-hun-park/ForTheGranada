@@ -72,9 +72,10 @@ public class MapManager : MonoBehaviour
         yield return null;
         stage = GameManager.Instance.stage;
         diff = GameManager.Instance.diff;
-        player = GameManager.Instance.player.gameObject;
+        
         if (GameManager.Instance.is_ingame)
         {
+            player = GameManager.Instance.player.gameObject;
             CreateMap(stage);
         }
     }
