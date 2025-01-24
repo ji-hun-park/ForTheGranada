@@ -94,8 +94,8 @@ public class itemmanager : MonoBehaviour
             if (item.GetItemID == 4 && GameManager.Instance.speed_item < item.GetNumNesting)//�ӵ� ������
             {
                 GameManager.Instance.speed_item++;
-                GameManager.Instance.speed = GameManager.Instance.originspeed * (1f + (0.1f * GameManager.Instance.speed_item));
-                GameManager.Instance.tmpspeed = GameManager.Instance.speed;
+                GameManager.Instance.speed = GameManager.OriginSpeed * (1f + (0.1f * GameManager.Instance.speed_item));
+                GameManager.Instance.tmpSpeed = GameManager.Instance.speed;
             }
             else if (item.GetItemID == 6 && GameManager.Instance.haste_item < item.GetNumNesting)//�ǰ� ������
             {

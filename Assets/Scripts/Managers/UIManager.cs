@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     
     [SerializeField]private GameObject canvas;
+    public Slider healthSlider;
     
     public List<RectTransform> UIList;
     
@@ -80,6 +82,12 @@ public class UIManager : MonoBehaviour
             {
                 InitIngameUI();
             }
+            
+            // Boss Scene
+            if (GameManager.Instance.is_boss)
+            {
+                InitBossUI();
+            }
         }
     }
 
@@ -107,6 +115,17 @@ public class UIManager : MonoBehaviour
         FindUI("PopupUI");
         if (UIList[9] != null) GameManager.Instance.pu = UIList[9].GetComponent<popupUI>();
         if (GameManager.Instance.pu != null) GameManager.Instance.pu.GetText();
+    }
+
+    private void InitBossUI()
+    {
+        FindUI("SettingsUI");
+        FindUI("PauseMenuUI");
+        FindUI("Slider");
+        if (UIList[2] != null) healthSlider = UIList[2].GetComponent<Slider>();
+        FindUI("ChatUI");
+        FindUI("OverUI");
+        FindUI("EndingUI");
     }
 
     private void FindUI(string UIName)

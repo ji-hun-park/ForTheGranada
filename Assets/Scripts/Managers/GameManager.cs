@@ -231,31 +231,14 @@ public class GameManager : MonoBehaviour
         if (is_boss)
         {
             audiomanager.Instance.bossdash.Stop();
-            tmp = GameObject.Find("Player");
-            if (tmp != null) player = tmp.GetComponent<Transform>();
-            if (player != null) pc = player.GetComponent<playercontroller>();
-            tmp = GameObject.Find("Slider");
-            if (tmp != null) healthSlider = tmp.GetComponent<Slider>();
-            tmp = GameObject.Find("BOSS");
+            tmp = GameObject.FindGameObjectWithTag("Player");
+            if (tmp != null)
+            {
+                player = tmp.GetComponent<Transform>();
+                pc = tmp.GetComponent<playercontroller>();
+            }
+            tmp = GameObject.FindGameObjectWithTag("Boss");
             if (tmp != null) boscon = tmp.GetComponent<bosscontroller>();
-            ui_list = new RectTransform[11];
-            tmp = GameObject.Find("PauseMenuUI");
-            if (tmp != null) ui_list[2] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("ChatUI");
-            if (tmp != null) ui_list[6] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("OverUI");
-            if (tmp != null) ui_list[7] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("EndingUI");
-            if (tmp != null) ui_list[9] = tmp.GetComponent<RectTransform>();
-            tmp = GameObject.Find("SettingsUI");
-            if (tmp != null) ui_list[10] = tmp.GetComponent<RectTransform>();
-
-            // UI 찾은 후 비활성화
-            if (ui_list[10] != null) ui_list[10].gameObject.SetActive(false);
-            if (ui_list[2] != null) ui_list[2].gameObject.SetActive(false);
-            if (ui_list[6] != null) ui_list[6].gameObject.SetActive(false);
-            if (ui_list[7] != null) ui_list[7].gameObject.SetActive(false);
-            if (ui_list[9] != null) ui_list[9].gameObject.SetActive(false);
 
             // 블럭 수가 난이도가 이지면 18개, 노말이면 12개, 도전이면 6개
             tmp = GameObject.Find("Block1_03");
