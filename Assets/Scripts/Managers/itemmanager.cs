@@ -84,6 +84,14 @@ public class ItemManager : MonoBehaviour
         OnMapCreated.AddListener(SetItemScripts);
     }
 
+    void OnDestroy()
+    {
+        if (OnMapCreated != null)
+        {
+            OnMapCreated.RemoveAllListeners(); // 모든 구독 해제
+        }
+    }
+
     public void getItem(Item item)
     {
         audiomanager.Instance.getitem.Play();
