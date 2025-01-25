@@ -85,11 +85,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text hint_count;
     public TMP_Text stagetext;
     public Transform player;
-    public inneritem[] innerItems;
-    public RectTransform[] healthList;
-    public RectTransform[] health_lose_list;
-    public RectTransform[] item_list;
-    public RectTransform[] ui_list;
+    
+    [Header("Lists")]
     public int[] rannum3;
     public int[] rannum3_2;
     public Sprite[] spr_list;
@@ -200,7 +197,6 @@ public class GameManager : MonoBehaviour
         if (spr_list.Length == 0) spr_list = MinigameManager.Instance.ImageSet();
         if (ans_list.Length == 0) ans_list = MinigameManager.Instance.AnswerSet();
         
-        ItemManager.Instance.StartSetItmScr();
         UIManager.Instance.SetItemIcon();
     }
 
@@ -409,7 +405,7 @@ public class GameManager : MonoBehaviour
                 if (Input.GetKeyDown(interactKey))
                 {
                     audiomanager.Instance.menusfx.Play();
-                    ui_list[1].gameObject.SetActive(true);
+                    UIManager.Instance.UIList[3].gameObject.SetActive(true);
                 }
             }
 

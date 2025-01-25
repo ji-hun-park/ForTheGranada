@@ -27,16 +27,6 @@ public class timer : MonoBehaviour
         }
     }
 
-    public void PauseTimer()
-    {
-        GameManager.Instance.is_running = false;
-    }
-
-    public void ResumeTimer()
-    {
-        GameManager.Instance.is_running = true;
-    }
-
     private void UpdateTimerText()
     {
         int m, s, t;
@@ -66,7 +56,7 @@ public class timer : MonoBehaviour
         GameManager.Instance.is_running = false;
         GameManager.Instance.is_ingame = false;
         Debug.Log("Time Out!");
-        GameManager.Instance.ui_list[7].gameObject.SetActive(true);
+        UIManager.Instance.UIList[8].gameObject.SetActive(true);
         //Time.timeScale = 0;
         GameManager.Instance.speed = 0;
         StartCoroutine(GameManager.Instance.WaitThreeSecond());

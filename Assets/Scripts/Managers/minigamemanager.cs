@@ -33,12 +33,12 @@ public class MinigameManager : MonoBehaviour
         return uniqueNumbers.ToArray();
     }
 
-    public int[] RanNumGenWithNum(int num1, int num2)
+    public int[] RanNumGenWithNum(int size, int range)
     {
         HashSet<int> uniqueNumbers = new HashSet<int>();
-        while (uniqueNumbers.Count < num1)
+        while (uniqueNumbers.Count < size)
         {
-            uniqueNumbers.Add(Random.Range(0, num2));
+            uniqueNumbers.Add(Random.Range(0, range));
         }
         return uniqueNumbers.ToArray();
     }

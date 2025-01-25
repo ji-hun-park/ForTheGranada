@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -15,6 +17,14 @@ public class ItemManager : MonoBehaviour
     public Item Item { get { return item; } set { item = value; } }
     public List<Item> itemList;
     public inneritem[] innerItems;
+    public UnityEvent OnMapCreated;
+    private bool is_map_cre_com;
+
+    public bool isMapCreCom
+    {
+        get { return is_map_cre_com; }
+        set { is_map_cre_com = value; if (is_map_cre_com) OnMapCreated?.Invoke();}
+    }
     
     void Awake()
     {
@@ -70,6 +80,8 @@ public class ItemManager : MonoBehaviour
         itemList.Add(Item);
         Item = Resources.Load<Item>("Key");
         itemList.Add(Item);
+        
+        OnMapCreated.AddListener(SetItemScripts);
     }
 
     public void getItem(Item item)
@@ -84,7 +96,7 @@ public class ItemManager : MonoBehaviour
                     GameManager.Instance.maxHealth++;
                     GameManager.Instance.health++;
                     GameManager.Instance.health_item++;
-                    GameManager.Instance.health_lose_list[GameManager.Instance.maxHealth].gameObject.SetActive(true);
+                    UIManager.Instance.healthLoseList[GameManager.Instance.maxHealth].gameObject.SetActive(true);
                 }
                 else if (GameManager.Instance.maxHealth > GameManager.Instance.health)
                 {
@@ -110,20 +122,20 @@ public class ItemManager : MonoBehaviour
             else if (item.GetItemID == 6 && GameManager.Instance.haste_item < item.GetNumNesting)
             {
                 GameManager.Instance.is_attacked_speed = true;
-                GameManager.Instance.item_list[5].gameObject.SetActive(true);
+                UIManager.Instance.itemList[5].gameObject.SetActive(true);
             }
             else if (item.GetItemID == 7 && GameManager.Instance.stealth_item < item.GetNumNesting)
             {
                 //GameManager.Instance.stealthTime += 1f;
                 GameManager.Instance.is_stealth = true;
                 GameManager.Instance.stealth_item++;
-                GameManager.Instance.item_list[6].gameObject.SetActive(true);
+                UIManager.Instance.itemList[6].gameObject.SetActive(true);
             }
             else if (item.GetItemID == 8 && GameManager.Instance.preview_item < item.GetNumNesting)
             {
                 GameManager.Instance.is_preview = true;
                 GameManager.Instance.preview_item++;
-                GameManager.Instance.item_list[7].gameObject.SetActive(true);
+                UIManager.Instance.itemList[7].gameObject.SetActive(true);
             }
         }
         else if (item.GetItemType == ItemType.Temporary)
@@ -141,7 +153,7 @@ public class ItemManager : MonoBehaviour
             {
                 GameManager.Instance.is_resurrection = true;
                 GameManager.Instance.resurrection_item++;
-                GameManager.Instance.item_list[4].gameObject.SetActive(true);
+                UIManager.Instance.itemList[4].gameObject.SetActive(true);
             }
         }
         else if (item.GetItemType == ItemType.Key)
@@ -206,7 +218,7 @@ public class ItemManager : MonoBehaviour
         return itemNum;
     }
     
-    public void SetItems()
+    private void SetItems()
     {
         // 초기화 작업
         for (int k = 0; k < innerItems.Length; k++)
@@ -233,20 +245,14 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
-
-    public void StartSetItmScr()
-    {
-        StartCoroutine(SetItemScripts());
-    }
     
     public void StartWaitFive()
     {
         StartCoroutine(WaitFiveSeconds());
     }
     
-    private IEnumerator SetItemScripts()
+    private void SetItemScripts()
     {
-        yield return new WaitForSeconds(1f);
         // InnerItem 스크립트를 가진 모든 오브젝트 찾기
         innerItems = FindObjectsByType<inneritem>(FindObjectsInactive.Include,FindObjectsSortMode.None);
         // 모든 상자에 키랑 아이템 할당

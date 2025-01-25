@@ -306,7 +306,7 @@ public class MapManager : MonoBehaviour
             }
             queue_room.Enqueue(instance);
         }
-        return;
+        ItemManager.Instance.isMapCreCom = true;
     }
 
 

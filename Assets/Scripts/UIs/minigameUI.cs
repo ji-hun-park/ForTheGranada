@@ -12,7 +12,6 @@ public class minigameUI : MonoBehaviour
 
     void Awake()
     {
-        enabled = true;
         eventSystem = EventSystem.current;
         img_list = GetComponentsInChildren<Image>();
         txt_list = GetComponentsInChildren<Text>();
@@ -21,13 +20,14 @@ public class minigameUI : MonoBehaviour
 
     public void UpdateMinigame()
     {
-        GameManager.Instance.is_minigame = true;
         SetImages();
         SetAnswers();
     }
 
     private void OnEnable()
     {
+        GameManager.Instance.is_minigame = true;
+        // 첫번째 버튼 포커싱
         eventSystem.SetSelectedGameObject(btn_list[1].gameObject);
         Time.timeScale = 0;
     }

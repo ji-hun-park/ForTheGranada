@@ -46,7 +46,7 @@ public class bossblock : MonoBehaviour
                 GameManager.Instance.health++;
                 GameManager.Instance.maxHealth++;
                 GameManager.Instance.health_item++;
-                GameManager.Instance.health_lose_list[GameManager.Instance.maxHealth].gameObject.SetActive(true);
+                UIManager.Instance.healthLoseList[GameManager.Instance.maxHealth].gameObject.SetActive(true);
                 maxhp = false;
                 SR.color = Color.white;
             }
