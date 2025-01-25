@@ -550,8 +550,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator WaitThreeSecond()
     {
-        // 3초 기다리고 타이틀 화면으로 감
-        yield return new WaitForSeconds(3f);
+        // 2초 기다리고 오버 UI 제거 후 타이틀 화면으로 감
+        yield return new WaitForSeconds(2f);
         if (is_ingame)
         {
             UIManager.Instance.UIList[8].gameObject.SetActive(false);
@@ -567,16 +567,10 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator WaitThreeSecond2()
     {
-        // 3초 기다리기
-        yield return new WaitForSeconds(3f);
-        if (is_ingame)
-        {
-            UIManager.Instance.UIList[8].gameObject.SetActive(false);
-        }
-        else if (is_boss)
-        {
-            UIManager.Instance.UIList[4].gameObject.SetActive(false);
-        }
+        // 2초 기다리기
+        yield return new WaitForSeconds(2f);
+        // 팝업 UI 제거
+        UIManager.Instance.UIList[9].gameObject.SetActive(false);
     }
 
     public IEnumerator EndingCoroutine()

@@ -139,7 +139,6 @@ public class APIManager : MonoBehaviour
             Debug.LogError("Response: " + request.downloadHandler.text);
             MinigameManager.Instance.FailRequest();
             GameManager.Instance.is_catch = true;
-            if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }
     }
     
@@ -156,14 +155,12 @@ public class APIManager : MonoBehaviour
             Debug.Log("Model Response: " + modelResponse);
             APIResponse = modelResponse;
             GameManager.Instance.is_catch = true;
-            if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }
         else
         {
             Debug.LogError("Could not parse the response.");
             MinigameManager.Instance.FailRequest();
             GameManager.Instance.is_catch = true;
-            if (GameManager.Instance.mgui != null) GameManager.Instance.mgui.UpdateMinigame();
         }
     }
 }

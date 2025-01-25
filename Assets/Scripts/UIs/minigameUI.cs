@@ -18,18 +18,19 @@ public class minigameUI : MonoBehaviour
         btn_list = GetComponentsInChildren<Button>();
     }
 
+    private void OnEnable()
+    {
+        GameManager.Instance.is_minigame = true;
+        UpdateMinigame();
+        // 첫번째 버튼 포커싱
+        eventSystem.SetSelectedGameObject(btn_list[1].gameObject);
+        Time.timeScale = 0;
+    }
+    
     public void UpdateMinigame()
     {
         SetImages();
         SetAnswers();
-    }
-
-    private void OnEnable()
-    {
-        GameManager.Instance.is_minigame = true;
-        // 첫번째 버튼 포커싱
-        eventSystem.SetSelectedGameObject(btn_list[1].gameObject);
-        Time.timeScale = 0;
     }
 
     private void SetImages()
