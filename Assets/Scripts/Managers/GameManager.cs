@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,12 +54,24 @@ public class GameManager : MonoBehaviour
     public int stage;
     public const int MaxStage = 3;
 
+    public delegate void PreviewFlagChangedHandler(); // 투시 델리게이트 선언
+    public event PreviewFlagChangedHandler OnPreviewEventTriggered; // 투시 C# 이벤트 선언
+    
     [Header("Flags")]
     public bool is_resurrection;
     public bool is_attacked_speed;
     public bool is_stealth;
     public bool is_detected;
-    public bool is_preview;
+    [SerializeField] private bool isPreview;
+    public bool is_preview
+    {
+        get { return isPreview; }
+        set
+        {
+            isPreview = value;
+            if (isPreview) OnPreviewEventTriggered?.Invoke();
+        }
+    }
     public bool is_running;
     public bool is_closebox;
     public bool is_minigame;
@@ -109,6 +122,12 @@ public class GameManager : MonoBehaviour
             _is_boss = value;
             Debug.Log($"is_boss 값 변경됨: {_is_boss}");
         }
+    }
+    
+    private void OnValidate()
+    {
+        // Inspector에서 값 변경 시 Setter를 수동으로 호출
+        is_preview = isPreview;
     }
 
     void Awake()
@@ -180,6 +199,8 @@ public class GameManager : MonoBehaviour
     {
         // 필요한 컴포넌트들 가져오기
         FetchForIngame();
+
+        StartCoroutine(ReActPrevFlag());
         
         is_rannum = true;
         is_rannum2 = true;
@@ -603,6 +624,16 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         speed = tmpSpeed;
         pc.STCoroutine = null; // 코루틴이 끝난 후 null로 초기화
+    }
+
+    private IEnumerator ReActPrevFlag()
+    {
+        yield return new WaitForSeconds(2f);
+        if (isPreview) // 이벤트 재호출
+        {
+            is_preview = false;
+            is_preview = true;
+        }
     }
     
     public Transform FindChildByName(Transform parent, string name)
