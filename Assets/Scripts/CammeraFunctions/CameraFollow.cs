@@ -4,8 +4,12 @@ public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private scanner scanner;
-    private float cameraZ = -10f;
+    private float cameraHalfWidth;
+    private float cameraHalfHeight;
+    private const float cameraZ = -10f;
     private Vector3 targetPosition;
+    private Vector2 mapMin;
+    private Vector2 mapMax;
 
     private void Start()
     {
@@ -27,11 +31,11 @@ public class CameraFollow : MonoBehaviour
         
         if (scanner != null && scanner.HasValidBorders())
         {
-            Vector2 mapMin = scanner.GetMapMin();
-            Vector2 mapMax = scanner.GetMapMax();
+            mapMin = scanner.GetMapMin();
+            mapMax = scanner.GetMapMax();
             
-            float cameraHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
-            float cameraHalfHeight = Camera.main.orthographicSize;                    
+            cameraHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
+            cameraHalfHeight = Camera.main.orthographicSize;                    
             
             targetPosition.x = Mathf.Clamp(targetPosition.x, mapMin.x + cameraHalfWidth, mapMax.x - cameraHalfWidth);
             targetPosition.y = Mathf.Clamp(targetPosition.y, mapMin.y + cameraHalfHeight, mapMax.y - cameraHalfHeight);

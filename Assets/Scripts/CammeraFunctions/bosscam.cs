@@ -5,7 +5,7 @@ public class bosscam : MonoBehaviour
 {
     public float mapHeight;
     public float mapWidth;
-    public float padding = 0f; // 화면 경계 여백
+    public float padding; // 화면 경계 여백
     GameObject mapObject;
     Tilemap map;
     Bounds bounds;

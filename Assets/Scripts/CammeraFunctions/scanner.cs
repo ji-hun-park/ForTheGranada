@@ -3,10 +3,12 @@ using UnityEngine;
 public class scanner : MonoBehaviour
 {
     public BoxCollider2D boxCollider;
-    [SerializeField] private Vector2 mapMin = Vector2.zero; // ���� ��� �ּ� ��ǥ
-    [SerializeField] private Vector2 mapMax = Vector2.zero; // ���� ��� �ִ� ��ǥ
-    [SerializeField] private bool hasBorders = false;      // ��谪 ��ȿ ����
-    //[SerializeField] private Transform player;             // �÷��̾� Transform
+    [SerializeField] private Vector2 mapMin = Vector2.zero; 
+    [SerializeField] private Vector2 mapMax = Vector2.zero; 
+    [SerializeField] private bool hasBorders;  
+    public Vector2 GetMapMin() => mapMin;
+    public Vector2 GetMapMax() => mapMax;
+    public bool HasValidBorders() => hasBorders;
 
     private void Awake()
     {
@@ -20,9 +22,8 @@ public class scanner : MonoBehaviour
 
     private void ResizeBoxCollider()
     {
-        // �ػ󵵿� ���� ���� ���
-        float widthRatio = Screen.width / 1920f; // ���� �ػ�: 1920
-        float heightRatio = Screen.height / 1080f; // ���� �ػ�: 1080
+        float widthRatio = Screen.width / 1920f; 
+        float heightRatio = Screen.height / 1080f; 
         float offset = (Screen.width <= 1024 || Screen.height <= 768) ? 1.4f : 1f;
 
         // BoxCollider ũ�� ����
@@ -36,11 +37,9 @@ public class scanner : MonoBehaviour
     {
         if (GameManager.Instance.player == null) return;
 
-        // ��� Border �±׸� ���� ��ü �˻�
         GameObject[] borders = GameObject.FindGameObjectsWithTag("border");
         if (borders.Length == 0) return;
-
-        // ���� ����� Border ã��
+        
         float shortestDistance = float.MaxValue;
         GameObject nearestBorder = null;
 
@@ -53,8 +52,7 @@ public class scanner : MonoBehaviour
                 nearestBorder = border;
             }
         }
-
-        // ����� Border�� Bounds�� ����Ͽ� ��� ������Ʈ
+        
         if (nearestBorder != null)
         {
             Collider2D borderCollider = nearestBorder.GetComponent<Collider2D>();
@@ -67,20 +65,13 @@ public class scanner : MonoBehaviour
             }
         }
     }
-
-    // �ּ�/�ִ� ��ǥ ��ȯ �޼���
-    public Vector2 GetMapMin() => mapMin;
-    public Vector2 GetMapMax() => mapMax;
-    public bool HasValidBorders() => hasBorders;
-
-    // �����: ��踦 �ð�ȭ
+    
     private void OnDrawGizmos()
     {
         if (hasBorders)
         {
             Gizmos.color = Color.red;
-
-            // ��� �簢�� �׸���
+            
             Gizmos.DrawLine(new Vector3(mapMin.x, mapMin.y, 0), new Vector3(mapMax.x, mapMin.y, 0));
             Gizmos.DrawLine(new Vector3(mapMax.x, mapMin.y, 0), new Vector3(mapMax.x, mapMax.y, 0));
             Gizmos.DrawLine(new Vector3(mapMax.x, mapMax.y, 0), new Vector3(mapMin.x, mapMax.y, 0));
