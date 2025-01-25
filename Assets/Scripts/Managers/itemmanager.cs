@@ -248,7 +248,7 @@ public class ItemManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         // InnerItem 스크립트를 가진 모든 오브젝트 찾기
-        innerItems = FindObjectsOfType<inneritem>(true);
+        innerItems = FindObjectsByType<inneritem>(FindObjectsInactive.Include,FindObjectsSortMode.None);
         // 모든 상자에 키랑 아이템 할당
         if (innerItems.Length >= GameManager.Instance.req_key) SetItems();
     }

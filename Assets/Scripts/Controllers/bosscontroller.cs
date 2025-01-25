@@ -40,7 +40,6 @@ public class bosscontroller : MonoBehaviour
     public Transform summonPoint;
     public Transform[] summonPoints;
     private Coroutine currentCoroutine;
-    private Coroutine damageCoroutine;
     private Coroutine dashCoroutine;
 
     private void Awake()
@@ -484,10 +483,6 @@ public class bosscontroller : MonoBehaviour
                 StartCoroutine(WaitPointsSecond());
             }
             StartCoroutine(GameManager.Instance.pc.ChangeColor());
-            /*if (damageCoroutine == null)
-            {
-                damageCoroutine = StartCoroutine(HIT());
-            }*/
         }
 
         if (collision.gameObject.CompareTag("border"))
@@ -657,13 +652,6 @@ public class bosscontroller : MonoBehaviour
         animator.SetTrigger("DIE");
         //StartCoroutine(GameManager.Instance.EndingCoroutine());
         Destroy(gameObject, 0.8f);
-    }
-
-    public IEnumerator HIT()
-    {
-        GameManager.Instance.health--;
-        yield return new WaitForSeconds(1f);
-        damageCoroutine = null; // 코루틴이 끝난 후 null로 초기화
     }
 
     public IEnumerator WaitPointsSecond()

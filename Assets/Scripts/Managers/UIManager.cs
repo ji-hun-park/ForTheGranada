@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
         
         ClearList(); // 리스트들 초기화
         
-        canvas = FindObjectOfType<Canvas>().gameObject;
+        canvas = FindFirstObjectByType<Canvas>().gameObject;
         if (canvas != null)
         {
             Debug.Log($"Canvas Found: {canvas.name}");
