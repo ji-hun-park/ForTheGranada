@@ -1090,7 +1090,7 @@ MonoBehaviour:
   is_attacked_speed: 0
   is_stealth: 0
   is_detected: 0
-  is_preview: 0
+  isPreview: 0
   is_running: 0
   is_closebox: 0
   is_minigame: 0
@@ -1112,11 +1112,6 @@ MonoBehaviour:
   hint_count: {fileID: 0}
   stagetext: {fileID: 0}
   player: {fileID: 0}
-  innerItems: []
-  healthList: []
-  health_lose_list: []
-  item_list: []
-  ui_list: []
   rannum3: 
   rannum3_2: 
   spr_list: []
@@ -7763,6 +7758,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemList: []
   innerItems: []
+  OnMapCreated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1954040506
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class weaponcontroller : MonoBehaviour
 {
-    public float destroyTime = 2f;
+    public const float destroyTime = 2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

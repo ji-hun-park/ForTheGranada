@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -421,7 +420,7 @@ public class GameManager : MonoBehaviour
                 audiomanager.Instance.menusfx.Play();
             }
 
-            if (is_closebox && is_delay == false && is_mgset && is_catch && !currentbox.isOpen && currentbox.ii.is_set)
+            if (is_closebox && !is_delay && is_mgset && is_catch && !currentbox.is_open && currentbox.ii.is_set)
             {
                 if (Input.GetKeyDown(interactKey))
                 {

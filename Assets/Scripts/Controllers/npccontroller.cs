@@ -4,16 +4,16 @@ public class npccontroller : MonoBehaviour
 {
     Animator animator;
 
-    public bool isChasing = false;
+    public bool isChasing;
     public GameObject[] points; // 순찰 포인트
     public Vector2 movement = Vector2.zero;
     public float currentSpeed;
     public float moveSpeed;
     public float chaseSpeed;
     
-    private int nextPoint = 0;
+    private int nextPoint;
     private float distToPoint;
-    private bool returnDefault = false;
+    private bool returnDefault;
 
     void Start()
     {
@@ -42,7 +42,6 @@ public class npccontroller : MonoBehaviour
         // 기본 순찰 동작
         NPCMoveDefault();
     }
-
 
     void NPCMoveDefault()
     {
@@ -100,7 +99,6 @@ public class npccontroller : MonoBehaviour
 
     }
 
-
     void ReturnDefault()
     {
         if (points.Length == 0) return;
@@ -146,6 +144,4 @@ public class npccontroller : MonoBehaviour
         animator.SetInteger("npc_x", Mathf.RoundToInt(movement.x));
         animator.SetInteger("npc_y", Mathf.RoundToInt(movement.y));
     }
-
-
 }

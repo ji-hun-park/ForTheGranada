@@ -1,10 +1,20 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class itemboxcontroller : MonoBehaviour
 {
-    public bool isOpen;
+    public UnityEvent OnOpen;
+    private bool isOpen;
+
+    public bool is_open
+    {
+        get { return isOpen; }
+        set
+        {
+            isOpen = value;
+            if (isOpen) OnOpen?.Invoke();
+        }
+    }
     public bool isUse;
     public Sprite[] ItemBoxSprites;
     public inneritem ii;
@@ -13,39 +23,47 @@ public class itemboxcontroller : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = ItemBoxSprites[0]; // ���� ���� ���·� ����
+        spriteRenderer.sprite = ItemBoxSprites[0]; 
         ii = GetComponentInChildren<inneritem>(true);
     }
+
+    void OnEnable()
+    {
+        OnOpen.AddListener(IsItemBoxOpen);
+    }
+
+    void OnDisable()
+    {
+        OnOpen.RemoveListener(IsItemBoxOpen);
+    }
+    
     private void Update()
     {
-        if (spriteRenderer != null)
-        {
-            IsPossible();
-            IsItemBoxOpen();
-        }
+        if (!is_open) IsPossible();
     }
 
     void IsItemBoxOpen()
     {
-        // ������ ���� ������ ���
-        if (isOpen) // ���� ������
+        if (spriteRenderer != null) 
         {
-            spriteRenderer.sprite = ItemBoxSprites[1]; // ���� ���� sprite�� ����
+            spriteRenderer.sprite = ItemBoxSprites[1]; 
         }
     }
 
     void IsPossible()
     {
-        if (!isOpen && GameManager.Instance.is_catch && !GameManager.Instance.is_delay) // ������ ���ڰ� Ȱ��ȭ�� ���
+        if (spriteRenderer != null)
         {
-            spriteRenderer.color = Color.white; // ���ڻ� �Ͼ������ ����
-            isUse = true;
-        }
-        else if (!isOpen && (!GameManager.Instance.is_catch || GameManager.Instance.is_delay))// ������ ���ڰ� ��Ȱ��ȭ�� ���
-        {
-            spriteRenderer.color = Color.gray;
-            isUse = false;
+            if (GameManager.Instance.is_catch && !GameManager.Instance.is_delay)
+            {
+                spriteRenderer.color = Color.white;
+                isUse = true;
+            }
+            else if (!GameManager.Instance.is_catch || GameManager.Instance.is_delay)
+            {
+                spriteRenderer.color = Color.gray;
+                isUse = false;
+            }
         }
     }
-
 }

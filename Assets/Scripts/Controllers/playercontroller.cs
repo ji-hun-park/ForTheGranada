@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -24,8 +23,8 @@ public class playercontroller : MonoBehaviour
     Color originalColor;
     Vector3 add_door_position;
 
-    float player_x;//鮈�? ???鴔�?
-    float player_y;//??��踝蕭??��踝蕭 ???鴔�?
+    float player_x;
+    float player_y;
 
     bool isDead;
     public bool is_door;
@@ -73,21 +72,20 @@ public class playercontroller : MonoBehaviour
 
     private void PlayerMove()
     {
-        player_x = Input.GetAxisRaw("Horizontal"); //鮈�? ??��踝蕭??��踝蕭
-        player_y = Input.GetAxisRaw("Vertical"); //??��踝蕭??��踝蕭 ??��踝蕭??��踝蕭
+        player_x = Input.GetAxisRaw("Horizontal"); 
+        player_y = Input.GetAxisRaw("Vertical"); 
         bool player_y_down = Input.GetButtonDown("Vertical");
         bool player_x_down = Input.GetButtonDown("Horizontal");
         bool player_x_up = Input.GetButtonUp("Horizontal");
         bool player_y_up = Input.GetButtonUp("Vertical");
-
-        //??��踝蕭??��踝蕭鮈�? ??��踝蕭??��踝蕭??��踝蕭 ??��踝蕭??��踝蕭 魽國?��
+        
         if (player_x_down)
         {
-            is_horizon_move = true; //鮈�? ??��踝蕭??��踝蕭
+            is_horizon_move = true; 
         }
         else if (player_y_down)
         {
-            is_horizon_move = false; //??��踝蕭??��踝蕭 ??��踝蕭??��踝蕭
+            is_horizon_move = false; 
         }
         else if (player_x_up || player_y_up)
             is_horizon_move = player_x != 0;
@@ -101,14 +99,13 @@ public class playercontroller : MonoBehaviour
         {
             player_x = 0;
         }
-
-        //??��踝蕭??��踝蕭諰�???��踝蕭
-        if (animator.GetInteger("player_move_x") != player_x) //鮈�?
+        
+        if (animator.GetInteger("player_move_x") != player_x) 
         {
             animator.SetBool("is_change", true);
             animator.SetInteger("player_move_x", (int)player_x);
         }
-        else if (animator.GetInteger("player_move_y") != player_y) //??��踝蕭??��踝蕭
+        else if (animator.GetInteger("player_move_y") != player_y) 
         {
             animator.SetBool("is_change", true);
             animator.SetInteger("player_move_y", (int)player_y);
@@ -116,8 +113,7 @@ public class playercontroller : MonoBehaviour
         else //idle
             animator.SetBool("is_change", false);
     }
-
-    //?��踝蕭?��豎嫡橘蕭?��踝蕭 ?��踝蕭
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -219,23 +215,21 @@ public class playercontroller : MonoBehaviour
             if (GameManager.Instance.is_attacked_speed) { if (ASCoroutine == null && STCoroutine == null) ASCoroutine = StartCoroutine(GameManager.Instance.ASCoroutine()); }
             is_damaged = true;
             spriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(1f); //1?��褊蛛?��?��踝蕭 ?��踝蕭?��踝蕭
-            spriteRenderer.color = originalColor; //?��踝蕭?��踝蕭 ?��踝蕭?��踝蕭?��踝蕭 ?��踝蕭?��複選?��
+            yield return new WaitForSeconds(1f); 
+            spriteRenderer.color = originalColor; 
             is_damaged = false;
         }
     }
 
-    //?�踝??��豎對??��踝蕭 ?�踝??���?
-
     public void Dead()
 
     {
-        if (isDead) return; // ?�諒對蕭 ?�踝??��踝蕭 ?�踝??��?�塚??���??�踝??��踝蕭?�踝??��踝蕭 ?�踝??��踝蕭
+        if (isDead) return; 
 
-        isDead = true; // ?�踝??��踝蕭 ?�踝??��踝蕭 ?�踝??��踝蕭
-        spriteRenderer.color = Color.gray; // ?�踝??��踝蕭 ?�踝??��踝蕭
-        spriteRenderer.sprite = deadSprite; // ?�踝??��踝蕭?�踝??��踝蕭???�踝??��踝蕭
-        animator.enabled = false; // ?�誰棲賂??��諒潘???�踝??��?�踝??��
+        isDead = true; 
+        spriteRenderer.color = Color.gray; 
+        spriteRenderer.sprite = deadSprite; 
+        animator.enabled = false; 
         Debug.Log("Game Over");
     }
 
@@ -286,5 +280,4 @@ public class playercontroller : MonoBehaviour
         is_damaged = false;
         Debug.Log("무적 시간이 풀렸습니다.");
     }
-
 }

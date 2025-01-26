@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
 
 public class bosscontroller : MonoBehaviour
@@ -8,14 +7,14 @@ public class bosscontroller : MonoBehaviour
     public Rigidbody2D bossrb;
     private Animator animator;
     private DashPathIndicator DPI;
-    private bool isDead = false;
-    private bool isMove = false;
-    public bool isDashing = false;
-    private bool isJumping = false;
-    private bool isLanding = false;
-    private bool isPhase2 = false;
-    private bool isFire = false;
-    private bool isInvincible = false;
+    private bool isDead;
+    private bool isMove;
+    public bool isDashing;
+    private bool isJumping;
+    private bool isLanding;
+    private bool isPhase2;
+    private bool isFire;
+    private bool isInvincible;
     public float moveSpeed = 5f;
     public float dashSpeed = 20f;
     public float dashDuration = 0.3f;

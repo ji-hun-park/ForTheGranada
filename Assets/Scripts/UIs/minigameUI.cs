@@ -148,7 +148,7 @@ public class minigameUI : MonoBehaviour
     {
         ItemManager.Instance.getItem(GameManager.Instance.currentbox.ii.item);
         GameManager.Instance.pu.item = GameManager.Instance.currentbox.ii.item;
-        GameManager.Instance.currentbox.isOpen = true;
+        GameManager.Instance.currentbox.is_open = true;
         GameManager.Instance.currentbox.ii.is_get = true;
         UIManager.Instance.UIList[9].gameObject.SetActive(true);
     }
